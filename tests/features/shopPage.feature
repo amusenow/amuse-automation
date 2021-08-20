@@ -1,0 +1,31 @@
+Feature: Amuse Home - shop page
+
+    As a user, in the amuse site
+    I want to be able to go to the shop page
+    @iosBrowser @androidBrowser
+    Scenario:  Amuse - Shop Page - The Header/Footer and location box appear on the Shop page and shop icon is active
+        Given I am on the home page
+        When I click in the shop page
+        Then I should see header and footer
+    @iosBrowser @androidBrowser
+    Scenario:  Amuse - Shop Page - The default state is “Shop all” and sorted by “Recommended”
+        When I click in sort button
+        Then I should see recommended option selected
+    @iosBrowser @androidBrowser    
+    Scenario:  Amuse - Shop Page - The product image, details and price should appear 
+        When I click in Pet section
+        Then I should see each product image, details and price
+    @iosBrowser @androidBrowser    
+    Scenario:  Amuse - Shop Page - The non-authenticated user should not be able to add the product to the cart.
+        When I add a product to the cart
+        Then I should be displayed with sigin modal
+    @iosBrowser @androidBrowser    
+    Scenario:  Amuse - Shop Page - The authenticated user should be able to add the product to the cart.
+        When I login
+        And I add a product to the cart
+        Then I should be logged in
+        And the cart button should be enabled
+    @iosBrowser @androidBrowser    
+    Scenario:  Amuse - Shop Page - When the user has one or more products in the cart, the microcart is displayed
+        Then the microcart is displayed
+
