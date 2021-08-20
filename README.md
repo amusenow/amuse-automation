@@ -1,11 +1,9 @@
-# WebdriverIO-V6-appium-cucumber-boilerplate
-
-Boilerplate project to run native and browser for android and ios using cucumber with page object pattern.
+# Amuse mobile automation repository 
 
 ## Based on
 
-- WebdriverIO v6
-- cucumber v6
+- WebdriverIO v7
+- cucumber v7
 - Node version 10.16 or higher
 - Appium
 
@@ -23,22 +21,16 @@ Click below to know more
 - [Appium Capabilities](http://appium.io/docs/en/writing-running-appium/caps/)
 - [Running Appium Tests](http://appium.io/docs/en/writing-running-appium/running-tests/)
 
-## Running sample test
-Follow the below commands: -
+## Steps to run tests
+Follow the below commands: - (after setting uo the WDA)
 
 - Install dependencies using `npm i` in the terminal.
 
 - Update the deviceName and platFormVersion in `config/android.info.js` and `config/ios.info.js` respectively.
 
-- Execute `npm run ios` to run ios native app
-
 - Execute `npm run iosBrowser` to run ios safari browser
 
-- Execute `npm run android` to run android native app
-
 - Execute `npm run androidBrowser` to run android chrome browser
-
-- Execute `npm run lint` to run eslint
 
 ## Setting up WDA for Running tests on IOS Real devices
 - Download and Install appium Desktop on your PC
@@ -65,7 +57,7 @@ Follow the below commands: -
 
 - Check the "Automatically manage signing" checkbox
 
-- Select "Escolarea LLC" on the Team dropdown list
+- Select "YOUR TEAM" on the Team dropdown list
 
 - Select "Development" on the Signing Certificate dropdown list
 
