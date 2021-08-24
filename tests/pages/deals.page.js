@@ -24,7 +24,7 @@ class DealsPage extends Page {
             await expect(await this.locationBox).toExist()
             await (await this.locationDiv).waitForDisplayed()
             await expect(await this.locationDiv).toExist()
-            //await expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocation())
+            await expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocation())
     }
 
     /**

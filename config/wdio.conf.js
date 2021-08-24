@@ -27,8 +27,8 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-    './tests/features/shopPage.feature',
-    './tests/features/productDetail.feature'
+    './tests/features/home.feature',
+    //'./tests/features/productDetail.feature'
   ],
 
   logLevel: 'error',

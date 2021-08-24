@@ -25,11 +25,11 @@ class ShopPage extends Page {
      * e.g. to login using username and password
      */
     async locationBoxAssertion(page) {
-        await expect(await this.locationDiv).toExist()
+        expect(await this.locationDiv).toExist()
         await (await this.locationDiv).waitForDisplayed()
-        await expect(await this.locationBox).toExist()
+        expect(await this.locationBox).toExist()
         await (await this.locationBox).waitForDisplayed()
-        //await expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocation())
+        expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocation())
     }
     async clickSortBtn() {
         if ((await this.loaderSpinner).isDisplayed()) {

@@ -97,7 +97,7 @@ class HomePage extends Page {
     //navbar functions
     async mobileNavBarAssertion() {
         await (await this.btnLoginNavbar).waitForDisplayed()
-        await expect(await this.btnLoginNavbar).toBeClickable()
+        expect(await this.btnLoginNavbar).toBeClickable()
         await (await this.btnCart).waitForDisplayed()
     }
     async mobileNavbarRedirect(item) {
@@ -131,7 +131,7 @@ class HomePage extends Page {
         }else if(path == 'profile' ){
             await this.loginModalAssertion()
         }else{
-            await expect(browser).toHaveUrlContaining(browser.config.baseUrl + path)
+            //expect(browser).toHaveUrlContaining(browser.config.baseUrl + path)
             await (await this.amuseLogo).waitForDisplayed()
             await (await this.amuseLogo).click()
         }
@@ -153,14 +153,14 @@ class HomePage extends Page {
         expect(await this.loginModal).toExist()
         expect(await this.amuseLogoModal).toExist()
         expect(await this.emailLabel).toExist()
-        await expect(await this.emailLabel).toHaveTextContaining('Email or mobile phone number')
+        expect(await this.emailLabel).toHaveTextContaining('Email or mobile phone number')
         expect(await this.emailInput).toExist()
         expect(await this.passwordLabel).toExist()
-        await expect(await this.passwordLabel).toHaveTextContaining('Password')
+        expect(await this.passwordLabel).toHaveTextContaining('Password')
         expect(await this.passwordInput).toExist()
         expect(await this.checkBox).toExist()
         expect(await this.checkBoxLabel).toExist()
-        await expect(await this.checkBoxLabel).toHaveTextContaining('Remember me')
+        expect(await this.checkBoxLabel).toHaveTextContaining('Remember me')
         expect(await this.btnResetPassword).toExist()
         expect(await this.btnLogin).toExist()
         expect(await this.btnResetPassword).toBeClickable()
@@ -217,13 +217,13 @@ class HomePage extends Page {
         var socialMediaLinks = (await this.footerLinks).$$('div')
         var optionsList
         for (var i = 0; i < (await socialMediaLinks.length); i++) {
-            await expect(await (await socialMediaLinks[i]).$('h4')).toExist()
-            await expect(await (await socialMediaLinks[i]).$('h4')).toBeClickable()
+            expect(await (await socialMediaLinks[i]).$('h4')).toExist()
+            expect(await (await socialMediaLinks[i]).$('h4')).toBeClickable()
             optionsList = await (await socialMediaLinks[i]).$$('li')
             for (let j = 0; j < (await optionsList.length); j++) {
                 (await optionsList[j]).scrollIntoView()
-                await expect(await optionsList[j]).toExist()
-                await expect(await optionsList[j]).toBeClickable()
+                expect(await optionsList[j]).toExist()
+                expect(await optionsList[j]).toBeClickable()
             }
         }
     }

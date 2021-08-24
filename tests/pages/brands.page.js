@@ -25,7 +25,7 @@ class BrandsPage extends Page {
             await (await this.locationDiv).waitForDisplayed()
             await expect(await this.locationBox).toExist()
             await (await this.locationBox).waitForDisplayed() 
-            //await expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocation())
+            await expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocation())
     }
     /**
      * overwrite specifc options to adapt it to page object
