@@ -10,6 +10,20 @@ const pages = {
 
 Given(/^I am on the (\w+) page$/, async (page) => {
     await pages[page].open(page)
-    console.log(browser.config.baseUrl)
     await HomePage.acceptModal()
+});
+Given(/^I am logged in$/, async () => {
+    await HomePage.loginClickButton()
+    await HomePage.setEmail()
+    await HomePage.setPassword()
+    await HomePage.loginClick() 
+});
+//
+Given(/^I am logged in (\w+) page$/, async (page) => {
+    await pages[page].open(page)
+    await HomePage.acceptModal()
+    await HomePage.loginClickButton()
+    await HomePage.setEmail()
+    await HomePage.setPassword()
+    await HomePage.loginClick() 
 });

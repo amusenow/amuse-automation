@@ -17,7 +17,7 @@ class HomePage extends Page {
     get btnLoginNavbar() { return $('.btn--with-padding') }
     get btnProfile() { return $('.account-button.account-button--logged-in.cursor-pointer.p-1.rounded-full') }
     get btnloginModaClose() { return $('.sf-modal__close') }
-    get btnCart() { return $('.o-header__icons > button:nth-child(2)') }
+    get btnCart() { return $('.a-microcart-icon.o-header__microcart') }
     get btnShopNavbar() { return $('a[href="/shop"]') }
     get btnDealsNavbar() { return $('a[href="/deals"]') }
     get btnBrandsNavbar() { return $('a[href="/brands"]') }
@@ -50,17 +50,22 @@ class HomePage extends Page {
     get deliveryAddress() { return $('.m-shipping-location__scroll > div:nth-of-type(2) > button:nth-of-type(1)') }
 
     //products 
-    get productImage() { return $('#home > div > div:nth-child(3) > div:nth-child(2) > div > div > div > a') }
+    get productName() { return $('#home > div > div:nth-child(3) > div:nth-child(2) > div > div > div > a') }
+    get productClassification() { return $('div:nth-of-type(3) .o-product-card.scrolling-product-card.sf-product-card > .flex.flex-row.items-center.text-xxs > .classification') }
+    get productBrand() { return $('div:nth-of-type(3) .o-product-card.scrolling-product-card.sf-product-card > div:nth-of-type(4) > .a-brand__link') }
+    get productWeight() { return $('#home > div > div:nth-child(3) > div:nth-child(2) > div > div > div > div:nth-child(6)') }
+    get productPrice() { return $('#home > div > div:nth-child(3) > div:nth-child(2) > div > div > div > div.flex.justify-between.items-center > div > div.a-product-price') }
     get productLabel() { return $(".content-section--margin-bottom-m:nth-of-type(3) [class='text-lg tracking-tighter leading-none mb-5']") }
 
 
     //mobile
-    
+
     get btnShopMobile() { return $('.sf-bottom-navigation > div:nth-of-type(1)') }
     get btnDealsMobile() { return $('.sf-bottom-navigation > div:nth-of-type(2)') }
     get btnSearchMobile() { return $('.sf-bottom-navigation > div:nth-of-type(3)') }
     get inputSearchMobile() { return $('.sf-search-bar__input') }
     get btnProfileMobile() { return $('.sf-bottom-navigation > div:nth-of-type(4)') }
+    get microCartDiv() { return $("div.o-microcart__checkout-box") }
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
@@ -82,14 +87,14 @@ class HomePage extends Page {
 
     async logoAssertionElement(element, logo = 'login') {
         if ((await this.loaderSpinner).isDisplayedInViewport()) {
-            await (await this.loaderSpinner).waitForDisplayed({reverse: true})
+            await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
         }
         await (await element).waitForDisplayed()
         if ((await this.loaderSpinner).isDisplayedInViewport()) {
-            await (await this.loaderSpinner).waitForDisplayed({reverse: true})
+            await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
         }
-        //await browser.saveElement((await this.amuseLogo), 'logo')
-        //expect(await browser.checkElement((await element), logo, {})).toEqual(0)
+        await driver.saveElement((await this.amuseLogo), logo)
+        expect(await driver.checkElement((await element), logo, {})).toEqual(0)
     }
     async logoAssertion() {
         await this.logoAssertionElement(this.amuseLogo)
@@ -100,8 +105,13 @@ class HomePage extends Page {
         expect(await this.btnLoginNavbar).toBeClickable()
         await (await this.btnCart).waitForDisplayed()
     }
+    async loggedNavBarAssertion() {
+        await (await this.btnProfile).waitForDisplayed()
+        expect(await this.btnProfile).toBeClickable()
+        await (await this.btnCart).waitForDisplayed()
+    }
     async mobileNavbarRedirect(item) {
-        var attribute 
+        var attribute
         switch (item) {
             case "shop":
                 await (await this.btnShopMobile).click()
@@ -124,19 +134,20 @@ class HomePage extends Page {
         }
     }
     async mobileUrlAssertion(path) {
-        if(path == 'search' ){
+        if (path == 'search') {
             await (await this.inputSearchMobile).waitForDisplayed()
             await (await this.amuseLogo).waitForDisplayed()
             await (await this.amuseLogo).click()
-        }else if(path == 'profile' ){
+        } else if (path == 'profile') {
             await this.loginModalAssertion()
-        }else{
-            //expect(browser).toHaveUrlContaining(browser.config.baseUrl + path)
+        } else {
+            console.log(driver.config.baseUrl)
+            expect(driver).toHaveUrlContaining(driver.config.baseUrl + path)
             await (await this.amuseLogo).waitForDisplayed()
             await (await this.amuseLogo).click()
         }
     }
-    
+
     //end of navbar functions
 
     async acceptModal() {
@@ -166,20 +177,20 @@ class HomePage extends Page {
         expect(await this.btnResetPassword).toBeClickable()
         expect(await this.btnLogin).toExist()
         expect(await this.signUpLink).toExist()
-        //await this.loginAssertionLogo()
 
     }
     async loginAssertionLogo() {
         await this.logoAssertionElement(this.amuseLogoModal, 'logoLogin')
     }
     async setPassword() {
-        await this.passwordInput.setValue(utils.ValidEmailPassword);
+        await (await this.passwordInput).setValue(utils.ValidEmailPassword);
     }
     async loginClick() {
         await (await this.btnLogin).click()
+        await (await this.btnLogin).waitForDisplayed({ reverse: true })
     }
     async setEmail() {
-        await this.emailInput.setValue(utils.ValidEmail);
+        await (await this.emailInput).setValue(utils.ValidEmail);
     }
     async checkLoggedUser() {
         await (await this.btnloginModaClose).waitForDisplayed({ reverse: true })
@@ -254,30 +265,48 @@ class HomePage extends Page {
         await (await this.mapsDivTest).click()
     }
     async checkAvailability() {
-        await (await this.logoLocationDiv).waitForDisplayed({reverse : true })
+        await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
     }
     async cartEnabled() {
         expect(await this.btnCart).toBeEnabled()
         expect(await this.btnCart).toBeClickable()
     }
     async selectAddress() {
-        expect(await this.shippingLocation).toBeEnabled()
-        expect(await this.deliveryAddress).toBeEnabled()
-        await (await this.deliveryAddress).click()
-        if (await (await this.loaderSpinner).isDisplayedInViewport()) {
-            await (await this.loaderSpinner).waitForDisplayed({reverse: true})
+        if ((await this.shippingLocation).isDisplayed()) {
+            console.log('quistoy')
+            expect(await this.shippingLocation).toBeDisplayed()
+            expect(await this.deliveryAddress).toBeDisplayed()
+            await (await this.deliveryAddress).click()
+            if (await (await this.loaderSpinner).isDisplayedInViewport()) {
+                await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
+            }
+            await (await this.shippingLocation).waitForDisplayed({ reverse: true })
         }
-        await (await this.deliveryAddress).click()
-        await (await this.shippingLocation).waitForDisplayed({reverse:true})
     }
     //product functions
     async clickOnProduct() {
         await (await this.productLabel).waitForDisplayed()
         await (await this.productLabel).scrollIntoView()
-        await (await this.productImage).waitForDisplayed()
-        await (await this.productImage).click()
+        await (await this.productName).waitForDisplayed()
+        utils.SelectedProduct.name = await (await this.productName).getText()
+        utils.SelectedProduct.classification = await (await this.productClassification).getText()
+        utils.SelectedProduct.brand = await (await this.productBrand).getText()
+        utils.SelectedProduct.price = await (await this.productPrice).getText()
+        await (await this.productName).click()
     }
-
+    async microCartDisplayed() {
+        await (await this.microCartDiv).waitForDisplayed()
+        expect(await this.microCartDiv).toBeDisplayed()
+            (await this.microCartDiv).scrollIntoView()
+        expect(await this.microCartDiv).toBeDisplayed()
+    }
+    async clickMicroCart() {
+        await (await this.btnCart).waitForClickable()
+        console.log('hola')
+        await (await this.btnCart).waitForDisplayed()
+        await (await this.btnCart).click()
+        console.log(await (await this.btnCart).isEnabled())
+    }
     /**
      * overwrite specifc options to adapt it to page object
      */

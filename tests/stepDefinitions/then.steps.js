@@ -3,6 +3,8 @@ const {  Then } = require('@cucumber/cucumber');
 const HomePage = require('../pages/home.page')
 const ShopPage = require('../pages/shop.page')
 const ProductPage = require('../pages/productDetail.page')
+const CartPage = require('../pages/cart.page')
+const CheckoutPage = require('../pages/checkout.page')
 
 /**
  * Header Section 
@@ -36,7 +38,7 @@ Then(/^I should see suggested delivery addresses$/, async () => {
 Then(/^I should see available products$/, async () => {
     await HomePage.checkAvailability()
 });
-//SHOP PAGE I should see header and footer
+//SHOP PAGE 
 Then(/^I should see header and footer$/, async () => {
     await HomePage.mobileNavBarAssertion()
     await HomePage.footerAssertion()
@@ -51,7 +53,7 @@ Then(/^I should see each product image, details and price$/, async () => {
     await ShopPage.productIteration()
 });
 Then(/^the microcart is displayed$/, async () => {
-    await ShopPage.microCartDisplayed()
+    await HomePage.microCartDisplayed()
 });
 //detail page 
 Then(/^I should see product details$/, async () => {
@@ -59,4 +61,29 @@ Then(/^I should see product details$/, async () => {
 });
 Then(/^I should see product info module$/, async () => {
     await ProductPage.infoModuleAssertion()
+});
+Then(/^Image should zoom$/, async () => {
+    await ProductPage.zoomCheck()
+});
+Then(/^Add to Cart button should display$/, async () => {//
+    await ProductPage.addCartAssert()
+});
+//cart page 
+Then(/^I should see cart page$/, async () => {//
+    await CartPage.titleAssertion()
+});
+Then(/^I should see cart icon active$/, async () => {//
+    await CartPage.titleAssertion()
+});//
+Then(/^I should see cart items$/, async () => {//
+    await CartPage.cartItemtsAssertion()
+});
+Then(/^I should see checkout button$/, async () => {//
+    await CartPage.btnCheckoutAssertion()
+});
+Then(/^I should see checkout page$/, async () => {//
+    await CheckoutPage.checkoutTitleAssertion()
+});
+Then(/^I should see new total$/, async () => {//
+    await CartPage.assertQuantity()
 });

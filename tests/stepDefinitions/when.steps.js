@@ -6,13 +6,15 @@ const ShopPage = require('../pages/shop.page')
 const DealsPage = require('../pages/deals.page')
 const BrandsPage = require('../pages/brands.page')
 const ProductPage = require('../pages/productDetail.page')
+const CartPage = require('../pages/cart.page')
 
 const pages = {
     home: HomePage,
     search: SearchPage,
     shop: ShopPage,
     deals: DealsPage,
-    brands: BrandsPage
+    brands: BrandsPage, 
+    productDetail: ProductPage
 }
 
 /**
@@ -45,15 +47,19 @@ When(/^I should be able to close it$/, async () => {
 When(/^I click on (\w+) from navbar$/, async (element) => {
     await HomePage.mobileNavbarRedirect(element)
 });
-When(/^I should see header icons$/, async () => {
-    await HomePage.mobileNavBarAssertion() 
+When(/^I should see (\w+) header icons$/, async (loggedFlag) => {
+    if(loggedFlag == 'logged'){
+        await HomePage.loggedNavBarAssertion()
+    }else{
+        await HomePage.mobileNavBarAssertion()
+    }
 });
 When(/^I click on login button$/, async () => {
     await HomePage.loginClickButton() 
 });
 When(/^I should (\w+) see location box in (\w+) page$/, async (locationFlag, page) => {
     if(locationFlag!='not'){
-        await pages[page].open(page)
+        //await pages[page].open(page)
         await pages[page].locationBoxAssertion(page)
     }
 });
@@ -77,8 +83,8 @@ When(/^I select an address$/, async () => {
     await HomePage.clickLocation()
 });
 // SHOP PAGE 
-When(/^I click in the shop page$/, async () => {
-    await HomePage.mobileNavbarRedirect('shop')
+When(/^I click in the (\w+) page$/, async (page) => {
+    await HomePage.mobileNavbarRedirect(page)
 });
 When(/^I click in sort button$/, async () => {
     await ShopPage.checkShopAll()
@@ -99,7 +105,7 @@ When(/^the cart button should be enabled$/, async () => {
     await HomePage.selectAddress()
     await HomePage.cartEnabled()
 });
-//product detail page
+//product detail page 
 When(/^I click on a product$/, async () => {
     await HomePage.clickOnProduct()
     await ProductPage.productHeaderAssertion()
@@ -107,3 +113,29 @@ When(/^I click on a product$/, async () => {
 When(/^I should see product price$/, async () => {
     await ProductPage.priceAssertion()
 });
+When(/^I double click in the image$/, async () => {
+    await ProductPage.zoomImage() 
+});
+When(/^I swipe to see in Carousel diferent images of product$/, async () => {
+    await ProductPage.caroselCheck() 
+});
+When(/^I add a product$/, async () => {
+    await ProductPage.increaseProduct()
+    await HomePage.selectAddress() 
+});
+When(/^I decrease the product$/, async () => {
+    await ProductPage.decreaseProduct() 
+});
+When(/^I delete product$/, async () => {
+    await ProductPage.deleteProduct() 
+});
+//cart 
+When(/^I click in cart icon$/, async () => {
+    await HomePage.clickMicroCart()
+}); 
+When(/^I click checkout button$/, async () => {
+    await CartPage.btnCheckoutClick()
+}); 
+When(/^I modify the quantity$/, async () => {
+    await CartPage.modifyQuantity()
+}); 

@@ -11,7 +11,6 @@ module.exports = class Page {
     * @param path path of the sub page (e.g. /path/to/page.html)
     */
     open (path) {
-        console.log(browser.config.baseUrl)
         return browser.url(browser.config.baseUrl.includes('storefront') ? utils.DevDomain: utils.ProdDomain+path)
     }
 }

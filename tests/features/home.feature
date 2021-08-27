@@ -6,7 +6,7 @@ Feature: Amuse Home
   Scenario:  Amuse - Home Page - Header - The Amuse logo, links, and icons should be present
     Given I am on the home page
     Then I should see amuse logo
-    And I should see header icons
+    And I should see normal header icons
   @iosBrowser @androidBrowser
   Scenario: Amuse - Home Page - Header - The login icon is clickable and redirect a user to the relevant page
     When I click on login button

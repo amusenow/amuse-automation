@@ -27,17 +27,22 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-    './tests/features/home.feature',
-    //'./tests/features/productDetail.feature'
+    //'./tests/features/home.feature',
+    './tests/features/cart.feature'
   ],
 
   logLevel: 'error',
   maxInstances: 5,
   maxInstancesPerCapability: 1,
-  reporters: ['spec',
+  reporters: ['spec', 
+  ['timeline', { 
+    outputDir: './reports', 
+    embedImages: true,
+    screenshotStrategy: 'on:error'
+  }]
   ],
   waitforTimeout: defaultTimeoutInterval,
-  services: [
+  services: [[TimelineService],
     ['appium',
       {
         // This will use the globally installed version of Appium
@@ -61,7 +66,7 @@ exports.config = {
         blockOutStatusBar: true,
         blockOutToolBar: true,
         // NOTE: When you are testing a hybrid app please use this setting
-        isHybridApp: true,
+        isHybridApp: false,
         // Options for the tabbing image
         tabbableOptions: {
           circle: {
@@ -147,6 +152,9 @@ exports.config = {
     // });
   },
   before: function () {
+    require('expect-webdriverio');
+    const chai = require('chai');
+    global.chaiExpect = chai.expect;
   },
   //
   onComplete: function () {

@@ -12,4 +12,10 @@ module.exports = {
   ProdDomain: 'https://amuse.com/',
   ValidEmail: 'vr@mailinator.com',
   ValidEmailPassword: 'Test1234!',
+  SelectedProduct:{
+    name: '',
+    classification: '',
+    brand: '',
+    price: ''
+  },
 }

@@ -3,7 +3,7 @@ Feature: Amuse Home - shop page
     As a user, in the amuse site
     I want to be able to go to the shop page
     @iosBrowser @androidBrowser
-    Scenario:  Amuse - Shop Page - The Header/Footer and location box appear on the Shop page and shop icon is active
+    Scenario:  Amuse - Shop Page - The Header/Footer and location box appear on the Shop page and shop all icon is active
         Given I am on the home page
         When I click in the shop page
         Then I should see header and footer
@@ -25,6 +25,7 @@ Feature: Amuse Home - shop page
         And I add a product to the cart
         Then I should be logged in
         And the cart button should be enabled
+        
     @iosBrowser @androidBrowser    
     Scenario:  Amuse - Shop Page - When the user has one or more products in the cart, the microcart is displayed
         Then the microcart is displayed

@@ -53,10 +53,8 @@ class ShopPage extends Page {
         await (await this.btnPetSection).waitForDisplayed()
         await (await this.locationDiv).scrollIntoView()
         await (await this.btnPetSection).click()
-        console.log('hola')
     }
     async productIteration() {
-        
         await (await this.btnPetSection).waitUntil(async () => {
             return (await (await this.btnPetSection).getAttribute('class')).includes('active')
         }, {
@@ -64,6 +62,8 @@ class ShopPage extends Page {
             timeoutMsg: 'shop all is still selected'
         });
         expect(this.btnPetSection).toHaveAttributeContaining('class', 'active')
+        const color = await (await this.btnPetSection).getCSSProperty('color')
+        console.log(color)
         if ((await this.loaderSpinner).isDisplayed()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
         }
@@ -72,7 +72,6 @@ class ShopPage extends Page {
         expect(await this.productGrid).toExist()
         var cards = (await this.productGrid).$$('div.sf-product-card')
         console.log((await cards).length)
-        //(await cards).length
         for (let i = 0; i < 3; i++) {
             expect(await (await cards)[i].$$('div.sf-product-card__image-wrapper')).toBeDisplayed()
             expect(await (await cards)[i].$$('.sf-product-card__link')).toBeDisplayed()
@@ -85,10 +84,7 @@ class ShopPage extends Page {
         await (await this.btnAddCart).waitForDisplayed()
         await (await this.btnAddCart).click()
     }
-    async microCartDisplayed() {
-        await (await this.microCartDiv).waitForDisplayed()
-        browser.pause(4000)
-    }
+    
 
     /**
      * overwrite specifc options to adapt it to page object 
