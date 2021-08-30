@@ -20,6 +20,8 @@ class ShopPage extends Page {
     get pageName() { return $(".sf-breadcrumbs__item--last") }
     get btnAddCart() { return $("[position='1']") }
     get microCartDiv() { return $("div.o-microcart__checkout-box") }
+    get microCartMessage() { return $(".o-microcart__content") }
+    get btnCheckoutMicrocart() { return $(".btn.btn--inverted-primary.btn--regular.btn--without-padding.cart-action") }
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
@@ -83,6 +85,14 @@ class ShopPage extends Page {
     async addProductToCart() {
         await (await this.btnAddCart).waitForDisplayed()
         await (await this.btnAddCart).click()
+    }
+    async checkMinimumMessage() {
+        await (await this.microCartMessage).waitForDisplayed()
+        expect(await this.btnShopAll).toHaveTextContaining('$50 minimum')
+    }
+    async checkMinimumCheckout() {
+        await (await this.btnCheckoutMicrocart).waitForDisplayed()
+        expect(await this.btnCheckoutMicrocart).toBeDisabled()
     }
     
 

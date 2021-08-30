@@ -87,3 +87,20 @@ Then(/^I should see checkout page$/, async () => {//
 Then(/^I should see new total$/, async () => {//
     await CartPage.assertQuantity()
 });
+Then(/^I should see microcart minimum message$/, async () => {//
+    await ShopPage.checkMinimumCheckout()
+});
+//checkout
+Then(/^I should see the delivery address$/, async () => {//
+    await CheckoutPage.checkoutDeliveryAssertion()
+}); 
+Then(/^I should see unit number field$/, async () => {//
+    await CheckoutPage.unitAssertion()
+}); 
+Then(/^I should see cart module$/, async () => {//
+    await CheckoutPage.cartClick() 
+    await CheckoutPage.cartModuleAssertion() 
+}); 
+Then(/^I should see subtotal$/, async () => {//
+    await CheckoutPage.subtotalAssertion() 
+}); 

@@ -28,7 +28,7 @@ exports.config = {
 
   specs: [
     //'./tests/features/home.feature',
-    './tests/features/cart.feature'
+    './tests/features/checkout.feature'
   ],
 
   logLevel: 'error',

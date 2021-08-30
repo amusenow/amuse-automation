@@ -14,6 +14,7 @@ class CartPage extends Page {
     get btnCheckout() { return $('.sf-button--full-width') }
     get loaderSpinner() { return $('div.m-loader') }
     get input() { return $('div.border-t.border-b.border-grey-medium > div:nth-child(1) > div.flex.flex-col-reverse > div:nth-child(1) > div > div > input') }
+    get cartMinimumLabel() { return $('.leading-snug.m-0.text-error.text-xxs.tracking-normal') }
     // 
     /**
      * a method to encapsule automation code to interact with the page
@@ -51,7 +52,6 @@ class CartPage extends Page {
         }
     }
     async modifyQuantity() {
-        
         await (await this.input).setValue(2)
     }
     async assertQuantity() {
@@ -59,6 +59,14 @@ class CartPage extends Page {
         var cards = (await this.cartGrid).$$('div.sf-collected-product')
         let total = cart[0].final_price * cart[0].qty
         expect(await (await cards)[0].$$('div.flex.flex-col-reverse > div.sf-collected-product__price')).toHaveTextContaining(total)
+    }
+    async checkMinimum() {
+        await (await this.cartMinimumLabel).waitForDisplayed()
+        expect(await this.cartMinimumLabel).toHaveTextContaining('You haven’t met the $50 minimum.')
+    }
+    async checkMinimumCheckout() {
+        await (await this.btnCheckout).waitForDisplayed()
+        expect(await this.btnCheckout).toBeDisabled()
     }
     /**
      * overwrite specifc options to adapt it to page object

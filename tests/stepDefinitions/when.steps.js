@@ -7,6 +7,8 @@ const DealsPage = require('../pages/deals.page')
 const BrandsPage = require('../pages/brands.page')
 const ProductPage = require('../pages/productDetail.page')
 const CartPage = require('../pages/cart.page')
+const utils = require('../utils/utils');
+const CheckoutPage = require('../pages/checkout.page');
 
 const pages = {
     home: HomePage,
@@ -139,3 +141,23 @@ When(/^I click checkout button$/, async () => {
 When(/^I modify the quantity$/, async () => {
     await CartPage.modifyQuantity()
 }); 
+When(/^I log in with new user$/, async () => {
+    await HomePage.loginClickButton() 
+    await HomePage.setEmail(utils.NewUserCredentials.email)
+    await HomePage.setPassword(utils.NewUserCredentials.password)
+    await HomePage.loginClick() 
+}); 
+When(/^I should see checkout button disabled$/, async () => {
+    await ShopPage.checkMinimumCheckout()
+}); 
+When(/^I should see minimum message in cart$/, async () => {
+    await HomePage.clickMicroCart()
+    await CartPage.checkMinimum()
+});
+When(/^I should see checkout button disabled in cart$/, async () => {
+    await CartPage.checkMinimumCheckout()
+}); 
+//Checkout  
+When(/^I should see instructions field$/, async () => {
+    await CheckoutPage.instructionsAssertion()
+});

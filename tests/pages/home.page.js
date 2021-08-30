@@ -182,15 +182,15 @@ class HomePage extends Page {
     async loginAssertionLogo() {
         await this.logoAssertionElement(this.amuseLogoModal, 'logoLogin')
     }
-    async setPassword() {
-        await (await this.passwordInput).setValue(utils.ValidEmailPassword);
+    async setPassword(password = utils.ValidEmailPassword) {
+        await (await this.passwordInput).setValue(password);
     }
     async loginClick() {
         await (await this.btnLogin).click()
         await (await this.btnLogin).waitForDisplayed({ reverse: true })
     }
-    async setEmail() {
-        await (await this.emailInput).setValue(utils.ValidEmail);
+    async setEmail(email = utils.ValidEmail) {
+        await (await this.emailInput).setValue(email);
     }
     async checkLoggedUser() {
         await (await this.btnloginModaClose).waitForDisplayed({ reverse: true })
