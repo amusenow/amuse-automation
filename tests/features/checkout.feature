@@ -18,3 +18,6 @@ Feature: Amuse Site - checkout page
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Details Page - Items and Subtotal should be displayed in the Cart module.
         Then I should see subtotal
+    @iosBrowser @androidBrowser
+    Scenario:  Amuse - Checkout - Checkout Details Page - The Checkout page Continue button should appear in the enabled state when all delivery options are correct.
+        
