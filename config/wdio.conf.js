@@ -49,7 +49,7 @@ exports.config = {
         slackOptions: {
           type: 'webhook',
           slackName: 'Automation Test Results',
-          webhook: "https://hooks.slack.com/services/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",
+          
         },
       }
     ],
