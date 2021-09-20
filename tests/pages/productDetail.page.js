@@ -104,7 +104,7 @@ class ProductDetail extends Page {
         await (await this.btnDecreaseProduct).click()
         console.log(amount + "decrease")
         amount = amount - 1
-        await expect((await (await this.amountInput).getValue())).toEqual((await (await this.amountInput).getValue()))
+        expect((await (await this.amountInput).getValue())).toEqual((await (await this.amountInput).getValue()))
         while (await (await this.amountInput).getValue() > 1) {
             console.log(await (await this.amountInput).getValue())
             amount = amount - 1

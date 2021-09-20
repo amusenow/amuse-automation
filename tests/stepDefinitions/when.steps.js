@@ -9,6 +9,8 @@ const ProductPage = require('../pages/productDetail.page')
 const CartPage = require('../pages/cart.page')
 const utils = require('../utils/utils');
 const CheckoutPage = require('../pages/checkout.page');
+const ReviewCheckoutPage = require('../pages/reviewCheckout.page')
+const SignUpModal = require('../pages/signUpModal.page')
 
 const pages = {
     home: HomePage,
@@ -84,6 +86,10 @@ When(/^I enter part of address$/, async () => {
 When(/^I select an address$/, async () => {
     await HomePage.clickLocation()
 });
+//help button
+When(/^I should see help button$/, async () => {
+    await HomePage.helpButtonAssertion()
+});
 // SHOP PAGE 
 When(/^I click in the (\w+) page$/, async (page) => {
     await HomePage.mobileNavbarRedirect(page)
@@ -97,6 +103,7 @@ When(/^I click in Pet section$/, async () => {
 });
 When(/^I add a product to the cart$/, async () => {
     await ShopPage.addProductToCart()
+    await HomePage.selectAddress() 
 });
 When(/^I login$/, async () => {
     await HomePage.setEmail()
@@ -123,7 +130,7 @@ When(/^I swipe to see in Carousel diferent images of product$/, async () => {
 });
 When(/^I add a product$/, async () => {
     await ProductPage.increaseProduct()
-    await HomePage.selectAddress() 
+    
 });
 When(/^I decrease the product$/, async () => {
     await ProductPage.decreaseProduct() 
@@ -161,3 +168,49 @@ When(/^I should see checkout button disabled in cart$/, async () => {
 When(/^I should see instructions field$/, async () => {
     await CheckoutPage.instructionsAssertion()
 });
+When(/^I click on cart button$/, async () => {//
+    await CheckoutPage.cartClick()
+}); 
+When(/^I should see id verification page$/, async () => {//
+    await ReviewCheckoutPage.idVerificationAssertion()
+}); 
+When(/^I select an (\w+)$/, async (option) => {//
+    await CheckoutPage.selectPayment(option)
+}); 
+When(/^all delivery options are set$/, async () => {
+    await CheckoutPage.checkContinueButton(false)
+    await CheckoutPage.selectDate()
+});
+When(/^I click on continue button$/, async () => {
+    await CheckoutPage.clickContinueButton()
+});
+When(/^I should see Discounts$/, async () => {
+    await ReviewCheckoutPage.discountsAssertion()
+});
+When(/^I should see taxes$/, async () => {
+    await ReviewCheckoutPage.taxesAssertion()
+});
+When(/^I click on Place Order Button$/, async () => {//
+    await ReviewCheckoutPage.placeOrderClick()
+}); 
+//sign up 
+When(/^I navigate to sign up modal$/, async () => {//
+    await HomePage.loginClickButton() 
+    await HomePage.signUpLinkClick()
+}); 
+When(/^I enter valid credentials$/, async () => {//
+    await SignUpModal.setFakeEmail()
+    await SignUpModal.setFakePhone()
+    await SignUpModal.setPassword()
+    await SignUpModal.clickSignUp()
+}); 
+//search
+When(/^I set a value in search input$/, async () => {//
+    await SearchPage.searchForAResult()
+}); 
+When(/^I click Enter$/, async () => {//
+    await SearchPage.clickEnterKey()
+});
+When(/^I click in a result$/, async () => {//
+    await SearchPage.clickResult()
+}); 

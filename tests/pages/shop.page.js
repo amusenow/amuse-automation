@@ -63,8 +63,8 @@ class ShopPage extends Page {
             timeout: 4000,
             timeoutMsg: 'shop all is still selected'
         });
-        expect(this.btnPetSection).toHaveAttributeContaining('class', 'active')
-        const color = await (await this.btnPetSection).getCSSProperty('color')
+        expect(await this.btnPetSection).toHaveAttributeContaining('class', 'active')
+        const color = await (await this.btnPetSection).getCSSProperty('background-color')
         console.log(color)
         if ((await this.loaderSpinner).isDisplayed()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })

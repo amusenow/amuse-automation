@@ -2,15 +2,18 @@ const { Given } = require('@cucumber/cucumber');
 
 
 const HomePage = require('../pages/home.page')
+const BrandsPage = require('../pages/brands.page')
 const { BROWSER } = require('ua-parser-js');
 
 const pages = {
     home: HomePage,
+    brands: BrandsPage
 }
 
 Given(/^I am on the (\w+) page$/, async (page) => {
     await pages[page].open(page)
     await HomePage.acceptModal()
+    //await HomePage.unlockModal()
 });
 Given(/^I am logged in$/, async () => {
     await HomePage.loginClickButton()

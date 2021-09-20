@@ -16,11 +16,15 @@ config.capabilities = [{
   'appium:platformVersion': '14.5',
   'appium:udid': '586EFE98-9998-4BFA-AC75-BABF034D06BB',
   'appium:orientation': 'PORTRAIT',
-  'appium:automationName': 'XCUITest',
+   'appium:automationName': 'XCUITest',
   'appium:newCommandTimeout': 240,
   'appium:wdaLaunchTimeout': 999999,
   'appium:wdaConnectionTimeout': 999999,
-
+  // 'browserstack:device': 'iPhone 11 Pro',
+  // 'browserstack:os_version': '14',
+  // 'browserName': 'iPhone',
+  // 'browserstack:realMobile': 'true',
+  // 'browserstack:video': 'true'
   // The following capabilities are needed to run tests on physical devices. Request them to your Dev Team
   // xcodeOrgId: 'YD5FNB475F',
   // xcodeSigningId: 'iPhone Developer',

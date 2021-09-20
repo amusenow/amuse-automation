@@ -18,5 +18,7 @@ module.exports = {
     brand: '',
     price: ''
   },
-
+  SelectedDate: '',
+  SelectedPayment: '',
+  feesDiscountsTaxes: 0,
 }

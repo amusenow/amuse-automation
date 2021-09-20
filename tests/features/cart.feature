@@ -19,7 +19,7 @@ Feature: Amuse Home - Cart
     Scenario:  Amuse - Cart Page - The Checkout button should be presented
         Then I should see checkout button
     @iosBrowser @androidBrowser
-    Scenario:  Amuse - Cart Page - The user should be able to modify the number of product items
+    Scenario:  Amuse - Cart Page - The user should be able to modify the number of product items TODO/ use buttons
         When I modify the quantity
         Then I should see new total
     @iosBrowser @androidBrowser

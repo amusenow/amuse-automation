@@ -46,6 +46,7 @@ class CartPage extends Page {
         expect(await this.btnCheckout).toExist()
     }
     async btnCheckoutClick() {
+        await (await this.btnCheckout).waitForDisplayed()
         await (await this.btnCheckout).click()
         if ((await this.loaderSpinner).isDisplayedInViewport()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })

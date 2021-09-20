@@ -12,13 +12,30 @@ Feature: Amuse Home
     When I click on login button
     Then I should be displayed with sigin modal
     And I should be able to close it
+  #NEW TEST CASES
+  @iosBrowser @androidBrowser
+  Scenario: Amuse - Home Page - Hero - The hero appears with an image on the home page
+    Then I should see hero image
+  @iosBrowser @androidBrowser
+  Scenario: Amuse - Home Page - Hero - The hero slide should be clickable
+    Then hero slide should be clickable
+  @iosBrowser @androidBrowser
+  Scenario: Amuse - Home Page - Category module - The category module appears on the home page
+    Then all icons in category module are clickable
+  @iosBrowser @androidBrowser
+  Scenario: Amuse - Home Page - Brand modules - View All links navigate to the correct pages
+    Then all links navigate to correct pages
+  @iosBrowser @androidBrowser
+  Scenario: Amuse - Home Page - Brand modules - User is able to scroll brand modules
+    Then I can scroll in brand modules
 
+  #END OF NEW TEST CASES
   @iosBrowser @androidBrowser
   Scenario Outline: Amuse - Home Page - Header - The Amuse logo and links should be should be clickable and redirect a user to the relevant page
     When I click on <navbarItem> from navbar
     Then I should be redirect to <navbarItem> page
     And I should <locationFlag> see location box in <navbarItem> page
-
+    And I should see help button
 
     Examples:
       | navbarItem | locationFlag |
@@ -26,5 +43,6 @@ Feature: Amuse Home
       | deals      | absolutely   |
       | search     | not          |
       | profile    | not          |
+
 
 

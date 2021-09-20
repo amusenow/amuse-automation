@@ -3,7 +3,7 @@ Feature: Amuse Home - product detail
   As a user, in the amuse site
   I want to be able to see product detail page
   @iosBrowser @androidBrowser
-  Scenario:  Amuse - Product Detail Page - The Header/Footer and Location box appear on the Product Detail page TODO Location box
+  Scenario:  Amuse - Product Detail Page - The Header/Footer and Location box appear on the Product Detail page
     Given I am on the home page
     When I click on a product
     Then I should see header and footer
@@ -21,7 +21,7 @@ Feature: Amuse Home - product detail
     Then Image should zoom
     And I swipe to see in Carousel diferent images of product
   @iosBrowser @androidBrowser
-  Scenario:  Amuse - Product Detail Page - The user should be able to add (decrease/delete) the product to the cart.
+  Scenario:  Amuse - Product Detail Page - The user should be able to add (decrease/delete) the product to the cart. TODO add four/ check in total in microcart
     Given I am logged in
     And I add a product
     And I decrease the product

@@ -1,5 +1,6 @@
 
 const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
+const SlackReporter = require('@moroo/wdio-slack-reporter').default;
 const { join } = require('path');
 const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 60000
 
@@ -14,7 +15,8 @@ _path.pop()
 const _rootPath = _path.join('/')
 
 exports.config = {
-
+  user: 'nohelia_3XgEJy',
+  key: 'h8CPm8ofWup6VQyYKGxK',
   runner: 'local',
 
   rootPath: _rootPath,
@@ -28,60 +30,75 @@ exports.config = {
 
   specs: [
     //'./tests/features/home.feature',
-    './tests/features/checkout.feature'
+    //'./tests/features/brands.feature',
+    './tests/features/brands.feature',
   ],
 
   logLevel: 'error',
   maxInstances: 5,
   maxInstancesPerCapability: 1,
-  reporters: ['spec', 
-  ['timeline', { 
-    outputDir: './reports', 
-    embedImages: true,
-    screenshotStrategy: 'on:error'
-  }]
+  reporters: ['spec',
+    ['timeline', {
+      outputDir: './reports',
+      embedImages: true,
+      screenshotStrategy: 'on:error'
+    }],
+    [
+      SlackReporter,
+      {
+        slackOptions: {
+          type: 'webhook',
+          slackName: 'Automation Test Results',
+          webhook: "https://hooks.slack.com/services/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",
+        },
+      }
+    ],
   ],
   waitforTimeout: defaultTimeoutInterval,
   services: [[TimelineService],
-    ['appium',
-      {
-        // This will use the globally installed version of Appium
-        command: 'appium',
-        args: {
-          // This is needed to tell Appium that we can execute local ADB commands
-          // and to automatically download the latest version of ChromeDriver
-          relaxedSecurity: true,
-        },
+  // ['browserstack', {
+  //   browserstackLocal: true
+  // }],
+  ['appium',
+    {
+      // This will use the globally installed version of Appium
+      command: 'appium',
+      args: {
+        // This is needed to tell Appium that we can execute local ADB commands
+        // and to automatically download the latest version of ChromeDriver
+        relaxedSecurity: true,
       },
-    ],
-    ['image-comparison',
-      // The options
-      {
-        // Some options, see the docs for more
-        baselineFolder: join(process.cwd(), './tests/sauceLabsBaseline/'),
-        formatImageName: '{tag}',
-        screenshotPath: join(process.cwd(), '.tmp/'),
-        savePerInstance: true,
-        autoSaveBaseline: true,
-        blockOutStatusBar: true,
-        blockOutToolBar: true,
-        // NOTE: When you are testing a hybrid app please use this setting
-        isHybridApp: false,
-        // Options for the tabbing image
-        tabbableOptions: {
-          circle: {
-            size: 18,
-            fontSize: 18,
-            // ...
-          },
-          line: {
-            color: '#ff221a', // hex-code or for example words like `red|black|green`
-            width: 3,
-          },
-        }
-        // ... more options
-      }],
+    },
   ],
+  ['image-comparison',
+    // The options
+    {
+      // Some options, see the docs for more
+      baselineFolder: join(process.cwd(), './tests/sauceLabsBaseline/'),
+      formatImageName: '{tag}',
+      screenshotPath: join(process.cwd(), '.tmp/'),
+      savePerInstance: true,
+      autoSaveBaseline: true,
+      blockOutStatusBar: true,
+      blockOutToolBar: true,
+      // NOTE: When you are testing a hybrid app please use this setting
+      isHybridApp: false,
+      // Options for the tabbing image
+      tabbableOptions: {
+        circle: {
+          size: 18,
+          fontSize: 18,
+          // ...
+        },
+        line: {
+          color: '#ff221a', // hex-code or for example words like `red|black|green`
+          width: 3,
+        },
+      }
+      // ... more options
+    }],
+  ],
+  //host: 'hub.browserstack.com',
   host: '127.0.0.1',
   port: 4723,
   path: '/wd/hub/',
@@ -100,7 +117,7 @@ exports.config = {
     dryRun: false,
 
     // <boolean> abort the run on first failure
-    failFast: true,
+    failFast: false,
 
     // <string[]> (type[:path]) specify the output format, optionally supply PATH to redirect formatter output (repeatable)
     format: ['pretty'],

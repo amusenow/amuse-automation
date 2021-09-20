@@ -15,6 +15,14 @@ class GlobalFunctions {
     var cart = JSON.parse(result)
     return cart
   }
+  async getRecipient() {
+    await browser.setTimeout({ script: 5000 })
+    const result = await  browser.execute((key) => {
+      return this.localStorage.getItem(key)
+    }, 'shop/user/current-user')
+    var user = JSON.parse(result)
+    return user
+  }
   async getAddress() {
     await browser.setTimeout({ script: 5000 })
     const result = await  browser.execute((key) => {

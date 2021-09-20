@@ -1,11 +1,12 @@
 const Page = require('./page');
 const GlobalFunctions = require('../utils/GlobalFunc');
+const utils = require('../utils/utils');
 /**
  * sub page containing specific selectors and methods for a specific page
  */
 class CheckoutPage extends Page {
     /**
-     * define selectors using getter methods
+     * define selectors using getter methods  
      */
      get checkoutDiv () { return $('#checkout') }
      get addressLabel () { return $('.leading-snug.mb-0.tracking-normal') }
@@ -15,7 +16,11 @@ class CheckoutPage extends Page {
      get instructionsInput () { return $('.sf-select--bordered') }
      get btnCart () { return $('.o-order-summary__toggle') }
      get cartGrid () { return $('.collected-product-list') }
-     get subtotalLabel () { return $("[class='sf-property sf-property--full-width sf-property--price-summary property mt-10 mb-3'] .sf-price__value--special") }
+     get subtotalLabel () { return $(".o-order-summary__toggle > div.sf-price > span.sf-price__value") }
+     get btnContinue () { return $(".pb-safe .btn--without-padding") }
+     get btnRadioDelivery () { return $("div:nth-of-type(1) > .form__element.form__radio.my-3.sf-radio > .sf-radio__container > .sf-radio__checkmark") }
+     get labelDeliveryHour () { return $("div:nth-of-type(1) > .form__element.form__radio.my-3.sf-radio > .sf-radio__container > .sf-radio__content") }
+     get btnRadioPayment () { return $(".o-payment > div> .form__radio-group") }
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
@@ -27,7 +32,8 @@ class CheckoutPage extends Page {
     async checkoutDeliveryAssertion () {
         await this.addressLabel.waitForDisplayed()
         expect(await this.addressLabel).toExist() 
-        expect(await this.cartMinimumLabel).toHaveTextContaining(GlobalFunctions.getAddress())
+        console.log(await (await this.addressLabel).getText())
+        expect(await this.addressLabel).toHaveTextContaining(await GlobalFunctions.getAddress())
     }
     async unitAssertion () {
         await this.unitsLabel.waitForDisplayed()
@@ -38,7 +44,7 @@ class CheckoutPage extends Page {
     async instructionsAssertion () {
         await this.instructionsLabel.waitForDisplayed()
         expect(await this.instructionsLabel).toExist() 
-        expect(await this.instructionsLabel).toHaveTextContaining('Instructions"')
+        expect(await this.instructionsLabel).toHaveTextContaining('Instructions:')
         expect(await this.instructionsInput).toExist() 
     }
     async cartClick () {
@@ -52,7 +58,6 @@ class CheckoutPage extends Page {
         var cards = (await this.cartGrid).$$('div.collected-product')
         for (let i = 0; i < (await cards).length; i++) {
             expect(await (await cards)[i].$$('div > div.o-order-summary-product__name')).toHaveTextContaining(cart[i].name)
-            expect(await (await cards)[i].$$('div> div.a-brand > div.a-brand__link')).toHaveHref(cart[i].path)
             expect(await (await cards)[i].$$('div > div.sf-price')).toHaveTextContaining(cart[i].final_price)
         }
     }
@@ -61,6 +66,44 @@ class CheckoutPage extends Page {
         expect(await this.subtotalLabel).toExist() 
         console.log(await(await this.subtotalLabel).getText())
         expect(await this.subtotalLabel).toHaveTextContaining(await GlobalFunctions.getSubtotal())
+    }
+    async selectDate () {
+        await (await this.labelDeliveryHour).waitForDisplayed()
+        expect(await this.labelDeliveryHour).toExist() 
+        utils.SelectedDate = await (await this.labelDeliveryHour).getText()
+        console.log(utils.SelectedDate)
+        await (await this.labelDeliveryHour).click()
+    }
+    async selectPayment () {
+        await (await this.btnRadioPayment).waitForDisplayed()
+        expect(await this.btnRadioPayment).toExist() 
+        var radioButtons = (await this.btnRadioPayment).$$('div.sf-radio > label.sf-radio__container')
+        var optionNumber = await this.getOption(await this.getRandom())
+        utils.SelectedPayment = await (await radioButtons)[optionNumber].getText()
+        await (await radioButtons)[optionNumber].click()
+    }
+    async getRandom () {
+        return parseInt((Math.random() * (3 - 1 )))
+    }
+    async getOption (option) {
+        if(option == 'debit'){
+            return 0
+        }else if(option == 'aeropay'){
+            return 1
+        }else{
+            return 2
+        }
+    }
+    async checkContinueButton (flag) {
+        await (await this.btnContinue).waitForDisplayed()
+        if(flag==true){
+            expect(await this.btnContinue).toBeEnabled()
+        }else{
+            expect(await this.btnContinue).toBeDisabled()
+        }
+    }
+    async clickContinueButton () {
+        await (await this.btnContinue).click()
     }
     /**
      * overwrite specifc options to adapt it to page object
