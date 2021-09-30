@@ -45,9 +45,9 @@ source ~/.zshrc
 
 - Update the deviceName and platFormVersion in `config/android.info.js` and `config/ios.info.js` respectively.
 
-- Execute `npm run iosBrowser` to run ios safari browser
+- Execute `BASEURL={DESIRED_URL} npm run iosBrowser` to run ios safari browser
 
-- Execute `npm run androidBrowser` to run android chrome browser
+- Execute `BASEURL={DESIRED_URL} npm run androidBrowser` to run android chrome browser
 
 
 
