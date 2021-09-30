@@ -11,6 +11,9 @@ const SignUpModal = require('../pages/signUpModal.page')
 const SearchPage = require('../pages/search.page')
 const DealsPage = require('../pages/deals.page')
 const BrandsPage = require('../pages/brands.page')
+const ReferralsPage = require('../pages/referral.page')
+const ProfilePage = require('../pages/profile.page')
+
 
 /**
  * Home Section  
@@ -54,7 +57,6 @@ Then(/^I can scroll in brand modules$/, async () => {
 }); 
 Then(/^I should see suggested delivery addresses$/, async () => {
     await HomePage.checkMap()
-    await browser.pause(3000)
 });
 Then(/^I should see available products$/, async () => {
     await HomePage.checkAvailability()
@@ -202,4 +204,33 @@ Then(/^I should see brands module$/, async () => {//
 }); 
 Then(/^I should see brands listed alphabetically$/, async () => {//
     await BrandsPage.alphabetOrderAssertion()
+}); 
+//referral
+Then(/^I should be redirected to program rules$/, async () => {//
+    await ShopPage.locationBoxAssertion()
+    await ReferralsPage.redirectAssertion()
+}); 
+Then(/^referral link should be clickable$/, async () => {//
+    await ReferralsPage.copyLinkAssertion()
+}); 
+Then(/^I shuld see promo code applied$/, async () => {//
+    await CheckoutPage.promoCodeAssertion()
+}); 
+//profile
+Then(/^I should see all profile options$/, async () => {//
+    await ProfilePage.menuAssertion()
+}); 
+Then(/^I should see referral program module$/, async () => {//
+    //await ReferralsPage.emailButtonAssertion()
+    //await ReferralsPage.learnMoreButtonAssertion()
+}); 
+Then(/^I should copy link$/, async () => {//
+    await ReferralsPage.copyLinkAssertion()
+}); 
+Then(/^I should see expanded order$/, async () => {//
+    await ProfilePage.expandedOrderAssertion()
+}); 
+Then(/^I should see receipt$/, async () => {//
+    await ProfilePage.receiptAssertion()
+    browser.pause(3000)
 }); 

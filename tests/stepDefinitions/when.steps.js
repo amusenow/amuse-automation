@@ -11,6 +11,8 @@ const utils = require('../utils/utils');
 const CheckoutPage = require('../pages/checkout.page');
 const ReviewCheckoutPage = require('../pages/reviewCheckout.page')
 const SignUpModal = require('../pages/signUpModal.page')
+const ReferralsPage = require('../pages/referral.page')
+const ProfilePage = require('../pages/profile.page')
 
 const pages = {
     home: HomePage,
@@ -103,7 +105,7 @@ When(/^I click in Pet section$/, async () => {
 });
 When(/^I add a product to the cart$/, async () => {
     await ShopPage.addProductToCart()
-    await HomePage.selectAddress() 
+    await HomePage.inputLocation()
 });
 When(/^I login$/, async () => {
     await HomePage.setEmail()
@@ -130,6 +132,7 @@ When(/^I swipe to see in Carousel diferent images of product$/, async () => {
 });
 When(/^I add a product$/, async () => {
     await ProductPage.increaseProduct()
+    await HomePage.selectAddress() 
     
 });
 When(/^I decrease the product$/, async () => {
@@ -213,4 +216,40 @@ When(/^I click Enter$/, async () => {//
 });
 When(/^I click in a result$/, async () => {//
     await SearchPage.clickResult()
+}); 
+//referral
+When(/^I click on refer a friend button$/, async () => {//
+    await HomePage.clickReferral()
+}); 
+When(/^I click on signup button$/, async () => {//
+    await ReferralsPage.clickSignUp()
+});
+When(/^I should be able to close signup modal$/, async () => {//
+    await ReferralsPage.clickSignUp()
+});
+When(/^I click on signin button$/, async () => {//
+    await ReferralsPage.clickSignIn()
+}); 
+When(/^I click on restrictions button$/, async () => {//
+    await ReferralsPage.clickRestrictionsLink()
+}); 
+When(/^email button is clickable$/, async () => {//
+    await ReferralsPage.emailButtonAssertion()
+}); 
+When(/^I logout$/, async () => {//
+    await ProfilePage.clickLogout()
+}); 
+When(/^I should see subtotal discount$/, async () => {//
+    await CheckoutPage.promoDiscountAssertion()
+});
+//profile
+When(/^I click in order history$/, async () => {//
+    await ProfilePage.clickOrderHistory()
+}); 
+When(/^I click in old order$/, async () => {//
+    await ProfilePage.clickOldOrder()
+}); 
+
+When(/^I click in view recipt$/, async () => {//
+    await ProfilePage.clickRecipt()
 }); 

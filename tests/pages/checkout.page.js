@@ -21,7 +21,10 @@ class CheckoutPage extends Page {
      get btnRadioDelivery () { return $("div:nth-of-type(1) > .form__element.form__radio.my-3.sf-radio > .sf-radio__container > .sf-radio__checkmark") }
      get labelDeliveryHour () { return $("div:nth-of-type(1) > .form__element.form__radio.my-3.sf-radio > .sf-radio__container > .sf-radio__content") }
      get btnRadioPayment () { return $(".o-payment > div> .form__radio-group") }
-    /**
+     get promoDiscount () { return $('.tracking-tighter .items-center') }
+     get inputPromoCode () { return $("input[name='promoCode']") }
+     get labelPromoCode () { return $(".a-promo-code.a-promo-code--font-light.mt-10.w-full > .font-bold.leading-none.mb-0") }
+     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
      */
@@ -104,6 +107,17 @@ class CheckoutPage extends Page {
     }
     async clickContinueButton () {
         await (await this.btnContinue).click()
+    }
+    async promoDiscountAssertion () {
+        await (await this.promoDiscount).waitForDisplayed()
+        expect(await this.promoDiscount).toExist() 
+    }
+    async promoCodeAssertion () {
+        await (await this.inputPromoCode).waitForDisplayed()
+        expect(await this.inputPromoCode).toExist() 
+        var code = (await (await this.inputPromoCode).getValue()).length
+        expect(code).toHaveValue({gte : 1 })
+        expect(await this.labelPromoCode).toExist() 
     }
     /**
      * overwrite specifc options to adapt it to page object

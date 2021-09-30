@@ -17,7 +17,7 @@ Feature: Amuse Home
   Scenario: Amuse - Home Page - Hero - The hero appears with an image on the home page
     Then I should see hero image
   @iosBrowser @androidBrowser
-  Scenario: Amuse - Home Page - Hero - The hero slide should be clickable
+  Scenario: Amuse - Home Page - Hero - The hero slide should be clickable //check that is present
     Then hero slide should be clickable
   @iosBrowser @androidBrowser
   Scenario: Amuse - Home Page - Category module - The category module appears on the home page
@@ -26,7 +26,7 @@ Feature: Amuse Home
   Scenario: Amuse - Home Page - Brand modules - View All links navigate to the correct pages
     Then all links navigate to correct pages
   @iosBrowser @androidBrowser
-  Scenario: Amuse - Home Page - Brand modules - User is able to scroll brand modules
+  Scenario: Amuse - Home Page - Brand modules - User is able to scroll brand modules //check the thrid element is in viewport
     Then I can scroll in brand modules
 
   #END OF NEW TEST CASES

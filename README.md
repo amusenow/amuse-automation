@@ -8,12 +8,8 @@
 - Appium
 
 ## Supports
-- Native Android and iOS apps
 - Android Chrome browser 
 - iOS Safari browser 
-- Supports Page Object Model
-- Contains sample test scenarios in cucumber
-- Supports multiple cucumber html reports
 
 ## Source
 Click below to know more 
@@ -26,16 +22,37 @@ Follow the below commands: - (after setting uo the WDA)
 
 - Install dependencies using `npm i` in the terminal.
 
+- Install appium globally on your PC: `npm install -g appium`
+
+- Export Android and Java environment variables
+
+```bash
+export JAVA_HOME=$(/usr/libexec/java_home)
+export ANDROID_HOME=/Users/YOUR_USER/Library/Android/sdk
+export ANDROID_SDK_ROOT=/Users/YOUR_USER/Library/Android/sdk
+export ANDROID_AVD_HOME=/Users/YOUR_USER/.android/avd
+export HTTP_PROXY=myserver:1981
+export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH"
+
+```
+
+- Save your exports
+
+```bash
+source ~/.zshrc
+```
+- Ask for the .env variables and import the file in repository root
+
 - Update the deviceName and platFormVersion in `config/android.info.js` and `config/ios.info.js` respectively.
 
 - Execute `npm run iosBrowser` to run ios safari browser
 
 - Execute `npm run androidBrowser` to run android chrome browser
 
-## Setting up WDA for Running tests on IOS Real devices
-- Download and Install appium Desktop on your PC
 
-- Install appium globally on your PC: `npm install -g appium`
+
+## Setting up WDA for Running tests on IOS Real devices / simulators
+- Download and Install appium Desktop on your PC
 
 - You can follow the steps in this link: http://appium.io/docs/en/drivers/ios-xcuitest-real-devices/#basic-manual-configuration
 

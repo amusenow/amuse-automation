@@ -21,7 +21,7 @@ class ProductDetail extends Page {
     get btnAddProduct() { return $(".border-2 > div:nth-of-type(2) > button") }
     get btnDecreaseProduct() { return $(".border-2 > div:nth-of-type(1) > button") }
     get amountInput() { return $(".border-2 > .text-center") }
-    get btnAddCart() { return $(".sf-button--full-width.btn--with-padding") }
+    get amountInputbtnAddCart() { return $(".sf-button--full-width.btn--with-padding") }
 
 
     /**
@@ -94,7 +94,7 @@ class ProductDetail extends Page {
         amount = amount + 1
         console.log(amount + " increase2")
         console.log(await (await this.amountInput).getValue())
-        await expect((await (await this.amountInput).getValue())).toEqual((await (await this.amountInput).getValue()))
+        expect((await (await this.amountInput).getValue())).toEqual((await (await this.amountInput).getValue()))
 
     }
     async decreaseProduct() {
@@ -107,13 +107,17 @@ class ProductDetail extends Page {
         expect((await (await this.amountInput).getValue())).toEqual((await (await this.amountInput).getValue()))
         while (await (await this.amountInput).getValue() > 1) {
             console.log(await (await this.amountInput).getValue())
-            amount = amount - 1
             await (await this.btnDecreaseProduct).click()
+            amount = amount - 1
+            
         }
     }
     async deleteProduct() {
         console.log(await (await this.amountInput).getValue())
         await (await this.btnDecreaseProduct).click()
+        while (await (await this.amountInput).isDisplayedInViewport()) {
+            await (await this.btnDecreaseProduct).click()
+        }
 
     }
     async addCartAssert() {

@@ -10,7 +10,8 @@ class HomePage extends Page {
     /**
      * define selectors using getter methods
      */
-    get btnModalAgeYes() { return $('.btn.btn--primary.btn--regular.btn--without-padding') }
+    get modalAgeYes() { return $('.sf-modal__content') }
+    get btnModalAgeYes() { return $('.sf-modal__content .btn.btn--primary.btn--regular.btn--without-padding') }
     get btnNoThanks() { return $('#bx-element-1428003-kqkNBO3 > button') }
     get amuseLogo() { return $('#amuseHeader > div > div > header > a') }
     get amuseLogoFooter() { return $('.m-logo__image') }
@@ -39,7 +40,7 @@ class HomePage extends Page {
     get checkBox() { return $('div.sf-checkbox__checkmark') }
     get checkBoxLabel() { return $('div.sf-checkbox__label') }
     get btnResetPassword() { return $('form .btn.btn--regular.btn--secondary.btn--without-padding') }
-    get btnLogin() { return $('.btn.btn--primary.btn--regular.btn--without-padding') }
+    get btnLogin() { return $('.form .flex .btn.btn--primary') }
     get signUpLink() { return $('.m-login .text-center > a') }
     get loaderSpinner() { return $('div.m-loader') }
     //location box
@@ -48,12 +49,12 @@ class HomePage extends Page {
     get logoLocationDiv() { return $('[class="m-modal-logo mb-10"]') }
     get inputLocationDiv() { return $('#map') }
     get mapsDiv() { return $('body > div.pac-container.pac-logo.hdpi') }//
-    get mapsDivTest() { return $('.pac-item-query > .pac-matched') }
+    get mapsDivTest() { return $('div:nth-of-type(1) > .pac-item-query > .pac-matched') }
     get shippingLocation() { return $('.m-shipping-location') }
     get deliveryAddress() { return $('.m-shipping-location__scroll > div:nth-of-type(2) > button:nth-of-type(1)') }
 
     //products 
-    get productName() { return $('div.scrolling-product > div.sf-product-card') }
+    get productName() { return $('div:nth-of-type(3) .o-product-card.scrolling-product-card.sf-product-card > .sf-product-card__link > .sf-product-card__title') }
     get productClassification() { return $('div:nth-of-type(3) .o-product-card.scrolling-product-card.sf-product-card > .flex.flex-row.items-center.text-xxs > .classification') }
     get productBrand() { return $('div:nth-of-type(3) .o-product-card.scrolling-product-card.sf-product-card > div:nth-of-type(4) > .a-brand__link') }
     get productWeight() { return $('#home > div > div:nth-child(3) > div:nth-child(2) > div > div > div > div:nth-child(6)') }
@@ -76,6 +77,9 @@ class HomePage extends Page {
     get inputSearchMobile() { return $('.sf-search-bar__input') }
     get btnProfileMobile() { return $('.sf-bottom-navigation > div:nth-of-type(4)') }
     get microCartDiv() { return $("div.o-microcart__checkout-box") }
+
+    //referral
+    get btnReferral() { return $("button[title='Learn More']") }
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
@@ -170,9 +174,9 @@ class HomePage extends Page {
     }
 
     async acceptModal() {
-        await (await this.btnModalAgeYes).waitForDisplayed()
+        await (await this.modalAgeYes).waitForDisplayed()
         await (await this.btnModalAgeYes).click()
-        await (await this.btnModalAgeYes).waitForDisplayed({ reverse: true })
+        await (await this.modalAgeYes).waitForDisplayed({ reverse: true })
     }
     async unlockModal() {
         await (await this.btnNoThanks).waitUntil(async () => {
@@ -181,8 +185,10 @@ class HomePage extends Page {
             timeout: 4000,
             timeoutMsg: 'Modal is not present'
         });
-        await (await this.btnNoThanks).click()
-        await (await this.btnNoThanks).waitForDisplayed({ reverse: true })
+        if (await (await this.btnNoThanks).isDisplayedInViewport()) {
+            await (await this.btnNoThanks).click()
+            await (await this.btnNoThanks).waitForDisplayed({ reverse: true })
+        }
     }
     async loginClickButton() {
         await (await this.btnLoginNavbar).waitForDisplayed()
@@ -242,8 +248,8 @@ class HomePage extends Page {
         expect(await this.footerDiv).toExist()
     }
     async footerAssertionLogo() {
-        (await this.amuseLogoFooter).scrollIntoView()
-        await this.logoAssertionElement(this.amuseLogoFooter)
+        await (await this.amuseLogoFooter).scrollIntoView()
+        //await this.logoAssertionElement(await this.amuseLogoFooter)
     }
     async footerSocialMediaAssertion() {
         await (await this.footerSocialMedia).waitForDisplayed()
@@ -290,13 +296,20 @@ class HomePage extends Page {
         await this.logoAssertionElement(this.logoLocationDiv, 'logoLogin')
     }
     async inputLocation() {
+        await (await this.inputLocationDiv).waitForDisplayed()
         await (await this.inputLocationDiv).setValue('11114')
         await (await this.inputLocationDiv).addValue(' Wright Road ')
     }
     async checkMap() {
         await (await this.mapsDiv).waitForDisplayed()
+        await (await this.mapsDivTest).waitForDisplayed()
+        await (await this.mapsDivTest).click()
+        await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
+        console.log('hola2')
     }
     async clickLocation() {
+        console.log('hola')
+        await (await this.mapsDivTest).waitForDisplayed()
         await (await this.mapsDivTest).click()
     }
     async checkAvailability() {
@@ -321,18 +334,15 @@ class HomePage extends Page {
     async clickOnProduct() {
         await (await this.productLabel).waitForDisplayed()
         await (await this.productLabel).scrollIntoView()
-        await (await this.productName).waitForDisplayed()
-        var cards = (await this.productName).$$('a.sf-product-card__link')
-        console.log(await this.getRandomNumber())
-        let random = await this.getRandomNumber()
-        utils.SelectedProduct.name =  await (await cards)[random].getText()
+        expect(await this.productName).toBeDisplayed()
+        utils.SelectedProduct.name = await (await this.productName).getText()
         utils.SelectedProduct.classification = await (await this.productClassification).getText()
         utils.SelectedProduct.brand = await (await this.productBrand).getText()
         utils.SelectedProduct.price = await (await this.productPrice).getText()
         await (await this.productName).click()
     }
     async getRandomNumber() {
-        return parseInt((Math.random() * ((await cards).length - 1 )))
+        return parseInt((Math.random() * ((await cards).length - 1)))
     }
     async microCartDisplayed() {
         await (await this.microCartDiv).waitForDisplayed()
@@ -368,7 +378,7 @@ class HomePage extends Page {
 
     async seeAllAssertion() {
         await (await this.seeAllLinks).waitForDisplayed()
-        var cards =  (await this.seeAllLinks).$$('a.text-fontBase.underline')
+        var cards = (await this.seeAllLinks).$$('a.text-fontBase.underline')
         console.log((await cards).length + ' hello')
         for (let i = 0; i < (await cards).length; i++) {
             await ((await cards)[i]).scrollIntoView()
@@ -384,6 +394,14 @@ class HomePage extends Page {
     async scrollBrandSection() {
         await (await this.thirdProduct).waitForDisplayed()
         await (await this.thirdProduct).scrollIntoView()
+    }
+    async clickReferral() {
+        await (await this.btnReferral).waitForDisplayed()
+        await (await this.btnReferral).scrollIntoView()
+        await (await this.btnReferral).click()
+        var newUrl = await (await this.btnReferral).getAttribute('link')
+        await driver.url(await (await this.btnReferral).getAttribute('link'))
+        expect(driver).toHaveUrlContaining(newUrl)
     }
     /**
      * overwrite specifc options to adapt it to page object

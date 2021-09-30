@@ -11,7 +11,7 @@ Feature: Amuse Home - search
     Scenario:  Amuse - Search Page - The Header appears on the Search page
         Then I should see header
     @iosBrowser @androidBrowser
-    Scenario:  Amuse - Search Page - The user should be able to search using Enter
+    Scenario:  Amuse - Search Page - The user should be able to search using Enter //part of product name, brand name, category
         When I set a value in search input
         And I click Enter
         Then I should see relevant results

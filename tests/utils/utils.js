@@ -1,5 +1,3 @@
-
-
 module.exports = {
   platformName: browser.isAndroid ? 'ANDROID' : 'IOS',
   NewUserCredentials: {
@@ -21,4 +19,5 @@ module.exports = {
   SelectedDate: '',
   SelectedPayment: '',
   feesDiscountsTaxes: 0,
+  referralUrl: 'hola nohe',
 }

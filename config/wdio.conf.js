@@ -2,7 +2,9 @@
 const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
 const SlackReporter = require('@moroo/wdio-slack-reporter').default;
 const { join } = require('path');
-const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 60000
+require('dotenv').config()
+
+const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 100000
 
 const apps = {
   android: 'CelsiusFahrenheitConverter_v1.0.1_apkpure.com.apk',
@@ -15,8 +17,8 @@ _path.pop()
 const _rootPath = _path.join('/')
 
 exports.config = {
-  user: 'nohelia_3XgEJy',
-  key: 'h8CPm8ofWup6VQyYKGxK',
+  user: process.env.BS_USER,
+  key: process.env.BS_KEY,
   runner: 'local',
 
   rootPath: _rootPath,
@@ -29,9 +31,13 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-    //'./tests/features/home.feature',
-    //'./tests/features/brands.feature',
-    './tests/features/brands.feature',
+    './tests/features/home.feature',
+    './tests/features/login.feature',
+    './tests/features/locationBox.feature',
+    './tests/features/shopPage.feature',
+    './tests/features/productDetail.feature',
+    './tests/features/cart.feature',
+    './tests/features/checkout.feature',
   ],
 
   logLevel: 'error',
@@ -47,18 +53,20 @@ exports.config = {
       SlackReporter,
       {
         slackOptions: {
-          type: 'webhook',
-          slackName: 'Automation Test Results',
-          
+          type: 'web-api',
+          channel: 'qa_tier',
+          slackBotToken: process.env.SLACK_TOKEN,
+          uploadScreenshotOfFailedCase: true,
+          notifyFailedCase:true,
         },
       }
     ],
   ],
   waitforTimeout: defaultTimeoutInterval,
-  services: [[TimelineService],
-  // ['browserstack', {
-  //   browserstackLocal: true
-  // }],
+  services: [ [TimelineService],
+  ['browserstack', {
+    browserstackLocal: true
+  }],
   ['appium',
     {
       // This will use the globally installed version of Appium
@@ -98,11 +106,11 @@ exports.config = {
       // ... more options
     }],
   ],
-  //host: 'hub.browserstack.com',
-  host: '127.0.0.1',
-  port: 4723,
+  host: 'hub.browserstack.com',
+  //host: '127.0.0.1',
+  //port: 4723,
   path: '/wd/hub/',
-  baseUrl: 'https://storefront.dev.amuse.com/',
+  baseUrl: process.env.BASEURL,
 
   framework: 'cucumber',
   cucumberOpts: {
@@ -181,5 +189,11 @@ exports.config = {
     //   host: '127.0.0.1',
     //   port: '4444'
     // });
+  },
+  afterScenario: async function (result){
+    if (result.result.status=='FAILED') {
+      const screenshot = await (await driver).takeScreenshot();
+      await SlackReporter.uploadFailedTestScreenshot(screenshot);
+    }
   }
 }
