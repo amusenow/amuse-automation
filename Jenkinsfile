@@ -7,6 +7,12 @@ pipeline {
   }
   stages {
     stage('Stage') {
+      agent {
+        node {
+          label 'stage'
+        }
+
+      }
       steps {
         sh 'npm install'
         sh 'npm install -g appium'
