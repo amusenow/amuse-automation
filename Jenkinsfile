@@ -1,5 +1,5 @@
 pipeline {
-  agent none
+  agent any
   stages {
     stage('Build') {
       agent {
@@ -9,6 +9,7 @@ pipeline {
 
       }
       steps {
+        sh 'sudo yum install -y node'
         sh 'npm install'
         sh 'npm install -g appium'
       }
