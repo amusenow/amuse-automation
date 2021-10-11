@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       agent {
         node {
-          label 'stage'
+          label 'codebuild'
         }
 
       }
@@ -14,6 +14,12 @@ pipeline {
       }
     }
     stage('Test') {
+      agent {
+        node {
+          label 'codebuild'
+        }
+
+      }
       steps {
         sh 'BASEURL=https://storefront.dev.amuse.com npm run iosBrowser '
       }
