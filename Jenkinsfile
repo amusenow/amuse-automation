@@ -1,5 +1,11 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:14-alpine'
+      args '-p 3000:3000'
+    }
+
+  }
   stages {
     stage('Build') {
       agent {
@@ -9,11 +15,8 @@ pipeline {
 
       }
       steps {
-        nodejs('automation-testing') {
-          sh '''npm install
+        sh '''npm install
 npm i -g appium'''
-        }
-
       }
     }
     stage('Test') {
@@ -24,10 +27,7 @@ npm i -g appium'''
 
       }
       steps {
-        nodejs('run-tests') {
-          sh 'BASEURL=https://storefront.dev.amuse.com npm run iosBrowser '
-        }
-
+        sh 'BASEURL=https://storefront.dev.amuse.com npm run iosBrowser '
       }
     }
   }
