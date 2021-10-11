@@ -9,7 +9,7 @@ pipeline {
 
       }
       steps {
-        sh 'sudo yum install -y node'
+        sh 'yum install -y node'
         sh 'npm install'
         sh 'npm install -g appium'
       }
