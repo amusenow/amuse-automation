@@ -9,9 +9,11 @@ pipeline {
 
       }
       steps {
-        sh 'yum install -y node'
-        sh 'npm install'
-        sh 'npm install -g appium'
+        nodejs('automation-testing') {
+          sh '''npm install
+npm i -g appium'''
+        }
+
       }
     }
     stage('Test') {
@@ -22,7 +24,10 @@ pipeline {
 
       }
       steps {
-        sh 'BASEURL=https://storefront.dev.amuse.com npm run iosBrowser '
+        nodejs('run-tests') {
+          sh 'BASEURL=https://storefront.dev.amuse.com npm run iosBrowser '
+        }
+
       }
     }
   }
