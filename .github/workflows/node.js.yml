@@ -26,12 +26,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
       
-    - name: Running
+    - name: testing
       run: |
-        if [[ "$BS_USER" = "nohelia_3XgEJy" ]]
-        then 
-          echo "Si es"
-        fi
+        npm i
+        npm i -g appium
+        BASEURL=https://storefront.stage.amuse.com npm run iosBrowser
       env:
         BS_USER: ${{ secrets.BS_USER }}
         BS_KEY: ${{ secrets.BS_KEY }}
