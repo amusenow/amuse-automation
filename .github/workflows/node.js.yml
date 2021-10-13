@@ -28,7 +28,5 @@ jobs:
       env:
         BS_USER: ${{ secrets.BS_USER }}
         BS_KEY: ${{ secrets.BS_KEY }}
-    - run: echo "$BS_USER"
-    - run: npm i
-    - run: npm i -g appium
+    - run: echo ${{ secrets.BS_USER }}
         
