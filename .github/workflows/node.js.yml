@@ -24,6 +24,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        BS_USER: ${{ secrets.BS_USER }}
+        BS_KEY: ${{ secrets.BS_KEY }}
     - run: npm i
     - run: npm i -g appium
     - run: BASEURL=https://storefront.stage.amuse.com npm run iosBrowser 
