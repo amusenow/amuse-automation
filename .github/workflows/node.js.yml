@@ -28,10 +28,8 @@ jobs:
       
     - name: Running
       run: |
-        if[ "$env:SUPER_SECRET" == "nohelia_3XgEJy" ]
-        then 
-          echo "Si es"
-        fi
+        echo "$env:BS_USER" 
+        echo "Si es"
       env:
         BS_USER: ${{ secrets.BS_USER }}
         BS_KEY: ${{ secrets.BS_KEY }}
