@@ -28,5 +28,5 @@ jobs:
       env:
         BS_USER: ${{ secrets.BS_USER }}
         BS_KEY: ${{ secrets.BS_KEY }}
-    - run: echo "$env:BS_USER"
+    - run: echo $BS_USER
         
