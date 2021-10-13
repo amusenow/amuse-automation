@@ -27,7 +27,7 @@ jobs:
         cache: 'npm'
       
     - name: Running
-    - run: |
+      run: |
         if["$BS_USER" eq "nohelia_3XgEJy"]
         then 
           echo "Si es"
