@@ -28,7 +28,7 @@ jobs:
       
     - name: Running
       run: |
-        echo "$env:BS_USER" 
+        echo "$BS_USER"
         echo "Si es"
       env:
         BS_USER: ${{ secrets.BS_USER }}
