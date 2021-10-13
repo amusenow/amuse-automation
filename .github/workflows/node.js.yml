@@ -28,7 +28,7 @@ jobs:
       
     - name: Running
       run: |
-        if["$BS_USER" == "nohelia_3XgEJy"]
+        if[ "$BS_USER" == "nohelia_3XgEJy" ]
         then 
           echo "Si es"
         fi
