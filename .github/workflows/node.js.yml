@@ -28,8 +28,10 @@ jobs:
       
     - name: Running
       run: |
-        echo "$BS_USER"
-        echo "Si es"
+        if [[ "$BS_USER" = "nohelia_3XgEJy" ]]
+        then 
+          echo "Si es"
+        fi
       env:
         BS_USER: ${{ secrets.BS_USER }}
         BS_KEY: ${{ secrets.BS_KEY }}
