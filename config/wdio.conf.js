@@ -54,7 +54,7 @@ exports.config = {
       {
         slackOptions: {
           type: 'web-api',
-          channel: 'qa_tier',
+          channel: 'qa-automation-amuse',
           slackBotToken: process.env.SLACK_TOKEN,
           uploadScreenshotOfFailedCase: true,
           notifyFailedCase:true,
