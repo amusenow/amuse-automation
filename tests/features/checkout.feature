@@ -4,20 +4,37 @@ Feature: Amuse Site - checkout page
     I want to be able to see checkout page
 
     @iosBrowser @androidBrowser
+    Scenario:  Amuse - Checkout
+        Given I am logged in shop page
+        When I add products to the cart
+        And I select last address
+    @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Details Page - The delivery address appears on the Checkout page.
-        Given I am logged in home page
         When I click checkout button
         Then I should see the delivery address
+    @iosBrowser @androidBrowser
+    Scenario:  Amuse - Checkout - Checkout Details Page - The Checkout header only contains an Amuse logo
+        Then I should see amuse logo only
+    @iosBrowser @androidBrowser
+    Scenario:  Amuse - Checkout - Checkout Details Page - The user is able to change their delivery address
+        When I click in edit address icon
+        And I select last address
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Details Page - "Unit #" and "Instructions" fields should be displayed in the Delivery Address module.
         Then I should see unit number field
         And I should see instructions field
     @iosBrowser @androidBrowser
-    Scenario:  Amuse - Checkout - Checkout Details Page - The Cart Module appears on the checkout page.
+    Scenario:  Amuse - Checkout - Checkout Details Page - The Cart Module appears on the checkout page. And When an item is on sale, the full price is crossed out with the sale price shown next to it.
         When I click on cart button
         Then I should see cart module
     @iosBrowser @androidBrowser
-    Scenario:  Amuse - Checkout - Checkout Details Page - Items and Subtotal should be displayed in the Cart module.
+    Scenario:  Amuse - Checkout - Checkout Details Page - The user should be able to modify the number of product items
+        When I click on edit cart
+        And I modify the quantity
+        Then I should see new total
+        And I click checkout button
+    @iosBrowser @androidBrowser
+    Scenario:  Amuse - Checkout - Checkout Details Page - Items and Subtotal should be displayed in the Cart module. And The subtotal should reflect the discount
         Then I should see subtotal
     @iosBrowser @androidBrowser
     Scenario Outline:  Amuse - Checkout - Checkout Details Page - User should select payment
@@ -27,6 +44,19 @@ Feature: Amuse Site - checkout page
         When all delivery options are set
         Then I should see the continue button
     @iosBrowser @androidBrowser
+    Scenario:  Amuse - Checkout - Checkout Details Page - The user should be able to select or change the delivery date and time in the Delivery Widow module.
+        When I change date
+        And I change time
+        Then I should see the continue button
+    @iosBrowser @androidBrowser
+    Scenario:  Amuse - Sale Price Designs - Checkout - The savings disclaimer is displayed on the payment module of the Checkout page when a sale product is in the cart and a promo code have not applied
+        When there is special price
+        Then I shuld see promo code applied
+    @iosBrowser @androidBrowser
+    Scenario:  Amuse - Checkout - Checkout Details Page - The user should be able to enter a promo code.
+        When I enter a promo code
+        Then I shuld see promo code applied
+    @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Details Page - The user should be redirected to the Checkout Review Page after a click on the Continue button.
         When I click on continue button
     @iosBrowser @androidBrowser
@@ -34,23 +64,26 @@ Feature: Amuse Site - checkout page
         And I should see id verification page
         Then I should see checkout review page
     @iosBrowser @androidBrowser
+    Scenario:  Amuse - Checkout - ID Verification Page  - The Checkout Review page header only contains an Amuse logo.
+        Then I should see amuse logo only
+    @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Review Page - The Recipient information should be displayed in the Review Your Order module.
         Then I should see recipient information
     @iosBrowser @androidBrowser
-    Scenario:  Amuse - Checkout - Checkout Review Page - The Delivery Window should be displayed in the Review Your Order module. //TODO delivery date and times
+    Scenario:  Amuse - Checkout - Checkout Review Page - The Delivery Window should be displayed in the Review Your Order module. 
         Then I should see delivery window
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Review Page - The Payment should be displayed in the Review Your Order module.
         Then I should see payment window
     @iosBrowser @androidBrowser
-    Scenario:  Amuse - Checkout - Checkout Review Page - Items should be displayed in the Cart module.
+    Scenario:  Amuse - Checkout - Checkout Review Page - Items should be displayed in the Cart module. AND Sale prices are displayed in the cart on the line item and the subtotal that appears within the cart
         Then I should see cart module
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Review Page - Subtotal should be displayed in the Cart module.
         Then I should see subtotal in review
     @iosBrowser @androidBrowser
-    Scenario:  Amuse - Checkout - Checkout Review Page - Fees, Discounts, and Taxes should be displayed in the Cart module. TODO add check fees for debit and cash
-        Then I should see fee 
+    Scenario:  Amuse - Checkout - Checkout Review Page - Fees, Discounts, and Taxes should be displayed in the Cart module. 
+        Then I should see fee
         And I should see Discounts
         And I should see taxes
     @iosBrowser @androidBrowser
@@ -59,15 +92,30 @@ Feature: Amuse Site - checkout page
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Review Page - The Place Order button is displayed on the Review Order page.
         Then I should see place order button
-    @iosBrowser @androidBrowser
+    @iosBrowser @androidBrowser @Pending
     Scenario:  Amuse - Checkout - Checkout Review Page - The user should be redirected to the Order Confirmation Page after a click on the Place Order button.
         When I click on Place Order Button
         Then I should be redirected to order confirmation page
-    @iosBrowser @androidBrowser
-    Scenario:  Amuse - Review Order Page - “Thank you …“ message should be displayed on the Order Confirmation page //TODO delivery date and time and whole message
+    @iosBrowser @androidBrowser @Pending
+    Scenario:  Amuse - Review Order Page - “Thank you …“ message should be displayed on the Order Confirmation page
         Then I should see thank you message
-    @iosBrowser @androidBrowser
+    @iosBrowser @androidBrowser @Pending
+    Scenario:  Amuse - Review Order Page - The Header/Footer appear on the Order Confirmation Page
+        Then I should see the footer
+        And I should see logged header icons
+    @iosBrowser @androidBrowser @Pending
     Scenario:  Amuse - Review Order Page - The Order Tracker should reflect the current state
-        Then I should see current state of order 
+        Then I should see current state of order
+    @iosBrowser @androidBrowser @Pending
+    Scenario:  Amuse - Review Order Page - The user should be able to view Receipt details
+        When I click in view receipt button
+        Then I should see receipt
+    @iosBrowser @androidBrowser @Pending
+    Scenario:  Amuse - Review Order Page - The user should be able to add it to the calendar
+        Then I am able to add it to the calendar
+    @iosBrowser @androidBrowser @Pending
+    Scenario:  Amuse - Review Order Page - The user should be able to cancel order
+        When I click in cancel order
+        Then I should be able to cancel order
 
 

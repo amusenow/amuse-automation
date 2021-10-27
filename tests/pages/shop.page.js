@@ -22,6 +22,7 @@ class ShopPage extends Page {
     get microCartDiv() { return $("div.o-microcart__checkout-box") }
     get microCartMessage() { return $(".o-microcart__content") }
     get btnCheckoutMicrocart() { return $(".btn.btn--inverted-primary.btn--regular.btn--without-padding.cart-action") }
+    get btnLoadMoreProducts() { return $(".block.duration-150.ease-in-out.font-light.mx-auto") }
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
@@ -86,6 +87,30 @@ class ShopPage extends Page {
         await (await this.btnAddCart).waitForDisplayed()
         await (await this.btnAddCart).click()
     }
+    async addToCartDiscountedProduct() {
+        await (await this.productGrid).waitForDisplayed()
+        expect(await this.productGrid).toExist()
+        var cards = (await this.productGrid).$$('div.sf-product-card')
+        console.log((await cards).length)
+        var totalCards = (await cards).length
+        var card
+        for (let i = 0; i < totalCards; i++) {
+            card = (await cards)[i].$$('.sf-price__value.sf-price__value--special')
+            if (await card.isExisting()) {
+                await ((await cards)[i].scrollIntoView())
+                await (await cards)[i].$$('sf-product-card__image-wrapper  .a-add-to-cart.group.sf-button.sf-circle-icon').click()
+                break;
+            } else if (i < (await cards).length) {
+                await (await this.btnLoadMoreProducts).click()
+                if ((await this.loaderSpinner).isDisplayed()) {
+                    await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
+                }
+                var cards = (await this.productGrid).$$('div.sf-product-card')
+                console.log((await cards).length + ' new length')
+                totalCards = (await cards).length
+            }
+        }
+    }
     async checkMinimumMessage() {
         await (await this.microCartMessage).waitForDisplayed()
         expect(await this.btnShopAll).toHaveTextContaining('$50 minimum')
@@ -94,13 +119,13 @@ class ShopPage extends Page {
         await (await this.btnCheckoutMicrocart).waitForDisplayed()
         expect(await this.btnCheckoutMicrocart).toBeDisabled()
     }
-    
+
 
     /**
      * overwrite specifc options to adapt it to page object 
      */
     open() {
-        return super.open('shop');
+        return super.open('/shop');
     }
 
 }

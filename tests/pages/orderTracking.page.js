@@ -14,6 +14,11 @@ class OrderTracking extends Page {
      get recipientName() { return $('h4.text-fontBase') }
      get addressLabel() { return $('.text-primary.leading-none:nth-of-type(1)') }
      get hourLabel() { return $('.text-primary.leading-none:nth-of-type(2)') }
+     get btnReciept() { return $('.text-center.btn--with-padding') }
+     get btnAddCalendar() { return $('.w-1\/2 > .btn.btn--regular.btn--secondary.btn--with-padding.w-full') }
+     get btnCancelOrder() { return $('.mr-4 > div > .btn.btn--regular.btn--secondary.btn--with-padding.w-full') }
+     get btnCancelOrderModal() { return $('.sf-modal .btn.btn--primary.btn--regular.btn--without-padding') }
+     get labelOrderCancelled() { return $('h4.leading-none > .text-fontBase') }
      
 
     /**
@@ -43,7 +48,28 @@ class OrderTracking extends Page {
     async hourAssertion () {
         await (await this.hourLabel).waitForDisplayed()
         expect(await this.hourLabel).toExist()
-        expect(await this.hourLabel).toHaveTextContaining(utils.SelectedDate)
+        expect(await this.hourLabel).toHaveTextContaining(utils.SelectedDeliverHour)
+    }
+    async clickViewReceipt () {
+        await (await this.btnReciept).waitForDisplayed()
+        expect(await this.btnReciept).toExist()
+        await (await this.btnReciept).click()
+    }
+    async addCalendarAssertion () {
+        await (await this.btnAddCalendar).waitForDisplayed()
+        expect(await this.btnAddCalendar).toExist()
+    }
+    async cancelOrder () {
+        await (await this.btnCancelOrder).waitForDisplayed()
+        expect(await this.btnCancelOrder).toExist()
+        await (await this.btnCancelOrder).click()
+        await (await this.btnCancelOrderModal).waitForDisplayed()
+        expect(await this.btnCancelOrderModal).toExist()
+        await (await this.btnCancelOrderModal).click()
+    }
+    async cancelledOrderCheck () {
+        await (await this.labelOrderCancelled).waitForDisplayed()
+        expect(await this.labelOrderCancelled).toHaveTextContaining('Your order has been cancelled at your request.')
     }
     
     

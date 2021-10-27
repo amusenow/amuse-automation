@@ -1,7 +1,9 @@
+const utils = require("./utils")
+
 class GlobalFunctions {
   async getLocation() {
     await browser.setTimeout({ script: 5000 })
-    const result = await  browser.execute((key) => {
+    const result = await browser.execute((key) => {
       return this.localStorage.getItem(key)
     }, 'shop/delivery/deliveryArea')
     var location = JSON.parse(result)
@@ -9,7 +11,7 @@ class GlobalFunctions {
   }
   async getCart() {
     await browser.setTimeout({ script: 5000 })
-    const result = await  browser.execute((key) => {
+    const result = await browser.execute((key) => {
       return this.localStorage.getItem(key)
     }, 'shop/cart/current-cart')
     var cart = JSON.parse(result)
@@ -17,7 +19,7 @@ class GlobalFunctions {
   }
   async getRecipient() {
     await browser.setTimeout({ script: 5000 })
-    const result = await  browser.execute((key) => {
+    const result = await browser.execute((key) => {
       return this.localStorage.getItem(key)
     }, 'shop/user/current-user')
     var user = JSON.parse(result)
@@ -25,7 +27,7 @@ class GlobalFunctions {
   }
   async getAddress() {
     await browser.setTimeout({ script: 5000 })
-    const result = await  browser.execute((key) => {
+    const result = await browser.execute((key) => {
       return this.localStorage.getItem(key)
     }, 'shop/address/currentAddress')
     var address = JSON.parse(result)
@@ -33,21 +35,34 @@ class GlobalFunctions {
   }
   async getSubtotal() {
     await browser.setTimeout({ script: 5000 })
-    const result = await  browser.execute((key) => {
+    const result = await browser.execute((key) => {
       return this.localStorage.getItem(key)
     }, 'shop/cart/current-cart')
     var cart = JSON.parse(result)
     let subtotal = 0
-    for(let i = 0; i<cart.length; i++){
-      if(cart[i].hasOwnProperty("special_price")){
-        subtotal = parseFloat(subtotal) + parseFloat(cart[i].special_price)
-      }else{
-        subtotal = parseFloat(subtotal) + parseFloat(cart[i].price)
-      } 
-      console.log(subtotal)
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i].hasOwnProperty("special_price")) {
+        subtotal = parseFloat(subtotal) + parseFloat(cart[i].special_price *cart[i].qty)
+      } else {
+        subtotal = parseFloat(subtotal) + parseFloat(cart[i].price *cart[i].qty)
+      }
     }
-    console.log(subtotal)
+    utils.lastSubtotal = subtotal
     return subtotal
+  }
+  async promoInCart() {
+    await browser.setTimeout({ script: 5000 })
+    const result = await browser.execute((key) => {
+      return this.localStorage.getItem(key)
+    }, 'shop/cart/current-cart')
+    var cart = JSON.parse(result)
+    var flag = false
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i].hasOwnProperty("special_price")) {
+        flag = true
+      }
+    }
+    return flag
   }
 
 }

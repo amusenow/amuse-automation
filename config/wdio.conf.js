@@ -4,7 +4,7 @@ const SlackReporter = require('@moroo/wdio-slack-reporter').default;
 const { join } = require('path');
 require('dotenv').config()
 
-const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 100000
+const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 60000
 
 const apps = {
   android: 'CelsiusFahrenheitConverter_v1.0.1_apkpure.com.apk',
@@ -31,12 +31,13 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-    './tests/features/home.feature',
-    './tests/features/login.feature',
-    './tests/features/locationBox.feature',
-    './tests/features/shopPage.feature',
-    './tests/features/productDetail.feature',
-    './tests/features/cart.feature',
+    // './tests/features/home.feature',
+    // './tests/features/login.feature',
+    // './tests/features/locationBox.feature',
+    // './tests/features/shopPage.feature',
+    // './tests/features/productDetail.feature',
+    // './tests/features/cart.feature',
+    // './tests/features/checkout.feature',
     './tests/features/checkout.feature',
   ],
 
@@ -49,24 +50,25 @@ exports.config = {
       embedImages: true,
       screenshotStrategy: 'on:error'
     }],
-    [
-      SlackReporter,
-      {
-        slackOptions: {
-          type: 'web-api',
-          channel: 'qa_tier',
-          slackBotToken: process.env.SLACK_TOKEN,
-          uploadScreenshotOfFailedCase: true,
-          notifyFailedCase:true,
-        },
-      }
-    ],
+    // [
+    //   SlackReporter,
+    //   {
+    //     slackOptions: {
+    //       type: 'web-api',
+    //       channel: 'qa_tier',
+    //       slackBotToken: process.env.SLACK_TOKEN,
+    //       uploadScreenshotOfFailedCase: true,
+    //       notifyFailedCase:true,
+    //     },
+    //   }
+    // ],
   ],
   waitforTimeout: defaultTimeoutInterval,
   services: [ [TimelineService],
-  ['browserstack', {
-    browserstackLocal: true
-  }],
+  //uncomment for browserstack runs
+  // ['browserstack', {
+  //   browserstackLocal: true
+  // }],
   ['appium',
     {
       // This will use the globally installed version of Appium
@@ -106,9 +108,11 @@ exports.config = {
       // ... more options
     }],
   ],
-  host: 'hub.browserstack.com',
-  //host: '127.0.0.1',
-  //port: 4723,
+  // For browserstack:
+  //host: 'hub.browserstack.com',
+  // For simulator running:
+  host: '127.0.0.1',
+  port: 4723,
   path: '/wd/hub/',
   baseUrl: process.env.BASEURL,
 

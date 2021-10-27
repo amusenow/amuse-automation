@@ -19,9 +19,12 @@ Feature: Amuse Home - Cart
     Scenario:  Amuse - Cart Page - The Checkout button should be presented
         Then I should see checkout button
     @iosBrowser @androidBrowser
-    Scenario:  Amuse - Cart Page - The user should be able to modify the number of product items TODO/ use buttons
+    Scenario:  Amuse - Cart Page - The user should be able to modify the number of product items
         When I modify the quantity
+    @iosBrowser @androidBrowser
+    Scenario:  Amuse - Sale Price Designs - Cart - The persistent checkout bar reflects the discounted subtotal
         Then I should see new total
+        And I should see discount in subtotal
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Cart Page - The user should be redirected to the Checkout Details Page by clicking on the Checkout button
         When I click checkout button

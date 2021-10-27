@@ -117,6 +117,9 @@ Then(/^I should see microcart minimum message$/, async () => {//
 Then(/^I should see the delivery address$/, async () => {//
     await CheckoutPage.checkoutDeliveryAssertion()
 }); 
+Then(/^I should see amuse logo only$/, async () => {//
+    await CheckoutPage.logoAssertion()
+}); 
 Then(/^I should see unit number field$/, async () => {//
     await CheckoutPage.unitAssertion()
 }); 
@@ -221,8 +224,8 @@ Then(/^I should see all profile options$/, async () => {//
     await ProfilePage.menuAssertion()
 }); 
 Then(/^I should see referral program module$/, async () => {//
-    //await ReferralsPage.emailButtonAssertion()
-    //await ReferralsPage.learnMoreButtonAssertion()
+    await ReferralsPage.emailButtonAssertion()
+    await ReferralsPage.learnMoreButtonAssertion()
 }); 
 Then(/^I should copy link$/, async () => {//
     await ReferralsPage.copyLinkAssertion()
@@ -233,4 +236,10 @@ Then(/^I should see expanded order$/, async () => {//
 Then(/^I should see receipt$/, async () => {//
     await ProfilePage.receiptAssertion()
     browser.pause(3000)
+}); 
+Then(/^I am able to add it to the calendar$/, async () => {//
+    await OrderTracking.addCalendarAssertion()
+}); 
+Then(/^I should be able to cancel order$/, async () => {//
+    await OrderTracking.cancelledOrderCheck()
 }); 

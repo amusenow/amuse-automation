@@ -11,10 +11,11 @@ class CartPage extends Page {
     get cartHeader() { return $('.mb-0') }
     get btnCart() { return $('.a-microcart-icon.o-header__microcart') }
     get cartGrid() { return $('.border-b.border-grey-medium') }
-    get btnCheckout() { return $('.sf-button--full-width') }
+    get btnCheckout() { return $('.btn.btn--inverted-primary.btn--regular.btn--without-padding.cart-action.sf-button--full-width') }
     get loaderSpinner() { return $('div.m-loader') }
     get input() { return $('div.border-t.border-b.border-grey-medium > div:nth-child(1) > div.flex.flex-col-reverse > div:nth-child(1) > div > div > input') }
     get cartMinimumLabel() { return $('.leading-snug.m-0.text-error.text-xxs.tracking-normal') }
+    get subtotalLabel () { return $(".o-microcart__total-price.sf-property > .sf-price") }
     // 
     /**
      * a method to encapsule automation code to interact with the page
@@ -35,19 +36,38 @@ class CartPage extends Page {
         var cards = (await this.cartGrid).$$('div.sf-collected-product')
         console.log((await cards).length)
         for (let i = 0; i < (await cards).length; i++) {
-            console.log(i)
             expect(await (await cards)[i].$$('div.flex.flex-col.justify-between > div.w-auto > div.sf-collected-product__name')).toHaveTextContaining(cart[i].name)
             expect(await (await cards)[i].$$('div.flex.flex-col.justify-between > div.w-auto > .o-microcart__product-brand > div > a.a-brand__link')).toHaveHref(cart[i].path)
-            expect(await (await cards)[i].$$('div.flex.flex-col-reverse > div.sf-collected-product__price')).toHaveTextContaining(cart[i].final_price)
+            if(cart[i].hasOwnProperty("special_price")){
+                expect(await (await cards)[i].$$('div > div.sf-collected-product__price > div.sf-price > .sf-price__value.sf-price__value--old')).toHaveTextContaining(cart[i].price * cart[i].qty)
+                expect(await (await cards)[i].$$('div > div.sf-collected-product__price > div.sf-price > .sf-price__value.sf-price__value--special')).toHaveTextContaining(cart[i].special_price * cart[i].qty)
+            }else{
+                expect(await (await cards)[i].$$('div > div.sf-collected-product__price > div.sf-price > .sf-price__value.sf-price__value')).toHaveTextContaining(cart[i].price * cart[i].qty)
+            }
         }
     }
     async btnCheckoutAssertion() {
         await (await this.btnCheckout).waitForDisplayed()
         expect(await this.btnCheckout).toExist()
     }
+    async subtotalAssertion() {
+        await (await this.subtotalLabel).scrollIntoView()
+        await (await this.subtotalLabel).waitForDisplayed()
+        expect(await this.subtotalLabel).toExist() 
+        if(await GlobalFunctions.promoInCart()){
+            expect(await this.subtotalLabel.$$('.sf-price__value.sf-price__value--old')).toExist()
+            expect(await this.subtotalLabel.$$('.sf-price__value.sf-price__value--special')).toHaveTextContaining(await GlobalFunctions.getSubtotal())
+        }else{
+            expect(await this.subtotalLabel.$$('.sf-price__value')).toHaveTextContaining(await GlobalFunctions.getSubtotal())
+        }
+    }
     async btnCheckoutClick() {
-        await (await this.btnCheckout).waitForDisplayed()
+        if ((await this.loaderSpinner).isDisplayedInViewport()) {
+            await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
+        }
+        await (await this.btnCheckout).waitForClickable()
         await (await this.btnCheckout).click()
+        console.log('clicked')
         if ((await this.loaderSpinner).isDisplayedInViewport()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
         }

@@ -43,13 +43,13 @@ class ReferralPage extends Page {
         expect(driver).toHaveUrlContaining(driver.config.baseUrl + 'referral-program-rules')
     }
     async copyLinkAssertion() {
-        if (await (await this.dotsDiv).isDisplayedInViewport()) {
+        if (await (await this.dotsDiv).isExisting()) {
             await (await this.btnCopyLink).waitForClickable()
             expect(await this.btnCopyLink).toBeClickable()
             await (await this.btnCopyLink).click();
             expect(await this.btnCopyLink).toHaveText('Copied')
             utils.referralUrl = await (await this.labelCopyLink).getValue()
-        }else if(await (await this.btnCopyLink).isDisplayedInViewport()){
+        }else if(await (await this.btnCopyLink).isExisting()){
             await (await this.btnCopyLink).waitForClickable()
             expect(await this.btnCopyLink).toBeClickable()
             if(await (await this.btnCopyLink).isDisplayedInViewport()){
