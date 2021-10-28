@@ -237,7 +237,17 @@ Then(/^I should see receipt$/, async () => {//
     await ProfilePage.receiptAssertion()
     browser.pause(3000)
 }); 
+Then(/^I see delivery window$/, async () => {//
+    await ProfilePage.deliveryWindowAssertion()
+}); 
+Then(/^I should see Discounts$/, async () => {
+    await ReviewCheckoutPage.discountsAssertion()
+});
+Then(/^I see savings disclaimer$/, async () => {//
+    await ProfilePage.disclaimerDiscountAssertion()
+}); 
 Then(/^I am able to add it to the calendar$/, async () => {//
+    await ProfilePage.clickBack()
     await OrderTracking.addCalendarAssertion()
 }); 
 Then(/^I should be able to cancel order$/, async () => {//

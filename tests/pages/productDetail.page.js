@@ -21,7 +21,7 @@ class ProductDetail extends Page {
     get btnAddProduct() { return $(".border-2 > div:nth-of-type(2) > button") }
     get btnDecreaseProduct() { return $(".border-2 > div:nth-of-type(1) > button") }
     get amountInput() { return $(".border-2 > .text-center") }
-    get amountInputbtnAddCart() { return $(".sf-button--full-width.btn--with-padding") }
+    get btnAddCart() { return $(".sf-button--full-width.btn--with-padding") }
 
 
     /**
@@ -52,6 +52,11 @@ class ProductDetail extends Page {
         await (await this.productPrice).waitForDisplayed()
         expect(await this.productPrice).toExist()
         expect(await this.productPrice).toHaveTextContaining(utils.SelectedProduct.price)
+    }
+    async priceSaleAssertion() {
+        await (await this.productPrice).waitForDisplayed()
+        expect(await this.productPrice.$$('.sf-price__value.sf-price__value--old')).toBeDisplayed()
+        expect(await this.productPrice.$$('.sf-price__value.sf-price__value--special')).toBeDisplayed()
     }
     async infoModuleAssertion() {
         await (await this.infoModule).waitForDisplayed()
@@ -88,13 +93,10 @@ class ProductDetail extends Page {
         }
         await (await this.btnAddProduct).waitForDisplayed()
         expect(await this.btnAddProduct).toExist()
-        let amount = parseInt(await (await this.amountInput).getValue())
-        console.log(amount + " increase")
-        await (await this.btnAddProduct).click()
-        amount = amount + 1
-        console.log(amount + " increase2")
-        console.log(await (await this.amountInput).getValue())
-        expect((await (await this.amountInput).getValue())).toEqual((await (await this.amountInput).getValue()))
+        while (await GlobalFunctions.getSubtotal() < 60) {
+            console.log(await GlobalFunctions.getSubtotal())
+            await (await this.btnAddProduct).click()
+        }
 
     }
     async decreaseProduct() {

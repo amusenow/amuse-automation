@@ -15,10 +15,10 @@ class OrderTracking extends Page {
      get addressLabel() { return $('.text-primary.leading-none:nth-of-type(1)') }
      get hourLabel() { return $('.text-primary.leading-none:nth-of-type(2)') }
      get btnReciept() { return $('.text-center.btn--with-padding') }
-     get btnAddCalendar() { return $('.w-1\/2 > .btn.btn--regular.btn--secondary.btn--with-padding.w-full') }
+     get btnAddCalendar() { return $("[class] [class='w-1\/2'] .btn--with-padding") }
      get btnCancelOrder() { return $('.mr-4 > div > .btn.btn--regular.btn--secondary.btn--with-padding.w-full') }
      get btnCancelOrderModal() { return $('.sf-modal .btn.btn--primary.btn--regular.btn--without-padding') }
-     get labelOrderCancelled() { return $('h4.leading-none > .text-fontBase') }
+     get labelOrderCancelled() { return $('.m-modal-cancel-order.modal') }
      
 
     /**

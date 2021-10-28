@@ -165,15 +165,13 @@ class CheckoutPage extends Page {
         await (await this.inputPromoCode).setValue(utils.promoCode)
     }
     async promoDiscountAssertion () {
+        await (await this.promoDiscount).scrollIntoView()
         await (await this.promoDiscount).waitForDisplayed()
         expect(await this.promoDiscount).toExist() 
     }
     async promoCodeAssertion () {
-        await (await this.inputPromoCode).waitForDisplayed()
-        expect(await this.inputPromoCode).toExist() 
-        var code = (await (await this.inputPromoCode).getValue()).length
-        expect(code).toHaveValue({gte : 1 })
         expect(await this.labelPromoCode).toBeDisplayed() 
+        expect(await this.promoDiscount).toExist() 
     }
     /**
      * overwrite specifc options to adapt it to page object

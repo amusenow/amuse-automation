@@ -229,6 +229,7 @@ class HomePage extends Page {
         if ((await this.loaderSpinner).isDisplayedInViewport()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
         }
+        console.log('here')
     }
     async setEmail(email = utils.ValidEmail) {
         await (await this.emailInput).setValue(email);
@@ -255,7 +256,7 @@ class HomePage extends Page {
     }
     async footerAssertionLogo() {
         await (await this.amuseLogoFooter).scrollIntoView()
-        await this.logoAssertionElement(await this.amuseLogoFooter)
+        //await this.logoAssertionElement(await this.amuseLogoFooter)
     }
     async footerSocialMediaAssertion() {
         await (await this.footerSocialMedia).waitForDisplayed()

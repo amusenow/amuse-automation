@@ -4,7 +4,7 @@ Feature: Amuse Site - checkout page
     I want to be able to see checkout page
 
     @iosBrowser @androidBrowser
-    Scenario:  Amuse - Checkout
+    Scenario:  Amuse - Sale Price Designs - Product Detail Page - The product detail page should display the original price crossed out and the sale price in amusing pink AND in Shop page
         Given I am logged in shop page
         When I add products to the cart
         And I select last address
@@ -82,9 +82,11 @@ Feature: Amuse Site - checkout page
     Scenario:  Amuse - Checkout - Checkout Review Page - Subtotal should be displayed in the Cart module.
         Then I should see subtotal in review
     @iosBrowser @androidBrowser
-    Scenario:  Amuse - Checkout - Checkout Review Page - Fees, Discounts, and Taxes should be displayed in the Cart module. 
+    Scenario:  Amuse - Premium_Discounted delivery window - Review Order - The delivery window fees should be shown in the cart on the Review your Order page
         Then I should see fee
-        And I should see Discounts
+    @iosBrowser @androidBrowser
+    Scenario:  Amuse - Checkout - Checkout Review Page - Fees, Discounts, and Taxes should be displayed in the Cart module.
+        Then I should see Discounts
         And I should see taxes
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Review Page - Order Total should be displayed in the Cart module.
@@ -110,6 +112,12 @@ Feature: Amuse Site - checkout page
     Scenario:  Amuse - Review Order Page - The user should be able to view Receipt details
         When I click in view receipt button
         Then I should see receipt
+    @iosBrowser @androidBrowser @Pending
+    Scenario:  Amuse - Premium_Discounted delivery window - Receipt - The premium delivery window line item appears in the receipt
+        Then I see delivery window
+    @iosBrowser @androidBrowser @Pending
+    Scenario:  Amuse - Premium_Discounted delivery window - Receipt - The Discounted delivery window line item and savings disclaimer appear in the receipt
+        Then I see savings disclaimer
     @iosBrowser @androidBrowser @Pending
     Scenario:  Amuse - Review Order Page - The user should be able to add it to the calendar
         Then I am able to add it to the calendar

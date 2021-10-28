@@ -13,7 +13,8 @@ const ReviewCheckoutPage = require('../pages/reviewCheckout.page')
 const OrderTracking = require('../pages/orderTracking.page')
 const SignUpModal = require('../pages/signUpModal.page')
 const ReferralsPage = require('../pages/referral.page')
-const ProfilePage = require('../pages/profile.page')
+const ProfilePage = require('../pages/profile.page');
+const { productDetailsAssertion } = require('../pages/productDetail.page');
 
 const pages = {
     home: HomePage,
@@ -177,6 +178,9 @@ When(/^I should see checkout button disabled in cart$/, async () => {
 //Checkout  
 When(/^I add products to the cart$/, async () => {
     await ShopPage.addToCartDiscountedProduct()
+    await ProductPage.priceSaleAssertion()
+    await ProductPage.increaseProduct()
+
 }); 
 When(/^I should see instructions field$/, async () => {
     await CheckoutPage.instructionsAssertion()
@@ -217,9 +221,7 @@ When(/^I enter a promo code$/, async () => {
 When(/^I click on continue button$/, async () => {
     await CheckoutPage.clickContinueButton()
 });
-When(/^I should see Discounts$/, async () => {
-    await ReviewCheckoutPage.discountsAssertion()
-});
+
 When(/^I should see taxes$/, async () => {
     await ReviewCheckoutPage.taxesAssertion()
 });

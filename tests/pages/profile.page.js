@@ -23,9 +23,12 @@ class ProfilePage extends Page {
     get btnProfileBackArrow () { return $("button[role='button']") }
     get basicInfoDiv () { return $('.o-my-account-profile.w-full') }
     get subtotalLabel () { return $('.o-order-receipt__subtotal.property.sf-property> .sf-price > .sf-price__value') }
-    get recipientName () { return $('.flex.flex-wrap.md\:mb-10 > div:nth-of-type(1) > div') }
+    get recipientName () { return $("[class='flex flex-wrap md\:mb-10'] [class='w-full md\:w-1\/2 pb-6 md\:pb-0 mb-6 md\:mb-10 border-b-2 md\:border-b-0 border-grey-medium']:nth-of-type(1) div") }
     get recipientAddress () { return $('.not-italic > div:nth-of-type(1)') }
+    get recipientDeliveryWindow () { return $("[class] .flex-wrap:nth-of-type(4) [class='w-full md\:w-1\/2 pb-6 md\:pb-0 mb-6 md\:mb-10 border-b-2 md\:border-b-0 border-grey-medium'] div") }
     get totalLabel () { return $('.leading-none.text-fontBase.text-lg.tracking-tighter') }
+    get disclaimerDiscount () { return $("[class='text-sm font-bold mt-4 md\:mt-5']") }
+    get disclaimerSavings() { return $("[class='flex items-center mb-2 lg\:mb-3']") }
     //
 
 
@@ -67,13 +70,35 @@ class ProfilePage extends Page {
         await (await this.btnReceipt).click()
     }
     async receiptAssertion () {
+        const userInfo = await GlobalFunctions.getRecipient()
         await (await this.receiptDiv).waitForDisplayed()
         expect (await this.receiptDiv).toExist()
         expect(await this.subtotalLabel).toHaveTextContaining( utils.lastSubtotal)
-        expect(await this.recipientName).toHaveTextContaining(await GlobalFunctions.getRecipient())
+        expect(await this.recipientName).toHaveTextContaining(userInfo.firstname)
         expect(await this.recipientAddress).toHaveTextContaining(await GlobalFunctions.getAddress())
         expect(await this.totalLabel).toHaveTextContaining( utils.lastTotal)
         expect (await this.orderSummary).toExist()
+    }
+    async deliveryWindowAssertion () {
+        await (await this.receiptDiv).waitForDisplayed()
+        expect (await this.receiptDiv).toExist()
+        await (await this.recipientDeliveryWindow).scrollIntoView()
+        expect(await this.recipientDeliveryWindow).toHaveTextContaining( utils.SelectedDeliverHour)
+        expect(await this.recipientDeliveryWindow).toHaveTextContaining( utils.SelectedDeliverDate)
+    }
+    async disclaimerDiscountAssertion () {
+        console.log('holi')
+        await (await this.disclaimerDiscount).scrollIntoView()
+        console.log('holi')
+        await (await this.disclaimerDiscount).waitForDisplayed()
+        expect (await this.disclaimerDiscount).toExist()
+        await (await this.disclaimerSavings).scrollIntoView()
+        console.log('holi')
+        expect (await this.disclaimerSavings).toExist()
+    }
+    async clickBack () {
+        await (await this.btnBackArrow).scrollIntoView()
+        await (await this.btnBackArrow).waitForDisplayed()
         await (await this.btnBackArrow).click();
     }
     async btnOrderAgain () {

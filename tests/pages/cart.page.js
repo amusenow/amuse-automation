@@ -73,7 +73,7 @@ class CartPage extends Page {
         }
     }
     async modifyQuantity() {
-        await (await this.input).setValue(2)
+        await (await this.input).setValue(4)
     }
     async assertQuantity() {
         const cart = await GlobalFunctions.getCart()
