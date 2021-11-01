@@ -28,7 +28,7 @@ Feature: Amuse Home - referral
         Then I should be redirected to program rules
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Referral Program Page - Logout of main account 
-        When I click on profile from navbar
+        When I click on profile from header
         And I logout
         Then I should see hero image
     @iosBrowser @androidBrowser

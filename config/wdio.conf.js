@@ -31,14 +31,14 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-    // './tests/features/home.feature',
-    // './tests/features/login.feature',
-    // './tests/features/locationBox.feature',
-    // './tests/features/shopPage.feature',
-    // './tests/features/productDetail.feature',
-    // './tests/features/cart.feature',
+     './tests/features/home.feature',
+     './tests/features/login.feature',
+     './tests/features/locationBox.feature',
+     './tests/features/shopPage.feature',
+     './tests/features/productDetail.feature',
+     './tests/features/cart.feature',
     // './tests/features/checkout.feature',
-    './tests/features/checkout.feature',
+    //'./tests/features/cart.feature',
   ],
 
   logLevel: 'error',

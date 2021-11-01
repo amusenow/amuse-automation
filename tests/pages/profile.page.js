@@ -13,7 +13,7 @@ class ProfilePage extends Page {
     get btnOrderHistory () { return $('li:nth-of-type(2) > .py-4.sf-content-pages__menu.sf-menu-item') }
     get menuProfile () { return $('.sf-list.sf-content-pages__list') }
     get menuProfile () { return $('.sf-list.sf-content-pages__list') } //
-    get oldOrder () { return $('div.sf-content-pages__content > div > div > div > div > div:nth-child(2) > div > div > div > div.flex.items-center') }
+    get oldOrder () { return $('.sf-accordion-item') }
     get btnHelp () { return $('.btn.btn--regular.btn--secondary.btn--with-padding.mr-4.text-center.w-full') }
     get btnReceipt () { return $('[class] .btn--regular:nth-of-type(2)') }
     get btnOrderPurchase () { return $('.btn.btn--regular.btn--secondary.btn--with-padding.ml-auto.text-center.w-full') }
@@ -56,8 +56,10 @@ class ProfilePage extends Page {
     }
     async clickOldOrder () {
         await (await this.oldOrder).waitForDisplayed()
-        await (await this.oldOrder).scrollIntoView()
-        await (await this.oldOrder).click();
+        var cards = (await this.oldOrder).$$('.cursor-pointer.flex.items-center.justify-between')
+        console.log((await cards).length)
+        await (await cards)[0].scrollIntoView()
+        await (await cards)[0].click();
     }
     async expandedOrderAssertion () {
         await (await this.btnHelp).waitForDisplayed()

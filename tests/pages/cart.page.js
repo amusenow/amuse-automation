@@ -83,7 +83,7 @@ class CartPage extends Page {
     }
     async checkMinimum() {
         await (await this.cartMinimumLabel).waitForDisplayed()
-        expect(await this.cartMinimumLabel).toHaveTextContaining('You haven’t met the $50 minimum.')
+        expect(await this.cartMinimumLabel).toHaveTextContaining('You haven’t met the $65 minimum.')
     }
     async checkMinimumCheckout() {
         await (await this.btnCheckout).waitForDisplayed()

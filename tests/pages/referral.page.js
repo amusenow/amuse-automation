@@ -63,7 +63,7 @@ class ReferralPage extends Page {
         if (await (await this.dotsDiv).isDisplayedInViewport()) {
             var cards = (await this.dotsDiv).$$('li')
             console.log((await cards).length)
-            await (await cards)[length - 1].click()
+            await (await cards)[(await cards).length - 1].click()
             await (await this.btnEmail).waitForDisplayed()
             expect(await this.btnEmail).toBeClickable()
             await this.btnEmail.click();

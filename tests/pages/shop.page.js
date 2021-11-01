@@ -1,5 +1,6 @@
 const Page = require('./page');
 const GlobalFunctions = require('../utils/GlobalFunc');
+const utils = require('../utils/utils');
 
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -65,8 +66,6 @@ class ShopPage extends Page {
             timeoutMsg: 'shop all is still selected'
         });
         expect(await this.btnPetSection).toHaveAttributeContaining('class', 'active')
-        const color = await (await this.btnPetSection).getCSSProperty('background-color')
-        console.log(color)
         if ((await this.loaderSpinner).isDisplayed()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
         }
@@ -107,31 +106,39 @@ class ShopPage extends Page {
                 flag = false
             }
         }
-        
-        // var totalCards = (await cards).length
-        // var card
-        // for (let i = 0; i < totalCards; i++) {
-        //     //card = (await cards)[i].$('.flex .a-product-price .sf-price__value.sf-price__value--special')
-        //     console.log(await ((await cards)[i].$('.flex .a-product-price')).getText())
-        //     if (await (await (await cards)[i].$('.flex .a-product-price .sf-price__value.sf-price__value--special')).isExisting()) {
-        //         await ((await cards)[i].scrollIntoView())
-        //         await (await cards)[i].$$('sf-product-card__image-wrapper .a-add-to-cart.group.sf-button.sf-circle-icon').click()
-        //         break;
-        //     } 
-        //     if (i == (await cards).length -1) {
-        //         await (await this.btnLoadMoreProducts).click()
-        //         if ((await this.loaderSpinner).isDisplayed()) {
-        //             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
-        //         }
-        //         var cards = (await this.productGrid).$$('div.sf-product-card')
-        //         console.log((await cards).length + ' new length')
-        //         totalCards = (await cards).length
-        //     }
-        // }
+    }
+    async addToCheapProduct() {
+        await (await this.productGrid).waitForDisplayed()
+        expect(await this.productGrid).toExist()
+        var cards = (await this.productGrid).$$('div.sf-product-card > div.flex > div > .a-product-price')
+        console.log((await cards).length)
+        var priceLabel = '', price =0
+        for (let i = 0; i < (await cards).length; i++) {
+            priceLabel = await ((await cards)[i]).getText()
+            price = priceLabel.match(/^$[0-9]+.[0-9]+/)
+            if(price < 50){
+                await ((await cards)[i].scrollIntoView())
+                await (await cards)[i].click()
+                break;
+            }
+        }
+    }
+    async clickOnProduct() {
+        await (await this.productGrid).waitForDisplayed()
+        expect(await this.productGrid).toExist()
+        var name = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.sf-product-card__link')
+        var classification = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.flex.flex-row.items-center.text-xxs')
+        var brand = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.a-brand.text-xxs')
+        var price = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.flex.items-center.justify-between')
+        utils.SelectedProduct.name = await (await name).getText()
+        utils.SelectedProduct.classification = await (await classification).getText()
+        utils.SelectedProduct.brand = await (await brand).getText()
+        utils.SelectedProduct.price = await (await price).getText()
+        await (await name).click()
     }
     async checkMinimumMessage() {
         await (await this.microCartMessage).waitForDisplayed()
-        expect(await this.btnShopAll).toHaveTextContaining('$50 minimum')
+        expect(await this.btnShopAll).toHaveTextContaining('$65 minimum')
     }
     async checkMinimumCheckout() {
         await (await this.btnCheckoutMicrocart).waitForDisplayed()
@@ -143,7 +150,7 @@ class ShopPage extends Page {
      * overwrite specifc options to adapt it to page object 
      */
     open() {
-        return super.open('/shop');
+        return super.open('shop');
     }
 
 }

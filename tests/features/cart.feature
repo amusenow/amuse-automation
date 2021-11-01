@@ -4,8 +4,12 @@ Feature: Amuse Home - Cart
     I want to be able to see cart page
 
     @iosBrowser @androidBrowser
+    Scenario:  Amuse - Cart Page 
+        Given I am logged in shop page
+        When I add products to the cart
+        And I select last address
+    @iosBrowser @androidBrowser
     Scenario:  Amuse - Cart Page - The Header appears on the Profile page
-        Given I am logged in home page
         When I click in cart icon
         Then I should see cart page
         And I should see logged header icons

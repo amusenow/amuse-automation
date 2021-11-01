@@ -45,12 +45,11 @@ class DealsPage extends Page {
         }
     }
     async allLinksClick () {
+        await (await this.allLinks).waitForDisplayed()
         if(await (await this.allLinks).isExisting()){
             await (await this.allLinks).scrollIntoView()
             await (await this.allLinks).click()
-            var newUrl = await (await this.allLinks).getAttribute('href')
-            await driver.url(await (await this.allLinks).getAttribute('href'))
-            expect( driver).toHaveUrlContaining(newUrl)
+            expect(await this.allLinks).toBeClickable()
         }
         
     }

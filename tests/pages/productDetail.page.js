@@ -93,7 +93,7 @@ class ProductDetail extends Page {
         }
         await (await this.btnAddProduct).waitForDisplayed()
         expect(await this.btnAddProduct).toExist()
-        while (await GlobalFunctions.getSubtotal() < 60) {
+        while (await GlobalFunctions.getSubtotal() < 65) {
             console.log(await GlobalFunctions.getSubtotal())
             await (await this.btnAddProduct).click()
         }
@@ -125,6 +125,10 @@ class ProductDetail extends Page {
     async addCartAssert() {
         await (await this.btnAddCart).waitForDisplayed()
         expect(await this.btnAddCart).toExist()
+    }
+    async addCartClick() {
+        await (await this.btnAddCart).waitForDisplayed()
+        await (await this.btnAddCart).click()
     }
 
     /**

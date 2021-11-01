@@ -14,7 +14,7 @@ const OrderTracking = require('../pages/orderTracking.page')
 const SignUpModal = require('../pages/signUpModal.page')
 const ReferralsPage = require('../pages/referral.page')
 const ProfilePage = require('../pages/profile.page');
-const { productDetailsAssertion } = require('../pages/productDetail.page');
+const productDetailPage = require('../pages/productDetail.page');
 
 const pages = {
     home: HomePage,
@@ -54,6 +54,9 @@ When(/^I should be able to close it$/, async () => {
 });
 When(/^I click on (\w+) from navbar$/, async (element) => {
     await HomePage.mobileNavbarRedirect(element)
+});
+When(/^I click on profile from header$/, async () => {
+    await HomePage.profileClickButton()
 });
 When(/^I should see (\w+) header icons$/, async (loggedFlag) => {
     if(loggedFlag == 'logged'){
@@ -109,6 +112,11 @@ When(/^I add a product to the cart$/, async () => {
     await ShopPage.addProductToCart()
     await HomePage.inputLocation()
 });
+When(/^I add a cheap product to the cart$/, async () => {
+    await ShopPage.addToCheapProduct()
+    await ProductPage.addCartClick()
+    await HomePage.selectAddress()
+});
 When(/^I login$/, async () => {
     await HomePage.setEmail()
     await HomePage.setPassword()
@@ -123,7 +131,7 @@ When(/^I select last address$/, async () => {
 });
 //product detail page 
 When(/^I click on a product$/, async () => {
-    await HomePage.clickOnProduct()
+    await ShopPage.clickOnProduct()
     await ProductPage.productHeaderAssertion()
 });
 When(/^I should see product price$/, async () => {
