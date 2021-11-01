@@ -16,8 +16,14 @@ module.exports = {
     brand: '',
     price: ''
   },
-  SelectedDate: '',
+  SelectedDeliverHour: '',
+  SelectedDeliverDate: '',
   SelectedPayment: '',
-  feesDiscountsTaxes: 0,
+  fees: 0,
+  disconuts: 0,
+  taxes: 0,
   referralUrl: 'hola nohe',
+  promoCode: 'TEAMAMUSE',
+  lastSubtotal: '',
+  lastTotal: '',
 }

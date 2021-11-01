@@ -11,7 +11,7 @@ module.exports = class Page {
     * @param path path of the sub page (e.g. /path/to/page.html)
     */
     open (path) {
-        return browser.url(process.env.BASEURL+path)
+        return browser.url(process.env.BASEURL+'/'+path)
     }
 
 }

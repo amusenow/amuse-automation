@@ -4,7 +4,7 @@ const SlackReporter = require('@moroo/wdio-slack-reporter').default;
 const { join } = require('path');
 require('dotenv').config()
 
-const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 100000
+const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 60000
 
 const apps = {
   android: 'CelsiusFahrenheitConverter_v1.0.1_apkpure.com.apk',
@@ -31,13 +31,14 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-    './tests/features/home.feature',
-    './tests/features/login.feature',
-    './tests/features/locationBox.feature',
-    './tests/features/shopPage.feature',
-    './tests/features/productDetail.feature',
-    './tests/features/cart.feature',
-    './tests/features/checkout.feature',
+     './tests/features/home.feature',
+     './tests/features/login.feature',
+     './tests/features/locationBox.feature',
+     './tests/features/shopPage.feature',
+     './tests/features/productDetail.feature',
+     './tests/features/cart.feature',
+    // './tests/features/checkout.feature',
+    //'./tests/features/cart.feature',
   ],
 
   logLevel: 'error',
@@ -64,6 +65,7 @@ exports.config = {
   ],
   waitforTimeout: defaultTimeoutInterval,
   services: [ [TimelineService],
+  //uncomment for browserstack runs
   ['browserstack', {
     browserstackLocal: true
   }],
@@ -106,7 +108,9 @@ exports.config = {
       // ... more options
     }],
   ],
+  // For browserstack:
   host: 'hub.browserstack.com',
+  //For simulator running:
   //host: '127.0.0.1',
   //port: 4723,
   path: '/wd/hub/',

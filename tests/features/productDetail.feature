@@ -4,7 +4,7 @@ Feature: Amuse Home - product detail
   I want to be able to see product detail page
   @iosBrowser @androidBrowser
   Scenario:  Amuse - Product Detail Page - The Header/Footer and Location box appear on the Product Detail page
-    Given I am on the home page
+    Given I am on the shop page
     When I click on a product
     Then I should see header and footer
     And I should absolutely see location box in productDetail page

@@ -6,7 +6,7 @@ Feature: Amuse Home - profile
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Profile Page - The Basic Info, Order History, Invite friends, Favorites, Payments, and Log out links should be displayed on the Profile page
         Given I am logged in home page
-        And I click on profile from navbar
+        And I click on profile from header
         Then I should see all profile options
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Profile Page - The Referral program module appears on the Profile page
@@ -27,4 +27,13 @@ Feature: Amuse Home - profile
     Scenario:  Amuse - Profile Page - Order History - The user should be able to view the receipt
         When I click in view recipt
         Then I should see receipt
+    @iosBrowser @androidBrowser
+    Scenario:  Amuse - Profile Page - Order History - The user should be able to purchase the order again
+        When I click in purchase order again
+        Then I should see the delivery address
+        And I select an option
+        And all delivery options are set
+        Then I should see the continue button
+        And I click on continue button
+        Then I should see delivery window
     

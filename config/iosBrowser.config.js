@@ -15,17 +15,17 @@ config.capabilities = [{
   // browserName: 'safari',
   // platformName: 'iOS',
   // maxInstances: 1,
-  // For W3C the appium capabilities need to have an extension prefix
-  // This is `appium:` for all Appium Capabilities which can be found here
-  // http://appium.io/docs/en/writing-running-appium/caps/
+  //For W3C the appium capabilities need to have an extension prefix
+  //This is `appium:` for all Appium Capabilities which can be found here
+  //http://appium.io/docs/en/writing-running-appium/caps/
   // 'appium:deviceName': 'iPhone 11 Pro Max',
   // 'appium:platformVersion': '14.5',
   // 'appium:udid': '586EFE98-9998-4BFA-AC75-BABF034D06BB',
   // 'appium:orientation': 'PORTRAIT',
   //  'appium:automationName': 'XCUITest',
-  //'appium:newCommandTimeout': 240,
+  // 'appium:newCommandTimeout': 240,
   // 'appium:wdaLaunchTimeout': 999999,
-  //'appium:wdaConnectionTimeout': 999999,
+  // 'appium:wdaConnectionTimeout': 999999,
   
   // The following capabilities are needed to run tests on physical devices. Request them to your Dev Team
   // xcodeOrgId: 'YD5FNB475F',

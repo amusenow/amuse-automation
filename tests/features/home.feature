@@ -42,7 +42,7 @@ Feature: Amuse Home
       | shop       | absolutely   |
       | deals      | absolutely   |
       | search     | not          |
-      | profile    | not          |
+      | brands     | absolutely   |
 
 
 

@@ -10,9 +10,11 @@ const CartPage = require('../pages/cart.page')
 const utils = require('../utils/utils');
 const CheckoutPage = require('../pages/checkout.page');
 const ReviewCheckoutPage = require('../pages/reviewCheckout.page')
+const OrderTracking = require('../pages/orderTracking.page')
 const SignUpModal = require('../pages/signUpModal.page')
 const ReferralsPage = require('../pages/referral.page')
-const ProfilePage = require('../pages/profile.page')
+const ProfilePage = require('../pages/profile.page');
+const productDetailPage = require('../pages/productDetail.page');
 
 const pages = {
     home: HomePage,
@@ -52,6 +54,9 @@ When(/^I should be able to close it$/, async () => {
 });
 When(/^I click on (\w+) from navbar$/, async (element) => {
     await HomePage.mobileNavbarRedirect(element)
+});
+When(/^I click on profile from header$/, async () => {
+    await HomePage.profileClickButton()
 });
 When(/^I should see (\w+) header icons$/, async (loggedFlag) => {
     if(loggedFlag == 'logged'){
@@ -107,6 +112,11 @@ When(/^I add a product to the cart$/, async () => {
     await ShopPage.addProductToCart()
     await HomePage.inputLocation()
 });
+When(/^I add a cheap product to the cart$/, async () => {
+    await ShopPage.addToCheapProduct()
+    await ProductPage.addCartClick()
+    await HomePage.selectAddress()
+});
 When(/^I login$/, async () => {
     await HomePage.setEmail()
     await HomePage.setPassword()
@@ -116,9 +126,12 @@ When(/^the cart button should be enabled$/, async () => {
     await HomePage.selectAddress()
     await HomePage.cartEnabled()
 });
+When(/^I select last address$/, async () => {
+    await HomePage.selectAddress()
+});
 //product detail page 
 When(/^I click on a product$/, async () => {
-    await HomePage.clickOnProduct()
+    await ShopPage.clickOnProduct()
     await ProductPage.productHeaderAssertion()
 });
 When(/^I should see product price$/, async () => {
@@ -151,6 +164,9 @@ When(/^I click checkout button$/, async () => {
 When(/^I modify the quantity$/, async () => {
     await CartPage.modifyQuantity()
 }); 
+When(/^I should see discount in subtotal$/, async () => {
+    await CartPage.subtotalAssertion()
+}); 
 When(/^I log in with new user$/, async () => {
     await HomePage.loginClickButton() 
     await HomePage.setEmail(utils.NewUserCredentials.email)
@@ -168,11 +184,23 @@ When(/^I should see checkout button disabled in cart$/, async () => {
     await CartPage.checkMinimumCheckout()
 }); 
 //Checkout  
+When(/^I add products to the cart$/, async () => {
+    await ShopPage.addToCartDiscountedProduct()
+    await ProductPage.priceSaleAssertion()
+    await ProductPage.increaseProduct()
+
+}); 
 When(/^I should see instructions field$/, async () => {
     await CheckoutPage.instructionsAssertion()
 });
 When(/^I click on cart button$/, async () => {//
     await CheckoutPage.cartClick()
+});
+When(/^I click in edit address icon$/, async () => {//
+    await CheckoutPage.clickDeliveryAddress()
+});
+When(/^I click on edit cart$/, async () => {//
+    await CheckoutPage.clickEditCart()
 }); 
 When(/^I should see id verification page$/, async () => {//
     await ReviewCheckoutPage.idVerificationAssertion()
@@ -183,18 +211,36 @@ When(/^I select an (\w+)$/, async (option) => {//
 When(/^all delivery options are set$/, async () => {
     await CheckoutPage.checkContinueButton(false)
     await CheckoutPage.selectDate()
+    await CheckoutPage.selectTime()
+});
+When(/^I change date$/, async () => {
+    await CheckoutPage.selectDate()
+});
+When(/^I change time$/, async () => {
+    await CheckoutPage.selectTime()
+});
+When(/^there is special price$/, async () => {
+    await CheckoutPage.checkSpecialPrice()
+});
+When(/^I enter a promo code$/, async () => {
+    await CheckoutPage.clickPromoCode()
+    await CheckoutPage.enterPromoCode()
 });
 When(/^I click on continue button$/, async () => {
     await CheckoutPage.clickContinueButton()
 });
-When(/^I should see Discounts$/, async () => {
-    await ReviewCheckoutPage.discountsAssertion()
-});
+
 When(/^I should see taxes$/, async () => {
     await ReviewCheckoutPage.taxesAssertion()
 });
 When(/^I click on Place Order Button$/, async () => {//
     await ReviewCheckoutPage.placeOrderClick()
+}); 
+When(/^I click in view receipt button$/, async () => {//
+    await OrderTracking.clickViewReceipt()
+}); 
+When(/^I click in cancel order$/, async () => {//
+    await OrderTracking.cancelOrder()
 }); 
 //sign up 
 When(/^I navigate to sign up modal$/, async () => {//
@@ -249,7 +295,11 @@ When(/^I click in order history$/, async () => {//
 When(/^I click in old order$/, async () => {//
     await ProfilePage.clickOldOrder()
 }); 
-
 When(/^I click in view recipt$/, async () => {//
     await ProfilePage.clickRecipt()
+}); 
+When(/^I click in purchase order again$/, async () => {//
+    await ProfilePage.clickOrderHistory()
+    await ProfilePage.clickOldOrder()
+    await ProfilePage.btnOrderAgain()
 }); 

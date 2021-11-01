@@ -1,6 +1,7 @@
 const { reverse } = require('lodash');
 const { default: browser } = require('webdriverio/build/commands/browser');
 const utils = require('../utils/utils');
+const GlobalFunc = require('../utils/GlobalFunc');
 const Page = require('./page');
 
 /**
@@ -27,7 +28,7 @@ class HomePage extends Page {
     get footerDiv() { return $('.o-footer__container') }
     get footerSocialMedia() { return $('#viewport > div.o-footer > div > div > div > div.mt-12 > div.mt-10 > div.flex') }
     get footerLinks() { return $('#viewport > div.o-footer > div > div > div > div.grid > div') }
-    get heroImage() { return $('[data-testid] > .w-full:nth-of-type(1)') }
+    get heroImage() { return $('.content-section--margin-bottom-m.content-section--margin-top-m.product-module') }
     get btnHelp() { return $("[class='wrapper-AtBcr u-isActionable u-textLeft u-inlineBlock u-borderNone u-textBold u-textNoWrap Arrange Arrange--middle u-userLauncherColor wrapperMobile-1Ets2']") }
 
     //login modal 
@@ -61,6 +62,8 @@ class HomePage extends Page {
     get productPrice() { return $('#home > div > div:nth-child(3) > div:nth-child(2) > div > div > div > div.flex.justify-between.items-center > div > div.a-product-price') }
     get productLabel() { return $(".content-section--margin-bottom-m:nth-of-type(3) [class='text-lg tracking-tighter leading-none mb-5']") }
     get thirdProduct() { return $("[data-testid] .content-section--margin-bottom-m:nth-of-type(4) .scrolling-product-card:nth-of-type(3)") }
+    get btnPlusProduct() { return $("div:nth-of-type(7) > div:nth-of-type(2) .o-product-card.scrolling-product-card .a-add-to-cart.sf-button") }
+    get firstCarousel() { return $("div#home > div > div.product-carousel.content-section--margin-bottom-m:nth-of-type(7)") }
 
     //categories
     get categoryModule() { return $('.m-homepage-categories__list--grid') }
@@ -71,11 +74,11 @@ class HomePage extends Page {
 
     //mobile
 
-    get btnShopMobile() { return $('.sf-bottom-navigation > div:nth-of-type(1)') }
-    get btnDealsMobile() { return $('.sf-bottom-navigation > div:nth-of-type(2)') }
-    get btnSearchMobile() { return $('.sf-bottom-navigation > div:nth-of-type(3)') }
+    get btnShopMobile() { return $('.sf-bottom-navigation > div:nth-of-type(2)') }
+    get btnDealsMobile() { return $('.sf-bottom-navigation > div:nth-of-type(3)') }
+    get btnSearchMobile() { return $('.sf-bottom-navigation > div:nth-of-type(4)') }
     get inputSearchMobile() { return $('.sf-search-bar__input') }
-    get btnProfileMobile() { return $('.sf-bottom-navigation > div:nth-of-type(4)') }
+    get btnProfileMobile() { return $('.sf-bottom-navigation > div:nth-of-type(5)') }
     get microCartDiv() { return $("div.o-microcart__checkout-box") }
 
     //referral
@@ -141,7 +144,7 @@ class HomePage extends Page {
                 await (await this.btnSearchMobile).click()
                 break;
 
-            case "profile":
+            case "brands":
                 await (await this.btnProfileMobile).click()
                 break;
             default:
@@ -153,10 +156,8 @@ class HomePage extends Page {
             await (await this.inputSearchMobile).waitForDisplayed()
             await (await this.amuseLogo).waitForDisplayed()
             await (await this.amuseLogo).click()
-        } else if (path == 'profile') {
-            await this.loginModalAssertion()
         } else {
-            expect(driver).toHaveUrlContaining(driver.config.baseUrl + path)
+            expect(driver).toHaveUrlContaining(driver.config.baseUrl +'/'+ path)
             await (await this.amuseLogo).waitForDisplayed()
             await (await this.amuseLogo).click()
         }
@@ -164,8 +165,10 @@ class HomePage extends Page {
 
     //end of navbar functions
     async heroAssertion() {
-        await (await this.heroImage).waitForDisplayed()
-        expect(await this.heroImage).toExist()
+        if(await (await this.heroImage).isExisting()){
+            await (await this.heroImage).waitForDisplayed()
+            expect(await this.heroImage).toExist()
+        }
     }
     async heroImageAssertion() {
         await (await this.heroImage).waitForDisplayed()
@@ -191,8 +194,12 @@ class HomePage extends Page {
         }
     }
     async loginClickButton() {
-        await (await this.btnLoginNavbar).waitForDisplayed()
+        await (await this.btnLoginNavbar).waitForClickable()
         await (await this.btnLoginNavbar).click()
+    }
+    async profileClickButton() {
+        await (await this.btnProfile).waitForClickable()
+        await (await this.btnProfile).click()
     }
     async loginModalAssertion() {
         await (await this.loginModal).waitForDisplayed()
@@ -223,6 +230,10 @@ class HomePage extends Page {
     async loginClick() {
         await (await this.btnLogin).click()
         await (await this.btnLogin).waitForDisplayed({ reverse: true })
+        if ((await this.loaderSpinner).isDisplayedInViewport()) {
+            await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
+        }
+        console.log('here')
     }
     async setEmail(email = utils.ValidEmail) {
         await (await this.emailInput).setValue(email);
@@ -305,12 +316,20 @@ class HomePage extends Page {
         await (await this.mapsDivTest).waitForDisplayed()
         await (await this.mapsDivTest).click()
         await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
-        console.log('hola2')
     }
     async clickLocation() {
-        console.log('hola')
         await (await this.mapsDivTest).waitForDisplayed()
         await (await this.mapsDivTest).click()
+    }
+    async addFirstProduct() {
+        await (await this.firstCarousel).scrollIntoView()
+        await (await this.btnPlusProduct).waitForDisplayed()
+        await (await this.btnPlusProduct).click()
+        console.log(await GlobalFunc.getSubtotal())
+        while (await GlobalFunc.getSubtotal() < 65) {
+            console.log(await GlobalFunc.getSubtotal())
+            await (await this.btnPlusProduct).click()
+        }
     }
     async checkAvailability() {
         await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
@@ -321,6 +340,7 @@ class HomePage extends Page {
     }
     async selectAddress() {
         if (await (await this.shippingLocation).isDisplayedInViewport()) {
+            await (await this.shippingLocation).waitForDisplayed()
             expect(await this.shippingLocation).toBeDisplayed()
             expect(await this.deliveryAddress).toBeDisplayed()
             await (await this.deliveryAddress).click()
@@ -329,18 +349,10 @@ class HomePage extends Page {
             }
             await (await this.shippingLocation).waitForDisplayed({ reverse: true })
         }
+
     }
     //product functions
-    async clickOnProduct() {
-        await (await this.productLabel).waitForDisplayed()
-        await (await this.productLabel).scrollIntoView()
-        expect(await this.productName).toBeDisplayed()
-        utils.SelectedProduct.name = await (await this.productName).getText()
-        utils.SelectedProduct.classification = await (await this.productClassification).getText()
-        utils.SelectedProduct.brand = await (await this.productBrand).getText()
-        utils.SelectedProduct.price = await (await this.productPrice).getText()
-        await (await this.productName).click()
-    }
+    
     async getRandomNumber() {
         return parseInt((Math.random() * ((await cards).length - 1)))
     }
@@ -384,11 +396,11 @@ class HomePage extends Page {
             await ((await cards)[i]).scrollIntoView()
             let cardHref = await ((await cards)[i]).getAttribute('href')
             console.log(await ((await cards)[i]).isClickable())
-            await ((await cards)[i]).click()
-            expect(driver).toHaveUrlContaining(driver.config.baseUrl + cardHref)
-            await (await this.categoryModule).waitForDisplayed()
-            await driver.switchWindow(driver.config.baseUrl)
-            await ((await cards)[i]).waitForDisplayed()
+            // await ((await cards)[i]).click()
+            // expect(driver).toHaveUrlContaining(driver.config.baseUrl + cardHref)
+            // await (await this.categoryModule).waitForDisplayed()
+            // await driver.switchWindow(driver.config.baseUrl)
+            // await ((await cards)[i]).waitForDisplayed()
         }
     }
     async scrollBrandSection() {
