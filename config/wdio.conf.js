@@ -50,25 +50,25 @@ exports.config = {
       embedImages: true,
       screenshotStrategy: 'on:error'
     }],
-    // [
-    //   SlackReporter,
-    //   {
-    //     slackOptions: {
-    //       type: 'web-api',
-    //       channel: 'qa_tier',
-    //       slackBotToken: process.env.SLACK_TOKEN,
-    //       uploadScreenshotOfFailedCase: true,
-    //       notifyFailedCase:true,
-    //     },
-    //   }
-    // ],
+    [
+      SlackReporter,
+      {
+        slackOptions: {
+          type: 'web-api',
+          channel: 'qa_tier',
+          slackBotToken: process.env.SLACK_TOKEN,
+          uploadScreenshotOfFailedCase: true,
+          notifyFailedCase:true,
+        },
+      }
+    ],
   ],
   waitforTimeout: defaultTimeoutInterval,
   services: [ [TimelineService],
   //uncomment for browserstack runs
-  // ['browserstack', {
-  //   browserstackLocal: true
-  // }],
+  ['browserstack', {
+    browserstackLocal: true
+  }],
   ['appium',
     {
       // This will use the globally installed version of Appium
@@ -109,10 +109,10 @@ exports.config = {
     }],
   ],
   // For browserstack:
-  //host: 'hub.browserstack.com',
-  // For simulator running:
-  host: '127.0.0.1',
-  port: 4723,
+  host: 'hub.browserstack.com',
+  //For simulator running:
+  //host: '127.0.0.1',
+  //port: 4723,
   path: '/wd/hub/',
   baseUrl: process.env.BASEURL,
 
