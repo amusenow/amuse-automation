@@ -14,6 +14,7 @@ class HomePage extends Page {
     get modalAgeYes() { return $('.sf-modal__content') }
     get btnModalAgeYes() { return $('.sf-modal__content .btn.btn--primary.btn--regular.btn--without-padding') }
     get btnNoThanks() { return $('#bx-element-1428003-kqkNBO3 > button') }
+    get btnCloseAdvertisement() { return $("[class='max-w-screen-xl mx-auto px-4 sm\:px-6'] [type]") }
     get amuseLogo() { return $('#amuseHeader > div > div > header > a') }
     get amuseLogoFooter() { return $('.m-logo__image') }
     get btnSearchNavbar() { return $('[class="a-search-icon p-1 mx-2 rounded-full lg\:block cursor-pointer o-header__search hidden"]') }
@@ -157,7 +158,7 @@ class HomePage extends Page {
             await (await this.amuseLogo).waitForDisplayed()
             await (await this.amuseLogo).click()
         } else {
-            expect(driver).toHaveUrlContaining(driver.config.baseUrl +'/'+ path)
+            expect(driver).toHaveUrlContaining(driver.config.baseUrl + '/' + path)
             await (await this.amuseLogo).waitForDisplayed()
             await (await this.amuseLogo).click()
         }
@@ -165,13 +166,13 @@ class HomePage extends Page {
 
     //end of navbar functions
     async heroAssertion() {
-        if(await (await this.heroImage).isExisting()){
+        if (await (await this.heroImage).isExisting()) {
             await (await this.heroImage).waitForDisplayed()
             expect(await this.heroImage).toExist()
         }
     }
     async heroImageAssertion() {
-        if(await (await this.heroImage).isExisting()){
+        if (await (await this.heroImage).isExisting()) {
             await (await this.heroImage).waitForDisplayed()
             expect(await this.heroImage).toBeClickable()
         }
@@ -181,6 +182,10 @@ class HomePage extends Page {
         await (await this.modalAgeYes).waitForDisplayed()
         await (await this.btnModalAgeYes).click()
         await (await this.modalAgeYes).waitForDisplayed({ reverse: true })
+    }
+    async closeAdvertisement() {
+        await (await this.btnCloseAdvertisement).waitForDisplayed()
+        await (await this.btnCloseAdvertisement).click()
     }
     async unlockModal() {
         await (await this.btnNoThanks).waitUntil(async () => {
@@ -229,12 +234,14 @@ class HomePage extends Page {
         await (await this.passwordInput).setValue(password);
     }
     async loginClick() {
+        if (await (await this.loaderSpinner).isDisplayedInViewport()) {
+            await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
+        } 
         await (await this.btnLogin).click()
         await (await this.btnLogin).waitForDisplayed({ reverse: true })
-        if ((await this.loaderSpinner).isDisplayedInViewport()) {
+        if (await (await this.loaderSpinner).isDisplayedInViewport()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
-        }
-        console.log('here')
+        } 
     }
     async setEmail(email = utils.ValidEmail) {
         await (await this.emailInput).setValue(email);
@@ -333,7 +340,19 @@ class HomePage extends Page {
         }
     }
     async checkAvailability() {
-        await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
+        if (await (await this.inputLocationDiv).isDisplayedInViewport()) {
+            await (await this.inputLocationDiv).setValue('11114')
+            await (await this.inputLocationDiv).addValue(' Wright')
+            await (await this.mapsDiv).waitForDisplayed()
+            await (await this.inputLocationDiv).addValue(' Road ')
+            await (await this.mapsDiv).waitForDisplayed()
+            await (await this.mapsDivTest).waitForDisplayed()
+            await (await this.mapsDivTest).click()
+            if (await (await this.loaderSpinner).isDisplayedInViewport()) {
+                await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
+            }
+            await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
+        }
     }
     async cartEnabled() {
         expect(await this.btnCart).toBeEnabled()
@@ -353,7 +372,7 @@ class HomePage extends Page {
 
     }
     //product functions
-    
+
     async getRandomNumber() {
         return parseInt((Math.random() * ((await cards).length - 1)))
     }

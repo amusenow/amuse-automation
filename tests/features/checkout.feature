@@ -3,10 +3,15 @@ Feature: Amuse Site - checkout page
     As a user, in the amuse site
     I want to be able to see checkout page
 
+     @iosBrowser @androidBrowser
+    Scenario:  Amuse - Sale Price Designs 
+        Given I am logged in shop page
+        When I click in the location box
+        And I select last address
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Sale Price Designs - Product Detail Page - The product detail page should display the original price crossed out and the sale price in amusing pink AND in Shop page
-        Given I am logged in shop page
-        When I add products to the cart
+        When I search for a discounted product
+        And I add discounted products to the cart
         And I select last address
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Details Page - The delivery address appears on the Checkout page.
@@ -18,7 +23,7 @@ Feature: Amuse Site - checkout page
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Details Page - The user is able to change their delivery address
         When I click in edit address icon
-        And I select last address
+        And I select another address
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Details Page - "Unit #" and "Instructions" fields should be displayed in the Delivery Address module.
         Then I should see unit number field

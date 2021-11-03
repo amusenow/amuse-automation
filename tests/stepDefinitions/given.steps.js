@@ -17,6 +17,7 @@ const pages = {
 Given(/^I am on the (\w+) page$/, async (page) => {
     await pages[page].open(page)
     await HomePage.acceptModal()
+    await HomePage.closeAdvertisement()
     // await HomePage.unlockModal()
 });
 Given(/^I am logged in$/, async () => {
@@ -29,6 +30,7 @@ Given(/^I am logged in$/, async () => {
 Given(/^I am logged in (\w+) page$/, async (page) => {
     await pages[page].open(page)
     await HomePage.acceptModal()
+    await HomePage.closeAdvertisement()
     await HomePage.loginClickButton()
     await HomePage.setEmail()
     await HomePage.setPassword()

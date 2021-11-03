@@ -42,7 +42,7 @@ class ReviewCheckout extends Page {
         expect(await this.recepientName).toHaveTextContaining(`${userInfo.firstname} ${userInfo.middlename} ${userInfo.lastname}`)
     }
     async checkoutDeliveryAssertion () {
-        await this.recepientAddress.waitForDisplayed()
+        await (await this.recepientAddress).waitForDisplayed()
         expect(await this.recepientAddress).toExist() 
         expect(await this.recepientAddress).toHaveTextContaining(await GlobalFunctions.getAddress())
     }
@@ -52,7 +52,7 @@ class ReviewCheckout extends Page {
         expect(await this.deliveryWindow).toHaveTextContaining(await utils.SelectedDeliverHour)
     }
     async checkoutPaymentAssertion () {
-        await this.paymentWindow.waitForDisplayed()
+        await (await this.paymentWindow).waitForDisplayed()
         expect(await this.paymentWindow).toExist() 
         expect(await this.paymentWindow).toHaveTextContaining(await utils.SelectedPayment)
     }
@@ -62,19 +62,19 @@ class ReviewCheckout extends Page {
         expect(await this.subtotalLabel).toHaveTextContaining(await GlobalFunctions.getSubtotal())
     }
     async feesAssertion () {
-        await (await this.feesLabel).waitForDisplayed()
+        await (await this.feesLabel).waitForDisplayed({ timeoutMsg: 'There were no fees displayed' })
         expect(await this.feesLabel).toExist()
         var fees = await (await this.feesLabel).getText()
         utils.fees = fees.match(/^$[0-9]+.[0-9]+/)
     }
     async discountsAssertion () {
-        await (await this.discountsLabel).waitForDisplayed()
+        await (await this.discountsLabel).waitForDisplayed({ timeoutMsg: 'There were no fees displayed' })
         expect(await this.discountsLabel).toExist() 
         var discounts = await (await this.discountsLabel).getText()
         utils.disconuts = discounts.match(/^$[0-9]+.[0-9]+/)
     }
     async taxesAssertion () {
-        await (await this.taxesLabel).waitForDisplayed()
+        await (await this.taxesLabel).waitForDisplayed({ timeoutMsg: 'There were no fees displayed' })
         expect(await this.taxesLabel).toExist() 
         var taxes = await (await this.taxesLabel).getText()
         utils.taxes = taxes.match(/^$[0-9]+.[0-9]+/)

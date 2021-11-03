@@ -5,6 +5,14 @@ class GlobalFunctions {
     await browser.setTimeout({ script: 5000 })
     const result = await browser.execute((key) => {
       return this.localStorage.getItem(key)
+    }, 'shop/address/currentAddress')
+    var location = JSON.parse(result)
+    return location.streetAddress
+  }
+  async getLocationUnlogged() {
+    await browser.setTimeout({ script: 5000 })
+    const result = await browser.execute((key) => {
+      return this.localStorage.getItem(key)
     }, 'shop/delivery/deliveryArea')
     var location = JSON.parse(result)
     return location.delivery_area_name

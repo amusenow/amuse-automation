@@ -29,7 +29,7 @@ class DealsPage extends Page {
             expect(await this.locationBox).toExist()
             await (await this.locationDiv).waitForDisplayed()
             expect(await this.locationDiv).toExist()
-            expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocation())
+            expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocationUnlogged())
     }
     async checkActiveState () {
         expect(this.btnDealsMobile).toHaveAttributeContaining('class', 'active')

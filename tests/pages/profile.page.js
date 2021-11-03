@@ -89,13 +89,10 @@ class ProfilePage extends Page {
         expect(await this.recipientDeliveryWindow).toHaveTextContaining( utils.SelectedDeliverDate)
     }
     async disclaimerDiscountAssertion () {
-        console.log('holi')
         await (await this.disclaimerDiscount).scrollIntoView()
-        console.log('holi')
         await (await this.disclaimerDiscount).waitForDisplayed()
         expect (await this.disclaimerDiscount).toExist()
         await (await this.disclaimerSavings).scrollIntoView()
-        console.log('holi')
         expect (await this.disclaimerSavings).toExist()
     }
     async clickBack () {

@@ -5,9 +5,9 @@ const config = require('./wdio.conf.js').config
 // For all capabilities please check
 // http://appium.io/docs/en/writing-running-appium/caps/#general-capabilities
 config.capabilities = [{
-  // The defaults you need to have in your config
-  'browserstack:device': 'iPhone 11 Pro',
-  'browserstack:os_version': '14.5',
+  //The defaults you need to have in your config
+  'browserstack:device': 'iPhone 11',
+  'browserstack:os_version': '13',
   'browserName': 'iPhone',
   'browserstack:realMobile': 'true',
   'browserstack:video': 'true',
@@ -18,7 +18,7 @@ config.capabilities = [{
   //For W3C the appium capabilities need to have an extension prefix
   //This is `appium:` for all Appium Capabilities which can be found here
   //http://appium.io/docs/en/writing-running-appium/caps/
-  // 'appium:deviceName': 'iPhone 11 Pro Max',
+  // 'appium:deviceName': 'iPhone 12 Pro',
   // 'appium:platformVersion': '14.5',
   // 'appium:udid': '586EFE98-9998-4BFA-AC75-BABF034D06BB',
   // 'appium:orientation': 'PORTRAIT',
