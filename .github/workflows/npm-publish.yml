@@ -1,11 +1,9 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ feature/browserstack ]
 
 jobs:
   build:
@@ -30,9 +28,8 @@ jobs:
       run: |
         npm i
         npm i -g appium
-        BASEURL=https://amuse.com npm run iosBrowser
+        BASEURL=https://storefront.stage.amuse.com npm run iosBrowser
       env:
         BS_USER: ${{ secrets.BS_USER }}
         BS_KEY: ${{ secrets.BS_KEY }}
         SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
-        
