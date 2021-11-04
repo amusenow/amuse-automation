@@ -3,6 +3,8 @@ name: Node.js CI
 on:
   push:
     branches: [ feature/browserstack ]
+  schedule:
+    - cron:  '0 6,12,18 * * *'
 
 jobs:
   build:
