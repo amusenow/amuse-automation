@@ -318,6 +318,8 @@ class HomePage extends Page {
         await (await this.inputLocationDiv).waitForDisplayed()
         await (await this.inputLocationDiv).setValue('11114')
         await (await this.inputLocationDiv).addValue(' Wright Road ')
+        await (await this.inputLocationDiv).addValue(' Lynwood ')
+        await (await this.mapsDiv).waitForDisplayed()
     }
     async checkMap() {
         await (await this.mapsDiv).waitForDisplayed()
@@ -345,6 +347,8 @@ class HomePage extends Page {
             await (await this.inputLocationDiv).addValue(' Wright')
             await (await this.mapsDiv).waitForDisplayed()
             await (await this.inputLocationDiv).addValue(' Road ')
+            await (await this.mapsDiv).waitForDisplayed()
+            await (await this.inputLocationDiv).addValue(' Lynwood ')
             await (await this.mapsDiv).waitForDisplayed()
             await (await this.mapsDivTest).waitForDisplayed()
             await (await this.mapsDivTest).click()

@@ -12,7 +12,7 @@ config.capabilities = [{
   'browserstack:realMobile': 'true',
   'browserstack:video': 'true',
   "browserstack:acceptSslCerts" : "true",
-  
+
   // browserName: 'safari',
   // platformName: 'iOS',
   // maxInstances: 1,

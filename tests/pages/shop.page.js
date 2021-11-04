@@ -94,7 +94,7 @@ class ShopPage extends Page {
                 var cards = (await this.productGrid).$$('div.sf-product-card')
             }else{
                 await ((await cards)[0].scrollIntoView())
-                browser.touchScroll(10, 0)
+                driver.touchScroll(10, 0)
                 console.log(await ((await cards)[0]).getText() + " shop page")
                 await (await cards)[0].click()
                 flag = false
