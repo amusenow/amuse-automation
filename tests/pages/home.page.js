@@ -49,6 +49,8 @@ class HomePage extends Page {
     get locationBox() { return $('.a-address-search') }
     get locationDiv() { return $('.m-select-location') }
     get logoLocationDiv() { return $('[class="m-modal-logo mb-10"]') }
+    get confirmLocationModal() { return $('.m-modal-confirm .sf-modal__container') }
+    get btnContinueAddress() { return $('.m-modal-confirm .justify-center .btn--without-padding.btn--primary') }
     get inputLocationDiv() { return $('#map') }
     get mapsDiv() { return $('body > div.pac-container.pac-logo.hdpi') }//
     get mapsDivTest() { return $('div:nth-of-type(1) > .pac-item-query > .pac-matched') }
@@ -325,7 +327,11 @@ class HomePage extends Page {
         await (await this.mapsDiv).waitForDisplayed()
         await (await this.mapsDivTest).waitForDisplayed()
         await (await this.mapsDivTest).click()
-        await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
+        if (await (await this.confirmLocationModal).isDisplayedInViewport()) {
+            await (await this.confirmLocationModal).waitForDisplayed()
+            await (await this.btnContinueAddress).click()
+        }
+        await (await this.logoLocationDiv).waitForDisplayed({ reverse: true }) 
     }
     async clickLocation() {
         await (await this.mapsDivTest).waitForDisplayed()

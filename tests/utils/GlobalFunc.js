@@ -58,6 +58,25 @@ class GlobalFunctions {
     utils.lastSubtotal = subtotal
     return subtotal
   }
+  async getDailyAllowanceInCart() {
+    await browser.setTimeout({ script: 5000 })
+    const result = await browser.execute((key) => {
+      return this.localStorage.getItem(key)
+    }, 'shop/cart/current-cart')
+    var cart = JSON.parse(result)
+    let totalFlower = 0
+    let totalConcentrate = 0
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i].hasOwnProperty("treez_amount")) {
+        if(cart[i].hasOwnProperty("treez_amount")){
+
+        }
+        subtotal = parseFloat(subtotal) + parseFloat(cart[i].special_price *cart[i].qty)
+      } 
+    }
+    utils.lastSubtotal = subtotal
+    return subtotal
+  }
   async promoInCart() {
     await browser.setTimeout({ script: 5000 })
     const result = await browser.execute((key) => {

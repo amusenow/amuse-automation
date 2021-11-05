@@ -19,7 +19,7 @@ class ShopPage extends Page {
     get btnShopAllSection() { return $("button[title='Shop All']") }
     get productGrid() { return $("div.m-category-products > div.m-product-listing") }
     get pageName() { return $(".sf-breadcrumbs__item--last") }
-    get btnAddCart() { return $("[position='1']") }
+    get btnAddCart() { return $(".m-product-add-to-cart > .a-add-to-cart.btn.btn--big.btn--primary.btn--with-padding") }
     get microCartDiv() { return $("div.o-microcart__checkout-box") }
     get microCartMessage() { return $(".o-microcart__content") }
     get btnCheckoutMicrocart() { return $(".btn.btn--inverted-primary.btn--regular.btn--without-padding.cart-action") }
@@ -93,8 +93,7 @@ class ShopPage extends Page {
                 }
                 var cards = (await this.productGrid).$$('div.sf-product-card')
             }else{
-                await ((await cards)[0].scrollIntoView())
-                driver.touchScroll(10, 0)
+                await ((await (await (await (await(await (await cards)[0].parentElement()).parentElement()).parentElement()).parentElement()).parentElement()).scrollIntoView())
                 console.log(await ((await cards)[0]).getText() + " shop page")
                 await (await cards)[0].click()
                 flag = false
@@ -121,6 +120,7 @@ class ShopPage extends Page {
         await (await this.productGrid).waitForDisplayed()
         expect(await this.productGrid).toExist()
         var name = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.sf-product-card__link')
+        var image = (await this.productGrid).$('.sf-product-card:nth-of-type(2) > .sf-product-card__image-wrapper')
         var classification = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.flex.flex-row.items-center.text-xxs')
         var brand = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.a-brand.text-xxs')
         var price = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.flex.items-center.justify-between')
@@ -128,6 +128,7 @@ class ShopPage extends Page {
         utils.SelectedProduct.classification = await (await classification).getText()
         utils.SelectedProduct.brand = await (await brand).getText()
         utils.SelectedProduct.price = await (await price).getText()
+        await (await image).scrollIntoView()
         await (await name).click()
     }
     async checkMinimumMessage() {

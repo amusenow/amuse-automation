@@ -109,8 +109,8 @@ When(/^I click in Pet section$/, async () => {
     await ShopPage.clickPetSection()
 });
 When(/^I add a product to the cart$/, async () => {
-    await ShopPage.addProductToCart()
     await HomePage.checkAvailability()
+    await ShopPage.addProductToCart()
 });
 When(/^I add a cheap product to the cart$/, async () => {
     await ShopPage.addToCheapProduct()

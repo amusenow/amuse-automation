@@ -22,7 +22,7 @@ Feature: Amuse Home - shop page
     @iosBrowser @androidBrowser    
     Scenario:  Amuse - Shop Page - The authenticated user should be able to add the product to the cart.
         When I login
-        And I add a product to the cart
+        And I select last address
         Then I should be logged in
         And the cart button should be enabled
         

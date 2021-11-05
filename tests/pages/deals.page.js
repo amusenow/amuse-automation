@@ -12,7 +12,7 @@ class DealsPage extends Page {
      get btnDealsMobile() { return $('.sf-bottom-navigation > div:nth-of-type(2)') }
      get allDealsTitles() { return $('div.product-carousel') }
      get allCarousels() { return $('.scrolling-product') }
-     get allLinks() { return $('.text-fontBase.underline') }
+     get allLinks() { return $$('.text-fontBase.underline') }
      //
     /**
      * a method to encapsule automation code to interact with the page
@@ -47,9 +47,8 @@ class DealsPage extends Page {
     async allLinksClick () {
         await (await this.allLinks).waitForDisplayed()
         if(await (await this.allLinks).isExisting()){
-            await (await this.allLinks).scrollIntoView()
-            await (await this.allLinks).click()
-            expect(await this.allLinks).toBeClickable()
+            await (await this.allLinks)[0].scrollIntoView()
+            expect(await this.allLinks)[0].toBeClickable()
         }
         
     }
