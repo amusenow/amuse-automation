@@ -64,15 +64,14 @@ class HomePage extends Page {
     get productWeight() { return $('#home > div > div:nth-child(3) > div:nth-child(2) > div > div > div > div:nth-child(6)') }
     get productPrice() { return $('#home > div > div:nth-child(3) > div:nth-child(2) > div > div > div > div.flex.justify-between.items-center > div > div.a-product-price') }
     get productLabel() { return $(".content-section--margin-bottom-m:nth-of-type(3) [class='text-lg tracking-tighter leading-none mb-5']") }
-    get thirdProduct() { return $("[data-testid] .content-section--margin-bottom-m:nth-of-type(4) .scrolling-product-card:nth-of-type(3)") }
+    get thirdProduct() { return $(".product-carousel:nth-of-type(2) .scrolling-product-card:nth-of-type(3)") }
     get btnPlusProduct() { return $("div:nth-of-type(7) > div:nth-of-type(2) .o-product-card.scrolling-product-card .a-add-to-cart.sf-button") }
-    get firstCarousel() { return $("div#home > div > div.product-carousel.content-section--margin-bottom-m:nth-of-type(7)") }
+    get firstCarousel() { return $(".product-carousel:nth-of-type(2)") }
 
     //categories
     get categoryModule() { return $('.m-homepage-categories__list--grid') }
     //brands
     get brandsModule() { return $('#home > div > div.max-w-screen-xl.mx-auto > div:nth-child(2)') }
-    get seeAllLinks() { return $('div.product-carousel > div.flex > div.mb-5') }
     get seeAllLinks() { return $('div.product-carousel > div.flex > div.mb-5') }
 
     //mobile
