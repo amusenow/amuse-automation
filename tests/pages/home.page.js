@@ -238,12 +238,12 @@ class HomePage extends Page {
     async loginClick() {
         if (await (await this.loaderSpinner).isDisplayedInViewport()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
-        } 
+        }
         await (await this.btnLogin).click()
         await (await this.btnLogin).waitForDisplayed({ reverse: true })
         if (await (await this.loaderSpinner).isDisplayedInViewport()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
-        } 
+        }
     }
     async setEmail(email = utils.ValidEmail) {
         await (await this.emailInput).setValue(email);
@@ -331,7 +331,15 @@ class HomePage extends Page {
             await (await this.confirmLocationModal).waitForDisplayed()
             await (await this.btnContinueAddress).click()
         }
-        await (await this.logoLocationDiv).waitForDisplayed({ reverse: true }) 
+        await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
+    }
+    async checkMapUnlogged() {
+        await (await this.mapsDiv).waitForDisplayed()
+        await (await this.mapsDivTest).waitForDisplayed()
+        await (await this.mapsDivTest).click()
+        await (await this.confirmLocationModal).waitForDisplayed()
+        await (await this.btnContinueAddress).click()
+        await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
     }
     async clickLocation() {
         await (await this.mapsDivTest).waitForDisplayed()
