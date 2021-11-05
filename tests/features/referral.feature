@@ -43,7 +43,6 @@ Feature: Amuse Home - referral
         Then I should see each product image, details and price
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Referral Program Page - Add product to cart
-        When I add a product to the cart
         Then I should see suggested delivery addresses
         And the cart button should be enabled
      @iosBrowser @androidBrowser

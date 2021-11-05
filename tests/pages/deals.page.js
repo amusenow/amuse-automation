@@ -9,10 +9,10 @@ class DealsPage extends Page {
      */
      get locationBox () { return $('.a-address-search') }
      get locationDiv () { return $('.m-select-location') }
-     get btnDealsMobile() { return $('.sf-bottom-navigation > div:nth-of-type(2)') }
+     get btnDealsMobile() { return $('.sf-bottom-navigation > div:nth-of-type(3)') }
      get allDealsTitles() { return $('div.product-carousel') }
      get allCarousels() { return $('.scrolling-product') }
-     get allLinks() { return $('.text-fontBase.underline') }
+     get allLinks() { return $$('.text-fontBase.underline') }
      //
     /**
      * a method to encapsule automation code to interact with the page
@@ -29,7 +29,7 @@ class DealsPage extends Page {
             expect(await this.locationBox).toExist()
             await (await this.locationDiv).waitForDisplayed()
             expect(await this.locationDiv).toExist()
-            expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocation())
+            expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocationUnlogged())
     }
     async checkActiveState () {
         expect(this.btnDealsMobile).toHaveAttributeContaining('class', 'active')
@@ -45,11 +45,9 @@ class DealsPage extends Page {
         }
     }
     async allLinksClick () {
-        await (await this.allLinks).waitForDisplayed()
-        if(await (await this.allLinks).isExisting()){
-            await (await this.allLinks).scrollIntoView()
-            await (await this.allLinks).click()
-            expect(await this.allLinks).toBeClickable()
+        if(await (await this.allLinks)[0].isExisting()){
+            await (await this.allLinks)[0].scrollIntoView()
+            //expect(await this.allLinks)[0].toBeClickable()
         }
         
     }

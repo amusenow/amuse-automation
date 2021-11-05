@@ -14,6 +14,7 @@ class HomePage extends Page {
     get modalAgeYes() { return $('.sf-modal__content') }
     get btnModalAgeYes() { return $('.sf-modal__content .btn.btn--primary.btn--regular.btn--without-padding') }
     get btnNoThanks() { return $('#bx-element-1428003-kqkNBO3 > button') }
+    get btnCloseAdvertisement() { return $("[class='max-w-screen-xl mx-auto px-4 sm\:px-6'] [type]") }
     get amuseLogo() { return $('#amuseHeader > div > div > header > a') }
     get amuseLogoFooter() { return $('.m-logo__image') }
     get btnSearchNavbar() { return $('[class="a-search-icon p-1 mx-2 rounded-full lg\:block cursor-pointer o-header__search hidden"]') }
@@ -48,6 +49,8 @@ class HomePage extends Page {
     get locationBox() { return $('.a-address-search') }
     get locationDiv() { return $('.m-select-location') }
     get logoLocationDiv() { return $('[class="m-modal-logo mb-10"]') }
+    get confirmLocationModal() { return $('.m-modal-confirm .sf-modal__container') }
+    get btnContinueAddress() { return $('.m-modal-confirm .justify-center .btn--without-padding.btn--primary') }
     get inputLocationDiv() { return $('#map') }
     get mapsDiv() { return $('body > div.pac-container.pac-logo.hdpi') }//
     get mapsDivTest() { return $('div:nth-of-type(1) > .pac-item-query > .pac-matched') }
@@ -61,15 +64,14 @@ class HomePage extends Page {
     get productWeight() { return $('#home > div > div:nth-child(3) > div:nth-child(2) > div > div > div > div:nth-child(6)') }
     get productPrice() { return $('#home > div > div:nth-child(3) > div:nth-child(2) > div > div > div > div.flex.justify-between.items-center > div > div.a-product-price') }
     get productLabel() { return $(".content-section--margin-bottom-m:nth-of-type(3) [class='text-lg tracking-tighter leading-none mb-5']") }
-    get thirdProduct() { return $("[data-testid] .content-section--margin-bottom-m:nth-of-type(4) .scrolling-product-card:nth-of-type(3)") }
+    get thirdProduct() { return $(".product-carousel:nth-of-type(2) .scrolling-product-card:nth-of-type(3)") }
     get btnPlusProduct() { return $("div:nth-of-type(7) > div:nth-of-type(2) .o-product-card.scrolling-product-card .a-add-to-cart.sf-button") }
-    get firstCarousel() { return $("div#home > div > div.product-carousel.content-section--margin-bottom-m:nth-of-type(7)") }
+    get firstCarousel() { return $(".product-carousel:nth-of-type(2)") }
 
     //categories
     get categoryModule() { return $('.m-homepage-categories__list--grid') }
     //brands
     get brandsModule() { return $('#home > div > div.max-w-screen-xl.mx-auto > div:nth-child(2)') }
-    get seeAllLinks() { return $('div.product-carousel > div.flex > div.mb-5') }
     get seeAllLinks() { return $('div.product-carousel > div.flex > div.mb-5') }
 
     //mobile
@@ -114,7 +116,7 @@ class HomePage extends Page {
         expect(await driver.checkElement((await element), logo, {})).toEqual(0)
     }
     async logoAssertion() {
-        await this.logoAssertionElement(this.amuseLogo)
+        //await this.logoAssertionElement(this.amuseLogo)
     }
     //navbar functions
     async mobileNavBarAssertion() {
@@ -157,7 +159,7 @@ class HomePage extends Page {
             await (await this.amuseLogo).waitForDisplayed()
             await (await this.amuseLogo).click()
         } else {
-            expect(driver).toHaveUrlContaining(driver.config.baseUrl +'/'+ path)
+            expect(driver).toHaveUrlContaining(driver.config.baseUrl + '/' + path)
             await (await this.amuseLogo).waitForDisplayed()
             await (await this.amuseLogo).click()
         }
@@ -165,21 +167,26 @@ class HomePage extends Page {
 
     //end of navbar functions
     async heroAssertion() {
-        if(await (await this.heroImage).isExisting()){
+        if (await (await this.heroImage).isExisting()) {
             await (await this.heroImage).waitForDisplayed()
             expect(await this.heroImage).toExist()
         }
     }
     async heroImageAssertion() {
-        await (await this.heroImage).waitForDisplayed()
-        expect(await this.heroImage).toExist()
-        expect(await this.heroImage).toBeClickable()
+        if (await (await this.heroImage).isExisting()) {
+            await (await this.heroImage).waitForDisplayed()
+            expect(await this.heroImage).toBeClickable()
+        }
     }
 
     async acceptModal() {
         await (await this.modalAgeYes).waitForDisplayed()
         await (await this.btnModalAgeYes).click()
         await (await this.modalAgeYes).waitForDisplayed({ reverse: true })
+    }
+    async closeAdvertisement() {
+        await (await this.btnCloseAdvertisement).waitForDisplayed()
+        await (await this.btnCloseAdvertisement).click()
     }
     async unlockModal() {
         await (await this.btnNoThanks).waitUntil(async () => {
@@ -222,18 +229,20 @@ class HomePage extends Page {
 
     }
     async loginAssertionLogo() {
-        await this.logoAssertionElement(this.amuseLogoModal, 'logoLogin')
+        //await this.logoAssertionElement(this.amuseLogoModal, 'logoLogin')
     }
     async setPassword(password = utils.ValidEmailPassword) {
         await (await this.passwordInput).setValue(password);
     }
     async loginClick() {
-        await (await this.btnLogin).click()
-        await (await this.btnLogin).waitForDisplayed({ reverse: true })
-        if ((await this.loaderSpinner).isDisplayedInViewport()) {
+        if (await (await this.loaderSpinner).isDisplayedInViewport()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
         }
-        console.log('here')
+        await (await this.btnLogin).click()
+        await (await this.btnLogin).waitForDisplayed({ reverse: true })
+        if (await (await this.loaderSpinner).isDisplayedInViewport()) {
+            await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
+        }
     }
     async setEmail(email = utils.ValidEmail) {
         await (await this.emailInput).setValue(email);
@@ -304,18 +313,34 @@ class HomePage extends Page {
         //await this.locationBoxLogoAssertion()
     }
     async locationBoxLogoAssertion() {
-        await this.logoAssertionElement(this.logoLocationDiv, 'logoLogin')
+        //await this.logoAssertionElement(this.logoLocationDiv, 'logoLogin')
     }
     async inputLocation() {
         await (await this.inputLocationDiv).waitForDisplayed()
         await (await this.inputLocationDiv).setValue('11114')
         await (await this.inputLocationDiv).addValue(' Wright Road ')
+        await (await this.inputLocationDiv).addValue(' Lynwood ')
+        await (await this.mapsDiv).waitForDisplayed()
     }
     async checkMap() {
         await (await this.mapsDiv).waitForDisplayed()
         await (await this.mapsDivTest).waitForDisplayed()
         await (await this.mapsDivTest).click()
+        if (await (await this.confirmLocationModal).isDisplayedInViewport()) {
+            await (await this.confirmLocationModal).waitForDisplayed()
+            await (await this.btnContinueAddress).click()
+        }
         await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
+    }
+    async checkMapUnlogged() {
+        await (await this.mapsDiv).waitForDisplayed()
+        await (await this.mapsDivTest).waitForDisplayed()
+        await (await this.mapsDivTest).click()
+        if (await (await this.confirmLocationModal).isDisplayedInViewport()) {
+            await (await this.confirmLocationModal).waitForDisplayed()
+            await (await this.btnContinueAddress).click()
+        }
+        await (await this.mapsDivTest).waitForDisplayed({ reverse: true })
     }
     async clickLocation() {
         await (await this.mapsDivTest).waitForDisplayed()
@@ -332,7 +357,21 @@ class HomePage extends Page {
         }
     }
     async checkAvailability() {
-        await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
+        if (await (await this.inputLocationDiv).isDisplayedInViewport()) {
+            await (await this.inputLocationDiv).setValue('11114')
+            await (await this.inputLocationDiv).addValue(' Wright')
+            await (await this.mapsDiv).waitForDisplayed()
+            await (await this.inputLocationDiv).addValue(' Road ')
+            await (await this.mapsDiv).waitForDisplayed()
+            await (await this.inputLocationDiv).addValue(' Lynwood ')
+            await (await this.mapsDiv).waitForDisplayed()
+            await (await this.mapsDivTest).waitForDisplayed()
+            await (await this.mapsDivTest).click()
+            if (await (await this.loaderSpinner).isDisplayedInViewport()) {
+                await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
+            }
+            await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
+        }
     }
     async cartEnabled() {
         expect(await this.btnCart).toBeEnabled()
@@ -352,7 +391,7 @@ class HomePage extends Page {
 
     }
     //product functions
-    
+
     async getRandomNumber() {
         return parseInt((Math.random() * ((await cards).length - 1)))
     }

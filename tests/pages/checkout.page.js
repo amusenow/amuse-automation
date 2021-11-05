@@ -35,41 +35,42 @@ class CheckoutPage extends Page {
      * e.g. to login using username and password
      */
     async checkoutTitleAssertion () {
-        await this.checkoutDiv.waitForDisplayed()
+        await (await this.checkoutDiv).waitForDisplayed()
         expect(await this.checkoutDiv).toExist() 
     }
     async checkoutDeliveryAssertion () {
-        await this.addressLabel.waitForDisplayed()
+        await (await this.addressLabel).waitForDisplayed()
         expect(await this.addressLabel).toExist() 
         console.log(await (await this.addressLabel).getText())
         expect(await this.addressLabel).toHaveTextContaining(await GlobalFunctions.getAddress())
     }
     async unitAssertion () {
-        await this.unitsLabel.waitForDisplayed()
+        
+        await (await this.unitsLabel).waitForDisplayed()
         expect(await this.unitsLabel).toExist() 
         expect(await this.unitsLabel).toHaveTextContaining('Unit #:')
         expect(await this.unitsInput).toExist() 
     }
     async logoAssertion () {
-        await this.headerLogo.waitForDisplayed()
+        await (await this.headerLogo).waitForDisplayed()
         expect(await this.headerLogo).toExist() 
     }
     async clickDeliveryAddress () {
-        await this.btnDeliveryAddress.waitForDisplayed()
+        await (await this.btnDeliveryAddress).waitForDisplayed()
         await (await this.btnDeliveryAddress).click()
     }
     async clickEditCart () {
-        await this.btnEditCart.waitForDisplayed()
+        await (await this.btnEditCart).waitForDisplayed()
         await (await this.btnEditCart).click()
     }
     async instructionsAssertion () {
-        await this.instructionsLabel.waitForDisplayed()
+        await (await this.instructionsLabel).waitForDisplayed()
         expect(await this.instructionsLabel).toExist() 
         expect(await this.instructionsLabel).toHaveTextContaining('Instructions:')
         expect(await this.instructionsInput).toExist() 
     }
     async cartClick () {
-        await this.btnCart.waitForDisplayed()
+        await (await this.btnCart).waitForDisplayed()
         await (await this.btnCart).click()
     }
     async cartModuleAssertion () {
@@ -93,10 +94,10 @@ class CheckoutPage extends Page {
         await (await this.subtotalLabel).waitForDisplayed()
         expect(await this.subtotalLabel).toExist() 
         if(await GlobalFunctions.promoInCart()){
-            expect(await this.subtotalLabel.$$('.sf-price__value.sf-price__value--old')).toExist()
-            expect(await this.subtotalLabel.$$('.sf-price__value.sf-price__value--special')).toHaveTextContaining(await GlobalFunctions.getSubtotal())
+            expect(await (await this.subtotalLabel).$$('.sf-price__value.sf-price__value--old')).toExist()
+            expect(await (await this.subtotalLabel).$$('.sf-price__value.sf-price__value--special')).toHaveTextContaining(await GlobalFunctions.getSubtotal())
         }else{
-            expect(await this.subtotalLabel.$$('.sf-price__value')).toHaveTextContaining(await GlobalFunctions.getSubtotal())
+            expect(await (await this.subtotalLabel).$$('.sf-price__value')).toHaveTextContaining(await GlobalFunctions.getSubtotal())
         }
     }
     async selectTime () {
@@ -106,18 +107,22 @@ class CheckoutPage extends Page {
         var leng = (await hour).length
         var optionNumber = await this.getRandom(leng)
         utils.SelectedDeliverHour = await (await hour)[optionNumber].getText()
+        await (await hour)[optionNumber].scrollIntoView()
         await (await hour)[optionNumber].click()
     }
     async selectDate () {
+        await (await this.dateCarausel).scrollIntoView()
         await (await this.dateCarausel).waitForDisplayed()
         expect(await this.dateCarausel).toExist() 
         var dates = (await this.dateCarausel).$$('.slick-slide')
         var leng = (await dates).length
         var optionNumber = await this.getRandom(leng)
         utils.SelectedDeliverDate = await (await dates)[optionNumber].getText()
+        await (await dates)[optionNumber].scrollIntoView()
         await (await dates)[optionNumber].click()
     }
     async selectPayment () {
+        await (await this.btnRadioPayment).scrollIntoView()
         await (await this.btnRadioPayment).waitForDisplayed()
         expect(await this.btnRadioPayment).toExist() 
         var radioButtons = (await this.btnRadioPayment).$$('div.sf-radio > label.sf-radio__container')
@@ -145,12 +150,13 @@ class CheckoutPage extends Page {
         }
     }
     async checkContinueButton (flag) {
+        await (await this.btnContinue).scrollIntoView()
         await (await this.btnContinue).waitForDisplayed()
         if(flag==true){
             expect(await this.btnContinue).toBeEnabled()
         }else{
             expect(await this.btnContinue).toBeDisabled()
-        }
+        } 
     }
     async clickContinueButton () {
         await (await this.btnContinue).click()

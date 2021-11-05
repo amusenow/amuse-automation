@@ -31,14 +31,16 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-     './tests/features/home.feature',
-     './tests/features/login.feature',
-     './tests/features/locationBox.feature',
-     './tests/features/shopPage.feature',
-     './tests/features/productDetail.feature',
-     './tests/features/cart.feature',
-    // './tests/features/checkout.feature',
-    //'./tests/features/cart.feature',
+    './tests/features/home.feature',
+    './tests/features/login.feature',
+    './tests/features/locationBox.feature',
+    './tests/features/shopPage.feature',
+    './tests/features/brands.feature',
+    './tests/features/deals.feature',
+    './tests/features/search.feature',
+    './tests/features/cart.feature',
+    //  './tests/features/productDetail.feature',
+    // './tests/features/cart.feature',
   ],
 
   logLevel: 'error',
@@ -55,16 +57,17 @@ exports.config = {
       {
         slackOptions: {
           type: 'web-api',
-          channel: 'qa-automation-amuse',
+          channel: 'U69UC3B5X',
           slackBotToken: process.env.SLACK_TOKEN,
           uploadScreenshotOfFailedCase: true,
-          notifyFailedCase:true,
+          notifyFailedCase: true,
+          title: 'Slack Reporter Test',
         },
       }
     ],
   ],
   waitforTimeout: defaultTimeoutInterval,
-  services: [ [TimelineService],
+  services: [[TimelineService],
   //uncomment for browserstack runs
   ['browserstack', {
     browserstackLocal: true
@@ -194,8 +197,8 @@ exports.config = {
     //   port: '4444'
     // });
   },
-  afterScenario: async function (result){
-    if (result.result.status=='FAILED') {
+  afterScenario: async function (result) {
+    if (result.result.status == 'FAILED') {
       const screenshot = await (await driver).takeScreenshot();
       await SlackReporter.uploadFailedTestScreenshot(screenshot);
     }

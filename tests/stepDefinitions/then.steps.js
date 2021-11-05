@@ -56,7 +56,7 @@ Then(/^I can scroll in brand modules$/, async () => {
     await HomePage.checkLoggedUser()
 }); 
 Then(/^I should see suggested delivery addresses$/, async () => {
-    await HomePage.checkMap()
+    await HomePage.checkMapUnlogged()
 });
 Then(/^I should see available products$/, async () => {
     await HomePage.checkAvailability()

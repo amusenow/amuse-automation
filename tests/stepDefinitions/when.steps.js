@@ -109,8 +109,8 @@ When(/^I click in Pet section$/, async () => {
     await ShopPage.clickPetSection()
 });
 When(/^I add a product to the cart$/, async () => {
+    await HomePage.checkAvailability()
     await ShopPage.addProductToCart()
-    await HomePage.inputLocation()
 });
 When(/^I add a cheap product to the cart$/, async () => {
     await ShopPage.addToCheapProduct()
@@ -127,6 +127,9 @@ When(/^the cart button should be enabled$/, async () => {
     await HomePage.cartEnabled()
 });
 When(/^I select last address$/, async () => {
+    await HomePage.checkAvailability()
+});
+When(/^I select another address$/, async () => {
     await HomePage.selectAddress()
 });
 //product detail page 
@@ -145,8 +148,6 @@ When(/^I swipe to see in Carousel diferent images of product$/, async () => {
 });
 When(/^I add a product$/, async () => {
     await ProductPage.increaseProduct()
-    await HomePage.selectAddress() 
-    
 });
 When(/^I decrease the product$/, async () => {
     await ProductPage.decreaseProduct() 
@@ -183,13 +184,18 @@ When(/^I should see minimum message in cart$/, async () => {
 When(/^I should see checkout button disabled in cart$/, async () => {
     await CartPage.checkMinimumCheckout()
 }); 
+When(/^I click in add to cart button$/, async () => {
+    await ProductPage.addCartClick()
+}); 
 //Checkout  
-When(/^I add products to the cart$/, async () => {
+When(/^I add discounted products to the cart$/, async () => {
+    await ProductPage.addCartClick()
+    await ProductPage.increaseProduct()
+}); 
+When(/^I search for a discounted product$/, async () => {
     await ShopPage.addToCartDiscountedProduct()
     await ProductPage.priceSaleAssertion()
-    await ProductPage.increaseProduct()
-
-}); 
+});
 When(/^I should see instructions field$/, async () => {
     await CheckoutPage.instructionsAssertion()
 });

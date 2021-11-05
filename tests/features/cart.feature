@@ -6,8 +6,12 @@ Feature: Amuse Home - Cart
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Cart Page 
         Given I am logged in shop page
-        When I add products to the cart
+        When I click in the location box
         And I select last address
+    @iosBrowser @androidBrowser
+    Scenario:  Amuse - Cart Page 
+        When I search for a discounted product
+        And I add discounted products to the cart
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Cart Page - The Header appears on the Profile page
         When I click in cart icon

@@ -28,7 +28,7 @@ class BrandsPage extends Page {
             await (await this.locationDiv).waitForDisplayed()
             expect(await this.locationBox).toExist()
             await (await this.locationBox).waitForDisplayed() 
-            expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocation())
+            expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocationUnlogged())
     }
     async featuredBrandsAssertion () {
         await (await this.featuredBrands).scrollIntoView()

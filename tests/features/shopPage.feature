@@ -13,8 +13,8 @@ Feature: Amuse Home - shop page
         Then I should see recommended option selected
     @iosBrowser @androidBrowser    
     Scenario:  Amuse - Shop Page - The product image, details and price should appear 
-        When I click in Pet section
         Then I should see each product image, details and price
+        And I click on a product
     @iosBrowser @androidBrowser    
     Scenario:  Amuse - Shop Page - The non-authenticated user should not be able to add the product to the cart.
         When I add a product to the cart
@@ -22,7 +22,7 @@ Feature: Amuse Home - shop page
     @iosBrowser @androidBrowser    
     Scenario:  Amuse - Shop Page - The authenticated user should be able to add the product to the cart.
         When I login
-        And I add a product to the cart
+        And I select last address
         Then I should be logged in
         And the cart button should be enabled
         

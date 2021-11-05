@@ -13,6 +13,8 @@ class CartPage extends Page {
     get cartGrid() { return $('.border-b.border-grey-medium') }
     get btnCheckout() { return $('.btn.btn--inverted-primary.btn--regular.btn--without-padding.cart-action.sf-button--full-width') }
     get loaderSpinner() { return $('div.m-loader') }
+    get limitModal() { return $('.sf-modal__content') }
+    get closeModal() { return $('.sf-modal__close') }
     get input() { return $('div.border-t.border-b.border-grey-medium > div:nth-child(1) > div.flex.flex-col-reverse > div:nth-child(1) > div > div > input') }
     get cartMinimumLabel() { return $('.leading-snug.m-0.text-error.text-xxs.tracking-normal') }
     get subtotalLabel () { return $(".o-microcart__total-price.sf-property > .sf-price") }
@@ -55,10 +57,10 @@ class CartPage extends Page {
         await (await this.subtotalLabel).waitForDisplayed()
         expect(await this.subtotalLabel).toExist() 
         if(await GlobalFunctions.promoInCart()){
-            expect(await this.subtotalLabel.$$('.sf-price__value.sf-price__value--old')).toExist()
-            expect(await this.subtotalLabel.$$('.sf-price__value.sf-price__value--special')).toHaveTextContaining(await GlobalFunctions.getSubtotal())
+            expect(await (await this.subtotalLabel).$$('.sf-price__value.sf-price__value--old')).toExist()
+            expect(await (await this.subtotalLabel).$$('.sf-price__value.sf-price__value--special')).toHaveTextContaining(await GlobalFunctions.getSubtotal())
         }else{
-            expect(await this.subtotalLabel.$$('.sf-price__value')).toHaveTextContaining(await GlobalFunctions.getSubtotal())
+            expect(await (await this.subtotalLabel).$$('.sf-price__value')).toHaveTextContaining(await GlobalFunctions.getSubtotal())
         }
     }
     async btnCheckoutClick() {
@@ -67,13 +69,15 @@ class CartPage extends Page {
         }
         await (await this.btnCheckout).waitForClickable()
         await (await this.btnCheckout).click()
-        console.log('clicked')
-        if ((await this.loaderSpinner).isDisplayedInViewport()) {
+        if (await (await this.loaderSpinner).isDisplayedInViewport()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
         }
     }
     async modifyQuantity() {
         await (await this.input).setValue(4)
+        if(await (await this.limitModal).isDisplayedInViewport()){
+            await (await this.closeModal).click()
+        }
     }
     async assertQuantity() {
         const cart = await GlobalFunctions.getCart()

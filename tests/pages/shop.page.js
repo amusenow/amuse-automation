@@ -16,10 +16,10 @@ class ShopPage extends Page {
     get recommendedOption() { return $('button.m-product-sorting__option.m-product-sorting__option--active') }
     get loaderSpinner() { return $('div.m-loader') } //
     get btnModalClose() { return $('.sf-modal__close') }
-    get btnPetSection() { return $("button[title='Pets']") }
+    get btnShopAllSection() { return $("button[title='Shop All']") }
     get productGrid() { return $("div.m-category-products > div.m-product-listing") }
     get pageName() { return $(".sf-breadcrumbs__item--last") }
-    get btnAddCart() { return $("[position='1']") }
+    get btnAddCart() { return $(".m-product-add-to-cart > .a-add-to-cart.btn.btn--big.btn--primary.btn--with-padding") }
     get microCartDiv() { return $("div.o-microcart__checkout-box") }
     get microCartMessage() { return $(".o-microcart__content") }
     get btnCheckoutMicrocart() { return $(".btn.btn--inverted-primary.btn--regular.btn--without-padding.cart-action") }
@@ -33,7 +33,7 @@ class ShopPage extends Page {
         await (await this.locationDiv).waitForDisplayed()
         expect(await this.locationBox).toExist()
         await (await this.locationBox).waitForDisplayed()
-        expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocation())
+        expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocationUnlogged())
     }
     async clickSortBtn() {
         if ((await this.loaderSpinner).isDisplayed()) {
@@ -59,17 +59,10 @@ class ShopPage extends Page {
         await (await this.btnPetSection).click()
     }
     async productIteration() {
-        await (await this.btnPetSection).waitUntil(async () => {
-            return (await (await this.btnPetSection).getAttribute('class')).includes('active')
-        }, {
-            timeout: 4000,
-            timeoutMsg: 'shop all is still selected'
-        });
-        expect(await this.btnPetSection).toHaveAttributeContaining('class', 'active')
+        expect(await this.btnShopAllSection).toHaveAttributeContaining('class', 'active')
         if ((await this.loaderSpinner).isDisplayed()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
         }
-        expect(await this.pageName).toHaveTextContaining('Pets')
         await (await this.productGrid).waitForDisplayed()
         expect(await this.productGrid).toExist()
         var cards = (await this.productGrid).$$('div.sf-product-card')
@@ -100,8 +93,8 @@ class ShopPage extends Page {
                 }
                 var cards = (await this.productGrid).$$('div.sf-product-card')
             }else{
-                await ((await cards)[0].scrollIntoView())
-                console.log(await ((await cards)[0]).getText())
+                await ((await (await (await (await(await (await cards)[0].parentElement()).parentElement()).parentElement()).parentElement()).parentElement()).scrollIntoView())
+                console.log(await ((await cards)[0]).getText() + " shop page")
                 await (await cards)[0].click()
                 flag = false
             }
@@ -127,6 +120,7 @@ class ShopPage extends Page {
         await (await this.productGrid).waitForDisplayed()
         expect(await this.productGrid).toExist()
         var name = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.sf-product-card__link')
+        var image = (await this.productGrid).$('.sf-product-card:nth-of-type(2) > .sf-product-card__image-wrapper')
         var classification = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.flex.flex-row.items-center.text-xxs')
         var brand = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.a-brand.text-xxs')
         var price = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.flex.items-center.justify-between')
@@ -134,6 +128,7 @@ class ShopPage extends Page {
         utils.SelectedProduct.classification = await (await classification).getText()
         utils.SelectedProduct.brand = await (await brand).getText()
         utils.SelectedProduct.price = await (await price).getText()
+        await (await image).scrollIntoView()
         await (await name).click()
     }
     async checkMinimumMessage() {
