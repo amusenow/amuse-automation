@@ -341,7 +341,7 @@ class HomePage extends Page {
             await (await this.confirmLocationModal).waitForDisplayed()
             await (await this.btnContinueAddress).click()
         }
-        await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
+        await (await this.mapsDivTest).waitForDisplayed({ reverse: true })
     }
     async clickLocation() {
         await (await this.mapsDivTest).waitForDisplayed()
