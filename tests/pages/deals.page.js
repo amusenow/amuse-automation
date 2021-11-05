@@ -9,7 +9,7 @@ class DealsPage extends Page {
      */
      get locationBox () { return $('.a-address-search') }
      get locationDiv () { return $('.m-select-location') }
-     get btnDealsMobile() { return $('.sf-bottom-navigation > div:nth-of-type(2)') }
+     get btnDealsMobile() { return $('.sf-bottom-navigation > div:nth-of-type(3)') }
      get allDealsTitles() { return $('div.product-carousel') }
      get allCarousels() { return $('.scrolling-product') }
      get allLinks() { return $$('.text-fontBase.underline') }
@@ -47,7 +47,7 @@ class DealsPage extends Page {
     async allLinksClick () {
         if(await (await this.allLinks)[0].isExisting()){
             await (await this.allLinks)[0].scrollIntoView()
-            expect(await this.allLinks)[0].toBeClickable()
+            //expect(await this.allLinks)[0].toBeClickable()
         }
         
     }

@@ -337,8 +337,10 @@ class HomePage extends Page {
         await (await this.mapsDiv).waitForDisplayed()
         await (await this.mapsDivTest).waitForDisplayed()
         await (await this.mapsDivTest).click()
-        await (await this.confirmLocationModal).waitForDisplayed()
-        await (await this.btnContinueAddress).click()
+        if (await (await this.confirmLocationModal).isDisplayedInViewport()) {
+            await (await this.confirmLocationModal).waitForDisplayed()
+            await (await this.btnContinueAddress).click()
+        }
         await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
     }
     async clickLocation() {
