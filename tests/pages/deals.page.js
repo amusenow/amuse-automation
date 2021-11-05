@@ -45,7 +45,6 @@ class DealsPage extends Page {
         }
     }
     async allLinksClick () {
-        await (await this.allLinks)[0].waitForDisplayed()
         if(await (await this.allLinks)[0].isExisting()){
             await (await this.allLinks)[0].scrollIntoView()
             expect(await this.allLinks)[0].toBeClickable()
