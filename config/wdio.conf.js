@@ -56,7 +56,7 @@ exports.config = {
       SlackReporter, {
         slackOptions: {
           type: 'webhook',
-          webhook: process.env.SLACK_APP_WEBHOOK,
+          webhook: process.env.SLACK_WEBHOOK,
           slackName: "eng-qa-channel",
           slackIconUrl: "https://webdriver.io/img/webdriverio.png"
         },

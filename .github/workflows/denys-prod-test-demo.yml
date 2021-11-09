@@ -30,4 +30,4 @@ jobs:
       env:
         BS_USER: denysfedotov_8lDg4I
         BS_KEY: dhgxwki9Qx4oQHeek7XD
-        SLACK_APP_WEBHOOK: https://hooks.slack.com/services/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
+        SLACK_WEBHOOK: ${{ secrets.DEMO_SLACK_APP_WEBHOOK }}
