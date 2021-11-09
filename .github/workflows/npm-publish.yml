@@ -28,7 +28,7 @@ jobs:
       run: |
         npm i
         npm i -g appium
-        BASEURL=https://amuse.com npm run iosBrowser
+        BASEURL=https://storefront.stage.amuse.com npm run iosBrowser
       env:
         BS_USER: ${{ secrets.BS_USER }}
         BS_KEY: ${{ secrets.BS_KEY }}
