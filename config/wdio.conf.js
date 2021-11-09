@@ -31,14 +31,14 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-    './tests/features/home.feature',
-    './tests/features/login.feature',
-    './tests/features/locationBox.feature',
-    './tests/features/shopPage.feature',
+    // './tests/features/home.feature',
+    // './tests/features/login.feature',
+    // './tests/features/locationBox.feature',
+    // './tests/features/shopPage.feature',
     './tests/features/brands.feature',
-    './tests/features/deals.feature',
-    './tests/features/search.feature',
-    './tests/features/cart.feature',
+    // './tests/features/deals.feature',
+    // './tests/features/search.feature',
+    // './tests/features/cart.feature',
     //  './tests/features/productDetail.feature',
     // './tests/features/cart.feature',
   ],
@@ -56,12 +56,10 @@ exports.config = {
       SlackReporter,
       {
         slackOptions: {
-          type: 'web-api',
-          channel: 'U69UC3B5X',
-          slackBotToken: process.env.SLACK_TOKEN,
-          uploadScreenshotOfFailedCase: true,
-          notifyFailedCase: true,
-          title: 'Slack Reporter Test',
+          type: 'webhook',
+          webhook: process.env.SLACK_APP_WEBHOOK,
+          slackName: "WebdriverIO Reporter",
+          slackIconUrl: "https://webdriver.io/img/webdriverio.png",
         },
       }
     ],

@@ -2,7 +2,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ feature/browserstack ]
+    branches: [ denys-test ]
 
 jobs:
   build:
@@ -13,7 +13,6 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v2
@@ -29,6 +28,6 @@ jobs:
         npm i -g appium
         BASEURL=https://amuse.com npm run iosBrowser
       env:
-        BS_USER: ${{ secrets.BS_USER }}
-        BS_KEY: ${{ secrets.BS_KEY }}
-        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        BS_USER: denysfedotov_8lDg4I
+        BS_KEY: dhgxwki9Qx4oQHeek7XD
+        SLACK_APP_WEBHOOK: https://hooks.slack.com/services/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
