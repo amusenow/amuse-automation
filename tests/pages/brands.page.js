@@ -24,11 +24,11 @@ class BrandsPage extends Page {
         expect(await this.locationDiv).waitForDisplayed()
     }
     async locationBoxAssertion (page) {
-            expect(await this.locationDiv).toExist()
-            await (await this.locationDiv).waitForDisplayed()
-            expect(await this.locationBox).toExist()
-            await (await this.locationBox).waitForDisplayed() 
-            expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocationUnlogged())
+        expect(await this.locationDiv).toExist()
+        await (await this.locationDiv).waitForDisplayed()
+        expect(await this.locationBox).toExist()
+        await (await this.locationBox).waitForDisplayed() 
+        expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocationUnlogged())
     }
     async featuredBrandsAssertion () {
         await (await this.featuredBrands).scrollIntoView()

@@ -57,9 +57,7 @@ exports.config = {
       {
         slackOptions: {
           type: 'webhook',
-          webhook: process.env.SLACK_APP_WEBHOOK,
-          slackName: "WebdriverIO Reporter",
-          slackIconUrl: "https://webdriver.io/img/webdriverio.png",
+          webhook: process.env.SLACK_APP_WEBHOOK
         },
       }
     ],
