@@ -53,12 +53,14 @@ exports.config = {
       screenshotStrategy: 'on:error'
     }],
     [
-      SlackReporter,
-      {
+      SlackReporter, {
         slackOptions: {
           type: 'webhook',
-          webhook: process.env.SLACK_APP_WEBHOOK
+          webhook: process.env.SLACK_APP_WEBHOOK,
+          slackName: "eng-qa-channel",
+          slackIconUrl: "https://webdriver.io/img/webdriverio.png"
         },
+        title: 'Qa Automation Demo'
       }
     ],
   ],

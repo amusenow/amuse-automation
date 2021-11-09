@@ -12,8 +12,12 @@ config.capabilities = [{
   'browserstack:realMobile': 'true',
   'browserstack:video': 'true',
   "browserstack:acceptSslCerts" : "true",
-  "browserstack.console": "errors",
-  "browserstack.networkLogs": "true"
+  "browserstack.debug": "true",
+  "browserstack.console": "error",
+  "browserstack.networkLogs" : "true",
+  "browserstack.networkLogsOptions": {
+    "captureContent": "true"
+  },
   // browserName: 'safari',
   // platformName: 'iOS',
   // maxInstances: 1,
