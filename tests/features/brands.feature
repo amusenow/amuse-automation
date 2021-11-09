@@ -1,4 +1,4 @@
-Feature: Amuse Home - brand page
+Feature: Denys Demo: Amuse Home - Brands page
 
     As a user, in the amuse site
     I want to be able to see brands page
