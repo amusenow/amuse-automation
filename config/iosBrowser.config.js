@@ -9,7 +9,6 @@ config.capabilities = [{
   'browserstack:device': 'iPhone 11',
   'browserstack:os_version': '13',
   'browserName': 'iPhone',
-  'browserVersion': '13',
   'browserstack:realMobile': 'true',
   'browserstack:video': 'true',
   "browserstack:acceptSslCerts" : "true",
