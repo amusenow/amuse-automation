@@ -49,7 +49,7 @@ class BrandsPage extends Page {
         }
     }
     async demoAssertion() {
-        expect( false === true)
+        expect( false === true).toBeTruthy()
     }
     /**
      * overwrite specifc options to adapt it to page object
