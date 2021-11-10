@@ -208,6 +208,9 @@ Then(/^I should see brands module$/, async () => {//
 Then(/^I should see brands listed alphabetically$/, async () => {//
     await BrandsPage.alphabetOrderAssertion()
 }); 
+Then(/^I should be able to get me some Doritos$/, async () => {//
+    await BrandsPage.demoAssertion()
+}); 
 //referral
 Then(/^I should be redirected to program rules$/, async () => {//
     await ShopPage.locationBoxAssertion()

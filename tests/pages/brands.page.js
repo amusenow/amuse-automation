@@ -48,6 +48,12 @@ class BrandsPage extends Page {
             actualLetter = await (letters)[i].getText()
         }
     }
+    demoAssertion() {
+        var letters =  await this.lettersBrands
+        var letterD = letters.find(item => item.getText().inludes('D'))
+        var brandsD = letterD.$(function () { return this.nextSibling })
+        expect( await brandsD.$$('.m-brand-card__name .m-clamp__text').getText().includes('Dosist'))
+    }
     /**
      * overwrite specifc options to adapt it to page object
      */
