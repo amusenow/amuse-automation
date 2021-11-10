@@ -48,7 +48,7 @@ class BrandsPage extends Page {
             actualLetter = await (letters)[i].getText()
         }
     }
-    demoAssertion() {
+    async demoAssertion() {
         var letters =  await this.lettersBrands
         var letterD = letters.find(item => item.getText().inludes('D'))
         var brandsD = letterD.$(function () { return this.nextSibling })
