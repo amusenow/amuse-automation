@@ -50,7 +50,7 @@ class BrandsPage extends Page {
     }
     async demoAssertion() {
         var letters =  await this.lettersBrands
-        var letterD = letters.find(item => item.getText().inludes('D'))
+        var letterD = letters.find(item => item.getText().includes('D'))
         var brandsD = letterD.$(function () { return this.nextSibling })
         expect( await brandsD.$$('.m-brand-card__name .m-clamp__text').getText().includes('Dosist'))
     }
