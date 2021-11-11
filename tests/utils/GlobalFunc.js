@@ -1,4 +1,5 @@
 const utils = require("./utils")
+const Api = require("./api")
 
 class GlobalFunctions {
   async getLocation() {
@@ -33,6 +34,14 @@ class GlobalFunctions {
     var user = JSON.parse(result)
     return user
   }
+  async getCurrentToken() {
+    await browser.setTimeout({ script: 5000 })
+    const result = await browser.execute((key) => {
+      return this.localStorage.getItem(key)
+    }, 'shop/user/current-token')
+    var token = JSON.parse(result)
+    return token
+  }
   async getAddress() {
     await browser.setTimeout({ script: 5000 })
     const result = await browser.execute((key) => {
@@ -58,25 +67,6 @@ class GlobalFunctions {
     utils.lastSubtotal = subtotal
     return subtotal
   }
-  async getDailyAllowanceInCart() {
-    await browser.setTimeout({ script: 5000 })
-    const result = await browser.execute((key) => {
-      return this.localStorage.getItem(key)
-    }, 'shop/cart/current-cart')
-    var cart = JSON.parse(result)
-    let totalFlower = 0
-    let totalConcentrate = 0
-    for (let i = 0; i < cart.length; i++) {
-      if (cart[i].hasOwnProperty("treez_amount")) {
-        if(cart[i].hasOwnProperty("treez_amount")){
-
-        }
-        subtotal = parseFloat(subtotal) + parseFloat(cart[i].special_price *cart[i].qty)
-      } 
-    }
-    utils.lastSubtotal = subtotal
-    return subtotal
-  }
   async promoInCart() {
     await browser.setTimeout({ script: 5000 })
     const result = await browser.execute((key) => {
@@ -90,6 +80,24 @@ class GlobalFunctions {
       }
     }
     return flag
+  }
+  async deleteCart() {
+    await browser.setTimeout({ script: 5000 })
+    var url =''
+    if(process.env.BASEURL.includes('dev')){
+      url = process.env.MAGENTO_DEV
+    }else if(process.env.BASEURL.includes('stage')){
+      url = process.env.MAGENTO_STAGE
+    }else{//prod
+      url = process.env.MAGENTO_PROD
+    }
+    const api = new Api(url);
+    const cart = await api.getCart(await this.getCurrentToken())
+    for(let i =  0; i < cart.length; i++){
+      await api.deleteCartItem(cart[i].item_id, await this.getCurrentToken())
+    }
+    const cart2 = await api.getCart(await this.getCurrentToken())
+    console.log(cart2)
   }
 
 }

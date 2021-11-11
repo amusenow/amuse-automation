@@ -25,6 +25,7 @@ Given(/^I am logged in$/, async () => {
     await HomePage.setEmail()
     await HomePage.setPassword()
     await HomePage.loginClick()
+    await GlobalFunc.deleteCart()
 });
 //
 Given(/^I am logged in (\w+) page$/, async (page) => {
@@ -35,6 +36,7 @@ Given(/^I am logged in (\w+) page$/, async (page) => {
     await HomePage.setEmail()
     await HomePage.setPassword()
     await HomePage.loginClick()
+    await GlobalFunc.deleteCart()
 });
 Given(/^I am a referral user$/, async () => {
     browser.url(utils.referralUrl)

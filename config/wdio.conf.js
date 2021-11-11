@@ -3,8 +3,10 @@ const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
 const SlackReporter = require('@moroo/wdio-slack-reporter').default;
 const { join } = require('path');
 require('dotenv').config()
+const GlobalFunc = require("../tests/utils/GlobalFunc")
+const Api = require("../tests/utils/api")
 
-const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 60000
+const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 50000
 
 const apps = {
   android: 'CelsiusFahrenheitConverter_v1.0.1_apkpure.com.apk',
@@ -31,14 +33,15 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-    './tests/features/home.feature',
-    './tests/features/login.feature',
-    './tests/features/locationBox.feature',
-    './tests/features/shopPage.feature',
-    './tests/features/brands.feature',
-    './tests/features/deals.feature',
-    './tests/features/search.feature',
-    './tests/features/cart.feature',
+    //'./tests/features/home.feature',
+    //'./tests/features/login.feature',
+    //'./tests/features/locationBox.feature',
+    //'./tests/features/shopPage.feature',
+    //'./tests/features/brands.feature',
+    //'./tests/features/deals.feature',
+    //'./tests/features/search.feature',
+    //'./tests/features/resetPassword.feature',
+    './tests/features/checkout.feature',
     //  './tests/features/productDetail.feature',
     // './tests/features/cart.feature',
   ],
@@ -69,9 +72,9 @@ exports.config = {
   waitforTimeout: defaultTimeoutInterval,
   services: [[TimelineService],
   //uncomment for browserstack runs
-  ['browserstack', {
-    browserstackLocal: true
-  }],
+  // ['browserstack', {
+  //   browserstackLocal: true
+  // }],
   ['appium',
     {
       // This will use the globally installed version of Appium
@@ -112,12 +115,13 @@ exports.config = {
     }],
   ],
   // For browserstack:
-  host: 'hub.browserstack.com',
+  //host: 'hub.browserstack.com',
   //For simulator running:
-  //host: '127.0.0.1',
-  //port: 4723,
+  host: '127.0.0.1',
+  port: 4723,
   path: '/wd/hub/',
   baseUrl: process.env.BASEURL,
+  deprecationWarnings: false,
 
   framework: 'cucumber',
   cucumberOpts: {
@@ -175,7 +179,7 @@ exports.config = {
   //
   // Gets executed before test execution begins. At this point you can access all global
   // variables, such as `browser`. It is the perfect place to define custom commands.
-  onPrepare: function () {
+  onPrepare: async function () {
     // Start the appium server with default host:localhost, port:4723
     // appiumController.startAppium();
     // appiumController.startAppium({
@@ -183,13 +187,13 @@ exports.config = {
     //   port: '4444'
     // });
   },
-  before: function () {
+  before: async function () {
     require('expect-webdriverio');
     const chai = require('chai');
     global.chaiExpect = chai.expect;
   },
   //
-  onComplete: function () {
+  onComplete: async function () {
     // Stop the appium server with default host:localhost, port:4723
     // appiumController.stopAppium();
     // appiumController.stopAppium({
@@ -201,6 +205,21 @@ exports.config = {
     if (result.result.status == 'FAILED') {
       const screenshot = await (await driver).takeScreenshot();
       await SlackReporter.uploadFailedTestScreenshot(screenshot);
+    }
+  },
+  afterFeature: async function (feature) {
+    if (feature.includes('signUp')) {
+      var url =''
+      if(process.env.BASEURL.includes('dev')){
+        url = process.env.MAGENTO_DEV
+      }else if(process.env.BASEURL.includes('stage')){
+        url = process.env.MAGENTO_STAGE
+      }else{//prod
+        url = process.env.MAGENTO_PROD
+      }
+      const userID = await GlobalFunc.getRecipient().id;
+      const api = await new Api(url);
+      await api.deleteUserFromDB(userID, await GlobalFunc.getCurrentToken());
     }
   }
 }

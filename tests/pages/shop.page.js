@@ -84,18 +84,18 @@ class ShopPage extends Page {
         expect(await this.productGrid).toExist()
         var flag = true
         while (flag) {
-            var cards = (await this.productGrid).$$('.sf-product-card .flex .a-product-price .sf-price__value.sf-price__value--special')
+            var cards = (await this.productGrid).$$('[qa-data-product-special="true"]')
             console.log((await cards).length)
             if((await cards).length == 0){
                 await (await this.btnLoadMoreProducts).click()
                 if ((await this.loaderSpinner).isDisplayed()) {
                     await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
                 }
-                var cards = (await this.productGrid).$$('div.sf-product-card')
+                var cards = (await this.productGrid).$$('[qa-data-product-special="true"]')
             }else{
-                await ((await (await (await (await(await (await cards)[0].parentElement()).parentElement()).parentElement()).parentElement()).parentElement()).scrollIntoView())
-                console.log(await ((await cards)[0]).getText() + " shop page")
-                await (await cards)[0].click()
+                await (await cards)[0].scrollIntoView()
+                var title =  (await cards)[0].$('a.sf-product-card__link')
+                await (await title).click()
                 flag = false
             }
         }

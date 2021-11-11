@@ -44,6 +44,11 @@ class HomePage extends Page {
     get btnResetPassword() { return $('form .btn.btn--regular.btn--secondary.btn--without-padding') }
     get btnLogin() { return $('.form .flex .btn.btn--primary') }
     get signUpLink() { return $('.m-login .text-center > a') }
+    get emailResetInput() { return $(() => document.getElementById('reset_password[emailOrPhone]')) }
+    get btnResetEmail() { return $('.m-reset-password .btn.btn--primary.btn--regular.btn--without-padding') }
+    get resetModal() { return $('.m-reset-password') }
+    get emailLabelResetPassword() { return $('.m-reset-password .text-primary') }
+    get btnCloseResetModal() { return $('.m-reset-password .btn') }
     get loaderSpinner() { return $('div.m-loader') }
     //location box
     get locationBox() { return $('.a-address-search') }
@@ -227,6 +232,26 @@ class HomePage extends Page {
         expect(await this.btnLogin).toExist()
         expect(await this.signUpLink).toExist()
 
+    }
+    async clickResetButton() {
+        await (await this.btnResetPassword).waitForClickable()
+        await (await this.btnResetPassword).click()
+    }
+    async resetEmailInput() {
+        await (await this.emailResetInput).waitForClickable()
+        await (await this.emailResetInput).setValue(utils.ValidEmail);
+    }
+    async clickResetEmail() {
+        await (await this.btnResetEmail).waitForClickable()
+        await (await this.btnResetEmail).click()
+    }
+    async resetModalAssertion() {
+        await (await this.resetModal).waitForDisplayed()
+        expect(await this.emailLabelResetPassword).toHaveTextContaining(utils.ValidEmailPassword)
+    }
+    async closeResetModalAssertion() {
+        await (await this.btnCloseResetModal).click()
+        await (await this.resetModal).waitForDisplayed({ reverse: true })
     }
     async loginAssertionLogo() {
         //await this.logoAssertionElement(this.amuseLogoModal, 'logoLogin')

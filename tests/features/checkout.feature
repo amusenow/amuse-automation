@@ -3,7 +3,7 @@ Feature: Amuse Site - checkout page
     As a user, in the amuse site
     I want to be able to see checkout page
 
-     @iosBrowser @androidBrowser
+    @iosBrowser @androidBrowser
     Scenario:  Amuse - Sale Price Designs 
         Given I am logged in shop page
         When I click in the location box
@@ -49,18 +49,17 @@ Feature: Amuse Site - checkout page
         When all delivery options are set
         Then I should see the continue button
     @iosBrowser @androidBrowser
-    Scenario:  Amuse - Checkout - Checkout Details Page - The user should be able to select or change the delivery date and time in the Delivery Widow module.
-        When I change date
-        And I change time
-        Then I should see the continue button
+    Scenario:  Amuse - Checkout - Checkout Details Page - The user should be able to select or change the delivery date and time in the Delivery Widow module changing for a special price
+        When I change to discounted date and time
+        Then I should see discounted applied in cart
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Sale Price Designs - Checkout - The savings disclaimer is displayed on the payment module of the Checkout page when a sale product is in the cart and a promo code have not applied
         When there is special price
-        Then I shuld see promo code applied
+        Then I should see promo code applied
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Details Page - The user should be able to enter a promo code.
         When I enter a promo code
-        Then I shuld see promo code applied
+        Then I should see promo code applied
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Details Page - The user should be redirected to the Checkout Review Page after a click on the Continue button.
         When I click on continue button
@@ -77,6 +76,7 @@ Feature: Amuse Site - checkout page
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Review Page - The Delivery Window should be displayed in the Review Your Order module. 
         Then I should see delivery window
+        And I should see discounts
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Review Page - The Payment should be displayed in the Review Your Order module.
         Then I should see payment window
@@ -117,6 +117,7 @@ Feature: Amuse Site - checkout page
     Scenario:  Amuse - Review Order Page - The user should be able to view Receipt details
         When I click in view receipt button
         Then I should see receipt
+        And I should see discounts in receipt
     @iosBrowser @androidBrowser @Pending
     Scenario:  Amuse - Premium_Discounted delivery window - Receipt - The premium delivery window line item appears in the receipt
         Then I see delivery window

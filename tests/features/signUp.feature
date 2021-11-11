@@ -1,4 +1,4 @@
-Feature: Amuse Home - sign up
+Feature: Amuse Home - signUp
 
     As a new user, in the amuse site
     I want to be able to sign up

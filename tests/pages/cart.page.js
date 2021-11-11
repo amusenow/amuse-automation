@@ -74,7 +74,8 @@ class CartPage extends Page {
         }
     }
     async modifyQuantity() {
-        await (await this.input).setValue(4)
+        const cart = await GlobalFunctions.getCart()
+        await (await this.input).setValue(cart[0].qty + 1)
         if(await (await this.limitModal).isDisplayedInViewport()){
             await (await this.closeModal).click()
         }

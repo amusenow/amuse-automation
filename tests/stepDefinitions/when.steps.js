@@ -68,6 +68,13 @@ When(/^I should see (\w+) header icons$/, async (loggedFlag) => {
 When(/^I click on login button$/, async () => {
     await HomePage.loginClickButton() 
 });
+When(/^I click reset password$/, async () => {
+    await HomePage.clickResetButton() 
+});
+When(/^I enter valid email$/, async () => {
+    await HomePage.resetEmailInput() 
+    await HomePage.clickResetEmail()
+});
 When(/^I should (\w+) see location box in (\w+) page$/, async (locationFlag, page) => {
     if(locationFlag!='not'){
         //await pages[page].open(page)
@@ -219,11 +226,8 @@ When(/^all delivery options are set$/, async () => {
     await CheckoutPage.selectDate()
     await CheckoutPage.selectTime()
 });
-When(/^I change date$/, async () => {
-    await CheckoutPage.selectDate()
-});
-When(/^I change time$/, async () => {
-    await CheckoutPage.selectTime()
+When(/^I change to discounted date and time$/, async () => {
+    await CheckoutPage.selectDiscountedTime()
 });
 When(/^there is special price$/, async () => {
     await CheckoutPage.checkSpecialPrice()
@@ -235,7 +239,12 @@ When(/^I enter a promo code$/, async () => {
 When(/^I click on continue button$/, async () => {
     await CheckoutPage.clickContinueButton()
 });
-
+When(/^I should see discounts$/, async () => {
+    await ReviewCheckoutPage.deliveryDiscountAssertion()
+});
+When(/^I should see discounts in receipt$/, async () => {
+    await ReviewCheckoutPage.deliveryDiscountAssertion()
+});
 When(/^I should see taxes$/, async () => {
     await ReviewCheckoutPage.taxesAssertion()
 });

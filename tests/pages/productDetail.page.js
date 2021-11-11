@@ -93,7 +93,6 @@ class ProductDetail extends Page {
         await (await this.btnAddProduct).waitForDisplayed()
         expect(await this.btnAddProduct).toExist()
         while (await GlobalFunctions.getSubtotal() < 65) {
-            console.log(await GlobalFunctions.getSubtotal() + " subtotal ?")
             await (await this.btnAddProduct).click()
             
         }
