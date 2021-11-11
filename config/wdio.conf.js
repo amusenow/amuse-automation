@@ -63,6 +63,17 @@ exports.config = {
         title: 'Qa Automation Demo'
       }
     ],
+    [
+      SlackReporter, {
+        slackOptions: {
+          type: 'webhook',
+          webhook: process.env.SLACK_WEBHOOK,
+          slackName: "eng-qa-channel",
+          slackIconUrl: "https://webdriver.io/img/webdriverio.png"
+        },
+        title: 'Qa Automation Demo'
+      }
+    ],
   ],
   waitforTimeout: defaultTimeoutInterval,
   services: [[TimelineService],
