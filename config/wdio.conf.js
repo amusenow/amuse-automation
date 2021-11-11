@@ -65,6 +65,16 @@ exports.config = {
         },
       }
     ],
+    [
+      SlackReporter, {
+        slackOptions: {
+          type: 'webhook',
+          webhook: process.env.AMUSE_SLACK_WEBHOOK,
+          slackName: "eng-qa-channel"
+        },
+        title: 'Production QA Automation'
+      }
+    ],
   ],
   waitforTimeout: defaultTimeoutInterval,
   services: [[TimelineService],

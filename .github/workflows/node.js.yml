@@ -35,4 +35,5 @@ jobs:
         BS_USER: ${{ secrets.BS_USER }}
         BS_KEY: ${{ secrets.BS_KEY }}
         SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        AMUSE_SLACK_WEBHOOK: ${{secrets.AMUSE_SLACK_WEBHOOK}}
         
