@@ -6,6 +6,7 @@ Feature: Amuse Site - checkout page
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Sale Price Designs 
         Given I am logged in shop page
+        And I clean up the cart
         When I click in the location box
         And I select last address
     @iosBrowser @androidBrowser

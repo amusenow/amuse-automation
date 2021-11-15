@@ -93,6 +93,7 @@ class ProductDetail extends Page {
         await (await this.btnAddProduct).waitForDisplayed()
         expect(await this.btnAddProduct).toExist()
         while (await GlobalFunctions.getSubtotal() < 65) {
+            await (await this.amountInput).waitForEnabled()
             await (await this.btnAddProduct).click()
             
         }
@@ -105,6 +106,7 @@ class ProductDetail extends Page {
         expect((await (await this.amountInput).getValue())).toEqual((await (await this.amountInput).getValue()))
         while (await (await this.amountInput).isEnabled()) {
             console.log(await (await this.amountInput).getValue())
+            await (await this.amountInput).waitForEnabled()
             await (await this.btnDecreaseProduct).click()
             
         }
@@ -112,6 +114,7 @@ class ProductDetail extends Page {
     async deleteProduct() {
         await (await this.btnDecreaseProduct).click()
         while (await (await this.amountInput).isDisplayedInViewport()) {
+            await (await this.amountInput).waitForEnabled()
             await (await this.btnDecreaseProduct).click()
         }
         await (await this.btnAddCart).waitForDisplayed()
@@ -124,6 +127,10 @@ class ProductDetail extends Page {
         if (await (await this.btnAddCart).isDisplayed()) {
             await (await this.btnAddCart).click()
         }
+    }
+    async increaseOneProduct() {
+        await (await this.btnAddProduct).waitForDisplayed()
+        await (await this.btnAddProduct).click()
     }
 
     /**

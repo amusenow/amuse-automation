@@ -11,7 +11,7 @@ class BrandsPage extends Page {
      get locationBox () { return $('.a-address-search') }
      get locationDiv () { return $('.m-select-location') }
      get featuredBrands () { return $("[data-testid] div:nth-of-type(2) [class='flex justify-between items-center mb-5']") }
-     get heroImage() { return $('div.m-homepage-hero__image.bg-cover') }
+     get heroImage() { return $('.hero__image') }
      get lettersBrands() { return $$('.leading-none.text-lg.tracking-tighter') }
     /**
      * a method to encapsule automation code to interact with the page

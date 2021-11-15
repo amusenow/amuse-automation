@@ -77,7 +77,7 @@ class HomePage extends Page {
     get categoryModule() { return $('.m-homepage-categories__list--grid') }
     //brands
     get brandsModule() { return $('#home > div > div.max-w-screen-xl.mx-auto > div:nth-child(2)') }
-    get seeAllLinks() { return $('div.product-carousel > div.flex > div.mb-5') }
+    get seeAllLinks() { return $$('div.product-carousel > div.flex > .flex') }
 
     //mobile
 
@@ -134,24 +134,64 @@ class HomePage extends Page {
         expect(await this.btnProfile).toBeClickable()
         await (await this.btnCart).waitForDisplayed()
     }
-    async mobileNavbarRedirect(item) {
-        var attribute
+    async navbarRedirect(item){
+        if (await (await this.loaderSpinner).isDisplayedInViewport()) {
+            await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
+        }
         switch (item) {
             case "shop":
+                await (await this.btnShopNavbar).waitForClickable()
+                await (await this.btnShopNavbar).click()
+                expect(this.btnShopNavbar).toHaveAttributeContaining('class', 'active')
+                break;
+
+            case "deals":
+                await (await this.btnDealsNavbar).waitForClickable()
+                await (await this.btnDealsNavbar).click()
+                expect(this.btnDealsNavbar).toHaveAttributeContaining('class', 'active')
+                break;
+
+            case "brands":
+                await (await this.btnBrandsNavbar).waitForClickable()
+                await (await this.btnBrandsNavbar).click()
+                expect(this.btnBrandsNavbar).toHaveAttributeContaining('class', 'active')
+                break;
+
+            case "referrals":
+                await (await this.btnReferralsNavbar).waitForClickable()
+                await (await this.btnReferralsNavbar).click()
+                await browser.pause(3000)
+                expect(this.btnReferralsNavbar).toHaveAttributeContaining('class', 'active')
+                break;
+        
+            default:
+                break;
+        }
+    }
+    async mobileNavbarRedirect(item) {
+        if (await (await this.loaderSpinner).isDisplayedInViewport()) {
+            await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
+        }
+        switch (item) {
+            case "shop":
+                await (await this.btnShopMobile).waitForClickable()
                 await (await this.btnShopMobile).click()
                 expect(this.btnShopMobile).toHaveAttributeContaining('class', 'active')
                 break;
 
             case "deals":
+                await (await this.btnDealsMobile).waitForClickable()
                 await (await this.btnDealsMobile).click()
                 expect(this.btnDealsMobile).toHaveAttributeContaining('class', 'active')
                 break;
 
             case "search":
+                await (await this.btnSearchMobile).waitForClickable()
                 await (await this.btnSearchMobile).click()
                 break;
 
             case "brands":
+                await (await this.btnProfileMobile).waitForClickable()
                 await (await this.btnProfileMobile).click()
                 break;
             default:
@@ -246,6 +286,9 @@ class HomePage extends Page {
         await (await this.btnResetEmail).click()
     }
     async resetModalAssertion() {
+        if (await (await this.loaderSpinner).isDisplayedInViewport()) {
+            await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
+        }
         await (await this.resetModal).waitForDisplayed()
         expect(await this.emailLabelResetPassword).toHaveTextContaining(utils.ValidEmailPassword)
     }
@@ -329,8 +372,13 @@ class HomePage extends Page {
 
     //location box functions
     async clickLocationBox() {
-        await (await this.locationBox).waitForDisplayed()
+        await (await this.locationBox).waitForClickable()
         await (await this.locationBox).click()
+        if(await (await this.inputLocationDiv).isDisplayedInViewport()){
+        }else{
+            await (await this.locationBox).waitForClickable()
+            await (await this.locationBox).click()
+        }
     }
     async assertLocationBoxModal() {
         await (await this.logoLocationDiv).waitForDisplayed()
@@ -345,10 +393,10 @@ class HomePage extends Page {
         await (await this.inputLocationDiv).setValue('11114')
         await (await this.inputLocationDiv).addValue(' Wright Road ')
         await (await this.inputLocationDiv).addValue(' Lynwood ')
-        await (await this.mapsDiv).waitForDisplayed()
+        //).waitForDisplayed()
     }
     async checkMap() {
-        await (await this.mapsDiv).waitForDisplayed()
+        //await (await this.mapsDiv).waitForDisplayed()
         await (await this.mapsDivTest).waitForDisplayed()
         await (await this.mapsDivTest).click()
         if (await (await this.confirmLocationModal).isDisplayedInViewport()) {
@@ -358,7 +406,7 @@ class HomePage extends Page {
         await (await this.logoLocationDiv).waitForDisplayed({ reverse: true })
     }
     async checkMapUnlogged() {
-        await (await this.mapsDiv).waitForDisplayed()
+        //await (await this.mapsDiv).waitForDisplayed()
         await (await this.mapsDivTest).waitForDisplayed()
         await (await this.mapsDivTest).click()
         if (await (await this.confirmLocationModal).isDisplayedInViewport()) {
@@ -366,6 +414,7 @@ class HomePage extends Page {
             await (await this.btnContinueAddress).click()
         }
         await (await this.mapsDivTest).waitForDisplayed({ reverse: true })
+        await (await this.inputLocationDiv).waitForDisplayed({ reverse: true })
     }
     async clickLocation() {
         await (await this.mapsDivTest).waitForDisplayed()
@@ -453,19 +502,13 @@ class HomePage extends Page {
     //brands module
 
     async seeAllAssertion() {
-        await (await this.seeAllLinks).waitForDisplayed()
-        var cards = (await this.seeAllLinks).$$('a.text-fontBase.underline')
-        console.log((await cards).length + ' hello')
-        for (let i = 0; i < (await cards).length; i++) {
-            await ((await cards)[i]).scrollIntoView()
-            let cardHref = await ((await cards)[i]).getAttribute('href')
-            console.log(await ((await cards)[i]).isClickable())
-            // await ((await cards)[i]).click()
-            // expect(driver).toHaveUrlContaining(driver.config.baseUrl + cardHref)
-            // await (await this.categoryModule).waitForDisplayed()
-            // await driver.switchWindow(driver.config.baseUrl)
-            // await ((await cards)[i]).waitForDisplayed()
-        }
+        var cards = (await this.seeAllLinks).$$('.content-section--text-normal')
+        console.log((await cards).length)
+        // for (let i = 0; i < (await cards).length; i++) {
+        //     await ((await cards)[i]).scrollIntoView()
+        //     let cardHref = await ((await cards)[i]).getAttribute('href')
+        //     console.log(await ((await cards)[i]).isClickable())
+        // }
     }
     async scrollBrandSection() {
         await (await this.thirdProduct).waitForDisplayed()

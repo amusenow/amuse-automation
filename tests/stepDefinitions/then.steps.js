@@ -190,7 +190,7 @@ Then(/^I should see header$/, async () => {//
     await HomePage.mobileNavBarAssertion() 
 }); 
 Then(/^I should see relevant results$/, async () => {//
-    await SearchPage.searchFoundAssert()
+    await SearchPage.searchFoundAssert('Sativa')
 }); 
 Then(/^I be redirected to correct page$/, async () => {//
     await SearchPage.checkSearch()
@@ -259,4 +259,7 @@ Then(/^I am able to add it to the calendar$/, async () => {//
 }); 
 Then(/^I should be able to cancel order$/, async () => {//
     await OrderTracking.cancelledOrderCheck()
+});
+Then(/^I should see limit modal$/, async () => {//
+    await CartPage.limitModalAsserion()
 }); 

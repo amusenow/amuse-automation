@@ -41,7 +41,7 @@ exports.config = {
     //'./tests/features/deals.feature',
     //'./tests/features/search.feature',
     //'./tests/features/resetPassword.feature',
-    './tests/features/checkout.feature',
+    './tests/features/dailyAllowance.feature',
     //  './tests/features/productDetail.feature',
     // './tests/features/cart.feature',
   ],
@@ -189,8 +189,11 @@ exports.config = {
   },
   before: async function () {
     require('expect-webdriverio');
-    const chai = require('chai');
-    global.chaiExpect = chai.expect;
+  },
+  beforeFeature: async function () {
+    if (driver.capabilities.browserName == 'chrome') {
+      driver.setWindowSize(1920, 1080)
+    }
   },
   //
   onComplete: async function () {
@@ -209,12 +212,12 @@ exports.config = {
   },
   afterFeature: async function (feature) {
     if (feature.includes('signUp')) {
-      var url =''
-      if(process.env.BASEURL.includes('dev')){
+      var url = ''
+      if (process.env.BASEURL.includes('dev')) {
         url = process.env.MAGENTO_DEV
-      }else if(process.env.BASEURL.includes('stage')){
+      } else if (process.env.BASEURL.includes('stage')) {
         url = process.env.MAGENTO_STAGE
-      }else{//prod
+      } else {//prod
         url = process.env.MAGENTO_PROD
       }
       const userID = await GlobalFunc.getRecipient().id;

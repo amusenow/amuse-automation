@@ -1,4 +1,5 @@
 const { When } = require('@cucumber/cucumber');
+const GlobalFunc = require('../utils/GlobalFunc');
 
 const SearchPage = require ('../pages/search.page');
 const HomePage = require('../pages/home.page.js')
@@ -28,6 +29,10 @@ const pages = {
 /**
  * SEARCH STEPS
  */
+ When(/^I clean up the cart$/, async () => {
+    await GlobalFunc.deleteCart()
+    driver.pause(4000)
+});
  When(/^a search box is displayed$/, async () => {
     await SearchPage.inputSearchAssertion()
 });
@@ -42,7 +47,7 @@ When(/^most searched content by section is displayed$/, async () => {
 });
 
 When(/^the user types text to search content$/, async () => {
-    await SearchPage.searchForAResult()
+    await SearchPage.searchForAResult('Sativa')
 });
 
 /**
@@ -106,7 +111,12 @@ When(/^I should see help button$/, async () => {
 });
 // SHOP PAGE 
 When(/^I click in the (\w+) page$/, async (page) => {
-    await HomePage.mobileNavbarRedirect(page)
+    if (driver.capabilities.browserName == 'chrome') {
+        await HomePage.navbarRedirect(page)
+    }else{
+        await HomePage.mobileNavbarRedirect(page)
+    }
+    
 });
 When(/^I click in sort button$/, async () => {
     await ShopPage.checkShopAll()
@@ -270,7 +280,7 @@ When(/^I enter valid credentials$/, async () => {//
 }); 
 //search
 When(/^I set a value in search input$/, async () => {//
-    await SearchPage.searchForAResult()
+    await SearchPage.searchForAResult('Sativa')
 }); 
 When(/^I click Enter$/, async () => {//
     await SearchPage.clickEnterKey()
@@ -317,4 +327,14 @@ When(/^I click in purchase order again$/, async () => {//
     await ProfilePage.clickOrderHistory()
     await ProfilePage.clickOldOrder()
     await ProfilePage.btnOrderAgain()
+}); 
+//limit modal
+When(/^I search for a product$/, async () => {//
+    await SearchPage.searchForAResult('28g')
+    await SearchPage.clickResult()
+}); 
+When(/^I add more than limit allowance to cart$/, async () => {//
+    await ShopPage.addProductToCart()
+    await ProductPage.increaseOneProduct()
+    await ProductPage.increaseOneProduct()
 }); 

@@ -94,6 +94,13 @@ class CartPage extends Page {
         await (await this.btnCheckout).waitForDisplayed()
         expect(await this.btnCheckout).toBeDisabled()
     }
+    async limitModalAsserion() {
+        await (await this.limitModal).waitForDisplayed({timeoutMsg: 'Limit modal was not displayed afer 5 seconds'})
+        expect(await this.limitModal).toBeDisplayed()
+        await (await this.closeModal).click()
+        await (await this.closeModal).waitForDisplayed({reverse:true})
+    
+    }
     /**
      * overwrite specifc options to adapt it to page object
      */

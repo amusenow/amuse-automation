@@ -12,6 +12,7 @@ class ShopPage extends Page {
     get locationBox() { return $('.a-address-search') }
     get locationDiv() { return $('.m-select-location') }
     get btnSortDiv() { return $('[class="w-1\/2 pl-1"] .btn--without-padding') }//
+    get sortDivWeb() { return $('.sf-select__selected-option') }//
     get btnShopAll() { return $('button.sb-category-filter-item.sb-category-filter-item--active') }//
     get recommendedOption() { return $('button.m-product-sorting__option.m-product-sorting__option--active') }
     get loaderSpinner() { return $('div.m-loader') } //
@@ -39,15 +40,24 @@ class ShopPage extends Page {
         if ((await this.loaderSpinner).isDisplayed()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
         }
-        await (await this.btnSortDiv).waitForDisplayed()
-        await (await this.locationDiv).scrollIntoView()
-        await (await this.btnSortDiv).click()
+        if (driver.capabilities.browserName == 'chrome') {
+            await (await this.sortDivWeb).waitForDisplayed() //sortDivWeb
+            await (await this.locationDiv).scrollIntoView()
+            await (await this.sortDivWeb).click()
+        }else{
+            await (await this.btnSortDiv).waitForDisplayed() 
+            await (await this.locationDiv).scrollIntoView()
+            await (await this.btnSortDiv).click()
+        }
     }
     async recommendedCheck() {
-        await (await this.recommendedOption).waitForDisplayed()
-        expect(await this.recommendedOption).toHaveTextContaining('Recommended')
-        await (await this.btnModalClose).click()
-
+        if (driver.capabilities.browserName == 'chrome') {
+            expect(await this.sortDivWeb).toHaveTextContaining('Recommended')
+        }else{
+            await (await this.recommendedOption).waitForDisplayed()
+            expect(await this.recommendedOption).toHaveTextContaining('Recommended')
+            await (await this.btnModalClose).click()
+        }
     }
     async checkShopAll() {
         await (await this.btnShopAll).waitForDisplayed()

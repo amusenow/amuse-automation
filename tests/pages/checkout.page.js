@@ -144,14 +144,19 @@ class CheckoutPage extends Page {
                     await (await hours)[j].scrollIntoView()
                     var hour =  (await hours)[j].$('.sf-radio__input')
                     await (await hour).click()
-                    flag = false
+                    flag = false;
                     break;
-                }else if(i == (await dates).length -1){
-                    flag = false 
                 }
             }
-            i++
-            await (await dates)[i].click()
+            if(i == (await dates).length -1){
+                flag = false ;
+                break;
+            }else{
+                i++
+                await (await dates)[i].scrollIntoView()
+                await (await dates)[i].click()
+            }
+            
         }
     }
     async selectPayment() {
