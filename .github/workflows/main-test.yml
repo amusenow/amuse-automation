@@ -2,7 +2,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ feature/browserstack ]
+    branches: [ feature/develop ]
 
 jobs:
   build:
@@ -27,7 +27,7 @@ jobs:
       run: |
         npm i
         npm i -g appium
-        BASEURL=https://amuse.com npm run iosBrowser
+        BASEURL=https://amuse.com npm run chrome
       env:
         BS_USER: ${{ secrets.BS_USER }}
         BS_KEY: ${{ secrets.BS_KEY }}
