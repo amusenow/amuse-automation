@@ -50,6 +50,7 @@ class HomePage extends Page {
     get emailLabelResetPassword() { return $('.m-reset-password .text-primary') }
     get btnCloseResetModal() { return $('.m-reset-password .btn') }
     get loaderSpinner() { return $('div.m-loader') }
+    get pendingDiv() { return $('.o-pending-orders') }
     //location box
     get locationBox() { return $('.a-address-search') }
     get locationDiv() { return $('.m-select-location') }
@@ -96,11 +97,11 @@ class HomePage extends Page {
      */
 
     async pageLoadWait() {
-        await browser.waitUntil(async function () {
-            const state = await browser.execute(async function () {
+        await driver.waitUntil(async function () {
+            const state = await driver.execute(async function () {
                 return document.readyState;
             });
-            //console.log("state:" + state)
+            console.log("state:" + state)
             return state === 'complete';
         },
             {
@@ -163,7 +164,10 @@ class HomePage extends Page {
                 await browser.pause(3000)
                 expect(this.btnReferralsNavbar).toHaveAttributeContaining('class', 'active')
                 break;
-        
+            case "search":
+                await (await this.btnSearchNavbar).waitForClickable()
+                await (await this.btnSearchNavbar).click()
+                expect(this.btnReferralsNavbar).toHaveAttributeContaining('class', 'active')
             default:
                 break;
         }
@@ -186,8 +190,12 @@ class HomePage extends Page {
                 break;
 
             case "search":
+                if (await (await this.loaderSpinner).isDisplayedInViewport()) {
+                    await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
+                }
                 await (await this.btnSearchMobile).waitForClickable()
                 await (await this.btnSearchMobile).click()
+                console.log('clicked')
                 break;
 
             case "brands":
@@ -252,6 +260,7 @@ class HomePage extends Page {
     async profileClickButton() {
         await (await this.btnProfile).waitForClickable()
         await (await this.btnProfile).click()
+        console.log('clicked')
     }
     async loginModalAssertion() {
         await (await this.loginModal).waitForDisplayed()
@@ -393,7 +402,7 @@ class HomePage extends Page {
         await (await this.inputLocationDiv).setValue('11114')
         await (await this.inputLocationDiv).addValue(' Wright Road ')
         await (await this.inputLocationDiv).addValue(' Lynwood ')
-        //).waitForDisplayed()
+        
     }
     async checkMap() {
         //await (await this.mapsDiv).waitForDisplayed()
@@ -434,11 +443,8 @@ class HomePage extends Page {
         if (await (await this.inputLocationDiv).isDisplayedInViewport()) {
             await (await this.inputLocationDiv).setValue('11114')
             await (await this.inputLocationDiv).addValue(' Wright')
-            await (await this.mapsDiv).waitForDisplayed()
             await (await this.inputLocationDiv).addValue(' Road ')
-            await (await this.mapsDiv).waitForDisplayed()
             await (await this.inputLocationDiv).addValue(' Lynwood ')
-            await (await this.mapsDiv).waitForDisplayed()
             await (await this.mapsDivTest).waitForDisplayed()
             await (await this.mapsDivTest).click()
             if (await (await this.loaderSpinner).isDisplayedInViewport()) {
@@ -472,7 +478,7 @@ class HomePage extends Page {
     async microCartDisplayed() {
         await (await this.microCartDiv).waitForDisplayed()
         expect(await this.microCartDiv).toBeDisplayed()
-        await (await this.microCartDiv).scrollIntoView()
+        await (await this.footerDiv).scrollIntoView()
         expect(await this.microCartDiv).toBeDisplayed()
     }
     async clickMicroCart() {
@@ -521,6 +527,14 @@ class HomePage extends Page {
         var newUrl = await (await this.btnReferral).getAttribute('link')
         await driver.url(await (await this.btnReferral).getAttribute('link'))
         expect(driver).toHaveUrlContaining(newUrl)
+    }
+    async closePending() {
+        if (await (await this.pendingDiv).isExisting()) {
+            await driver.execute(() => {
+                return document.querySelector('.o-pending-orders').setAttribute('style', "display: none");
+            })
+        }
+        
     }
     /**
      * overwrite specifc options to adapt it to page object

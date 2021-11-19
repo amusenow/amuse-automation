@@ -29,7 +29,6 @@ class Api {
       .get(`rest/V1/carts/mine`, {
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Cookie': 'AWSALB=W1auVOVwyeOPRw8qAzvx9AMgy77ZJtSbVfeFV4YbtcthuaoYtF67neQFdBYYTv+qq2V5e5yimWWkMTNh4c4YrvKIXDG2NlJ7WmrUdFBcsTRfqcRC5ovrv4qUJUYX; AWSALBCORS=W1auVOVwyeOPRw8qAzvx9AMgy77ZJtSbVfeFV4YbtcthuaoYtF67neQFdBYYTv+qq2V5e5yimWWkMTNh4c4YrvKIXDG2NlJ7WmrUdFBcsTRfqcRC5ovrv4qUJUYX; PHPSESSID=nhub7fu2lhf2c9cgon2kc8o3fp'
         }
       })
       .then((response) => {

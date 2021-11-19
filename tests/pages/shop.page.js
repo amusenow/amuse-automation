@@ -40,18 +40,19 @@ class ShopPage extends Page {
         if ((await this.loaderSpinner).isDisplayed()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
         }
-        if (driver.capabilities.browserName == 'chrome') {
-            await (await this.sortDivWeb).waitForDisplayed() //sortDivWeb
+        console.log(driver.capabilities.platformName)
+        if (driver.capabilities.platformName == 'windows') {
             await (await this.locationDiv).scrollIntoView()
+            await (await this.sortDivWeb).waitForDisplayed() //sortDivWeb
             await (await this.sortDivWeb).click()
         }else{
-            await (await this.btnSortDiv).waitForDisplayed() 
             await (await this.locationDiv).scrollIntoView()
+            await (await this.btnSortDiv).waitForDisplayed() 
             await (await this.btnSortDiv).click()
         }
     }
     async recommendedCheck() {
-        if (driver.capabilities.browserName == 'chrome') {
+        if (driver.capabilities.platformName == 'windows') {
             expect(await this.sortDivWeb).toHaveTextContaining('Recommended')
         }else{
             await (await this.recommendedOption).waitForDisplayed()
@@ -76,7 +77,7 @@ class ShopPage extends Page {
         await (await this.productGrid).waitForDisplayed()
         expect(await this.productGrid).toExist()
         var cards = (await this.productGrid).$$('div.sf-product-card')
-        console.log((await cards).length)
+        await (await cards)[0].waitForDisplayed()
         for (let i = 0; i < 3; i++) {
             expect(await (await cards)[i].$$('div.sf-product-card__image-wrapper')).toBeDisplayed()
             expect(await (await cards)[i].$$('.sf-product-card__link')).toBeDisplayed()
@@ -114,14 +115,19 @@ class ShopPage extends Page {
         await (await this.productGrid).waitForDisplayed()
         expect(await this.productGrid).toExist()
         var cards = (await this.productGrid).$$('div.sf-product-card > div.flex > div > .a-product-price')
-        console.log((await cards).length)
         var priceLabel = '', price =0
         for (let i = 0; i < (await cards).length; i++) {
             priceLabel = await ((await cards)[i]).getText()
-            price = priceLabel.match(/^$[0-9]+.[0-9]+/)
-            if(price < 50){
+            price = priceLabel.match(/[(0-9)+.?(0-9)*]+/)
+            if(price[0] < 65){
                 await ((await cards)[i].scrollIntoView())
+                await driver.execute(() => {
+                    return document.querySelector('#amuseHeader').setAttribute('style', "display: none");
+                })
                 await (await cards)[i].click()
+                await driver.execute(() => {
+                    return document.querySelector('#amuseHeader').setAttribute('style', "");
+                })
                 break;
             }
         }

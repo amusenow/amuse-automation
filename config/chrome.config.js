@@ -15,6 +15,8 @@ config.capabilities = [{
   "browserstack:acceptSslCerts" : "true",
   "browserstack:local" : "false",
   'browserstack:resolution': '1920x1080',
+  "browserstack:networkLogs":"true",
+  "browserstack:console":"errors"
 
 //   browserName: 'chrome',
 //   platformName: "linux"

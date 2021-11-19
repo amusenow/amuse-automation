@@ -30,8 +30,8 @@ const pages = {
  * SEARCH STEPS
  */
  When(/^I clean up the cart$/, async () => {
-    await GlobalFunc.deleteCart()
-    driver.pause(4000)
+    //await GlobalFunc.deleteCart()
+    await HomePage.closePending()
 });
  When(/^a search box is displayed$/, async () => {
     await SearchPage.inputSearchAssertion()
@@ -58,7 +58,12 @@ When(/^I should be able to close it$/, async () => {
     await HomePage.loginModalClose() 
 });
 When(/^I click on (\w+) from navbar$/, async (element) => {
-    await HomePage.mobileNavbarRedirect(element)
+    console.log(driver.capabilities.platformName)
+    if (driver.capabilities.platformName == 'windows') {
+        await HomePage.navbarRedirect(element)
+    }else{
+        await HomePage.mobileNavbarRedirect(element)
+    }
 });
 When(/^I click on profile from header$/, async () => {
     await HomePage.profileClickButton()
@@ -111,7 +116,7 @@ When(/^I should see help button$/, async () => {
 });
 // SHOP PAGE 
 When(/^I click in the (\w+) page$/, async (page) => {
-    if (driver.capabilities.browserName == 'chrome') {
+    if (driver.capabilities.platformName == 'windows') {
         await HomePage.navbarRedirect(page)
     }else{
         await HomePage.mobileNavbarRedirect(page)
@@ -131,8 +136,8 @@ When(/^I add a product to the cart$/, async () => {
 });
 When(/^I add a cheap product to the cart$/, async () => {
     await ShopPage.addToCheapProduct()
-    await ProductPage.addCartClick()
-    await HomePage.selectAddress()
+    await ProductPage.productHeaderAssertion()
+    await ProductPage.addCartOneClick()
 });
 When(/^I login$/, async () => {
     await HomePage.setEmail()
@@ -284,6 +289,7 @@ When(/^I set a value in search input$/, async () => {//
 }); 
 When(/^I click Enter$/, async () => {//
     await SearchPage.clickEnterKey()
+    
 });
 When(/^I click in a result$/, async () => {//
     await SearchPage.clickResult()
@@ -334,7 +340,6 @@ When(/^I search for a product$/, async () => {//
     await SearchPage.clickResult()
 }); 
 When(/^I add more than limit allowance to cart$/, async () => {//
-    await ShopPage.addProductToCart()
-    await ProductPage.increaseOneProduct()
+    await ProductPage.productHeaderAssertion()
     await ProductPage.increaseOneProduct()
 }); 

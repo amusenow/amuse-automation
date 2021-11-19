@@ -4,9 +4,13 @@ Feature: Amuse Home - profile
     I want to be able to go to profile page
 
     @iosBrowser @androidBrowser @web
+    Scenario:  Amuse - Profile Page - Login
+        Given I am on the home page
+        When I click on login button
+        And I login
+    @iosBrowser @androidBrowser @web
     Scenario:  Amuse - Profile Page - The Basic Info, Order History, Invite friends, Favorites, Payments, and Log out links should be displayed on the Profile page
-        Given I am logged in home page
-        And I click on profile from header
+        When I click on profile from header
         Then I should see all profile options
     @iosBrowser @androidBrowser @web
     Scenario:  Amuse - Profile Page - The Referral program module appears on the Profile page

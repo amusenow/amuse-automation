@@ -96,6 +96,8 @@ class GlobalFunctions {
     for(let i =  0; i < cart.length; i++){
       await api.deleteCartItem(cart[i].item_id, await this.getCurrentToken())
     }
+    const cart2 = await api.getCart(await this.getCurrentToken())
+    console.log(cart2)
     driver.refresh()
   }
 

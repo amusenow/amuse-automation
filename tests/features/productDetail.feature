@@ -21,7 +21,7 @@ Feature: Amuse Home - product detail
   @iosBrowser @androidBrowser @web
   Scenario:  Amuse - Product Detail Page - The product detail page should include the following components in the Info Module: Category, Subcategory, Classification, Safety, THC %, CBD %
     Then I should see product info module
-  @iosBrowser @androidBrowser @web
+  @iosBrowser @androidBrowser
   Scenario:  Amuse - Product Detail Page - The product image should appear. Zoom In and Carousel functionalities works properly.
     When I double click in the image
     Then Image should zoom

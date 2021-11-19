@@ -10,9 +10,10 @@ class ProfilePage extends Page {
      * define selectors using getter methods
      */
     get btnLogout () { return $('div:nth-of-type(2) > .sf-content-pages__list.sf-list .duration-150.ease-in-out.fill-current') }
+    get btnBasicInfo () { return $('div:nth-of-type(1) > .sf-content-pages__list > li:nth-of-type(1) > .sf-content-pages__menu.sf-menu-item') }
     get btnOrderHistory () { return $('li:nth-of-type(2) > .py-4.sf-content-pages__menu.sf-menu-item') }
     get menuProfile () { return $('.sf-list.sf-content-pages__list') }
-    get menuProfile () { return $('.sf-list.sf-content-pages__list') } //
+    get microcart () { return $('.o-microcart') } //
     get oldOrder () { return $('.sf-accordion-item') }
     get btnHelp () { return $('.btn.btn--regular.btn--secondary.btn--with-padding.mr-4.text-center.w-full') }
     get btnReceipt () { return $('[class] .btn--regular:nth-of-type(2)') }
@@ -51,15 +52,28 @@ class ProfilePage extends Page {
         }
     }
     async clickOrderHistory () {
+        await (await this.menuProfile).scrollIntoView()
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "display: none");
+        })
         await (await this.btnOrderHistory).waitForDisplayed()
         await (await this.btnOrderHistory).click();
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "");
+        })
     }
     async clickOldOrder () {
         await (await this.oldOrder).waitForDisplayed()
         var cards = (await this.oldOrder).$$('.cursor-pointer.flex.items-center.justify-between')
         console.log((await cards).length)
         await (await cards)[0].scrollIntoView()
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "display: none");
+        })
         await (await cards)[0].click();
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "");
+        })
     }
     async expandedOrderAssertion () {
         await (await this.btnHelp).waitForDisplayed()

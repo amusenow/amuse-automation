@@ -4,8 +4,13 @@ Feature: Amuse Home - Cart
     I want to be able to see cart page
 
     @iosBrowser @androidBrowser @web
-    Scenario:  Amuse - Cart Page 
-        Given I am logged in shop page
+    Scenario:  Amuse - Cart Page -  I login  
+        Given I am on the shop page
+        And I click on login button
+        When I login
+        And I clean up the cart
+    @iosBrowser @androidBrowser @web
+    Scenario:  Amuse - Cart Page - I select address
         When I click in the location box
         And I select last address
     @iosBrowser @androidBrowser @web

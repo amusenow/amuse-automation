@@ -6,7 +6,7 @@ require('dotenv').config()
 const GlobalFunc = require("../tests/utils/GlobalFunc")
 const Api = require("../tests/utils/api")
 
-const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 50000
+const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 60000
 
 const apps = {
   android: 'CelsiusFahrenheitConverter_v1.0.1_apkpure.com.apk',
@@ -40,10 +40,13 @@ exports.config = {
     //'./tests/features/brands.feature',
     //'./tests/features/deals.feature',
     //'./tests/features/search.feature',
+    //'./tests/features/profile.feature',
     //'./tests/features/resetPassword.feature',
     './tests/features/dailyAllowance.feature',
-    //  './tests/features/productDetail.feature',
+    //'./tests/features/checkout.feature',
+     // './tests/features/productDetail.feature',
     // './tests/features/cart.feature',
+    //'./tests/features/cartMinimum.feature',
   ],
 
   logLevel: 'error',
@@ -72,9 +75,9 @@ exports.config = {
   waitforTimeout: defaultTimeoutInterval,
   services: [[TimelineService],
   //uncomment for browserstack runs
-  // ['browserstack', {
-  //   browserstackLocal: true
-  // }],
+  ['browserstack', {
+    browserstackLocal: true
+  }],
   ['appium',
     {
       // This will use the globally installed version of Appium
@@ -115,10 +118,10 @@ exports.config = {
     }],
   ],
   // For browserstack:
-  //host: 'hub.browserstack.com',
+  host: 'hub.browserstack.com',
   //For simulator running:
-  host: '127.0.0.1',
-  port: 4723,
+  //host: '127.0.0.1',
+  //port: 4723,
   path: '/wd/hub/',
   baseUrl: process.env.BASEURL,
   deprecationWarnings: false,
@@ -191,7 +194,7 @@ exports.config = {
     require('expect-webdriverio');
   },
   beforeFeature: async function () {
-    if (driver.capabilities.browserName == 'chrome') {
+    if (driver.capabilities.platformName == 'windows') {
       driver.setWindowSize(1920, 1080)
     }
   },
@@ -211,6 +214,7 @@ exports.config = {
     }
   },
   afterFeature: async function (feature) {
+    
     if (feature.includes('signUp')) {
       var url = ''
       if (process.env.BASEURL.includes('dev')) {
@@ -223,6 +227,9 @@ exports.config = {
       const userID = await GlobalFunc.getRecipient().id;
       const api = await new Api(url);
       await api.deleteUserFromDB(userID, await GlobalFunc.getCurrentToken());
+    }else if(feature.includes('shopPage') || feature.includes('dailyAllowance') || feature.includes('cart') || feature.includes('profile') 
+    || feature.includes('checkout') || feature.includes('productDetail') || feature.includes('cartMinimum') ){
+      await GlobalFunc.deleteCart()
     }
   }
 }

@@ -24,6 +24,7 @@ class SearchPage extends Page {
         expect(await this.btnSearch).toBeClickable()
     }
     async inputSearchAssertion() {
+        await (await this.inputSearch).waitForDisplayed()
         expect(await this.inputSearch).toExist()
     }
 
@@ -46,8 +47,11 @@ class SearchPage extends Page {
         await (await this.inputSearch).setValue(query)
     }
     async clickEnterKey() {
-        driver.sendKeyEvent('Enter')
-        console.log(await driver.isKeyboardShown())
+        if (driver.capabilities.platformName == 'windows') {
+            driver.keys(['Enter'])
+        }else{
+            driver.sendKeyEvent('Enter')
+        }
     }
 
     async searchFoundAssert(query) {
@@ -64,6 +68,7 @@ class SearchPage extends Page {
         }
     }
     async clickResult() {
+        await (await this.firstProduct).waitForDisplayed()
         await (await this.firstProduct).scrollIntoView()
         await (await this.firstProduct).click()
     }
