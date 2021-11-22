@@ -61,8 +61,9 @@ exports.config = {
           slackBotToken: process.env.SLACK_TOKEN,
           uploadScreenshotOfFailedCase: true,
           notifyFailedCase: true,
-          title: 'Slack Reporter Test',
         },
+        notifyTestStartMessage: false,
+        title: 'Slack Reporter Test',
       }
     ],
     [
@@ -72,7 +73,8 @@ exports.config = {
           webhook: process.env.AMUSE_SLACK_WEBHOOK,
           slackName: "eng-qa-channel"
         },
-        title: 'Production QA Automation'
+        title: 'Production QA Automation',
+        notifyTestStartMessage: false,
       }
     ],
   ],
