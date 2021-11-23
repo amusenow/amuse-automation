@@ -12,6 +12,12 @@ config.capabilities = [{
   'browserstack:realMobile': 'true',
   'browserstack:video': 'true',
   "browserstack:acceptSslCerts" : "true",
+  'browserstack:console':"errors",
+  'browserstack:debug': true,
+  'bstack:options': {
+    'networkLogs': 'true',
+    
+},
 
   // browserName: 'safari',
   // platformName: 'iOS',
