@@ -1,5 +1,5 @@
 
-name: Node.js CI
+name: Staging Automation Tests
 
 on:
   schedule:
