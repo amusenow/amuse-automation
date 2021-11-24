@@ -329,6 +329,12 @@ When(/^I click in view recipt$/, async () => {//
     await ProfilePage.clickRecipt()
 }); 
 When(/^I click in purchase order again$/, async () => {//
+    if (driver.capabilities.platformName == 'windows') {
+        await ProfilePage.clickBack()
+    }else{
+        await ProfilePage.clickBack()
+        await ProfilePage.clickBackProfile()
+    }
     await ProfilePage.clickOrderHistory()
     await ProfilePage.clickOldOrder()
     await ProfilePage.btnOrderAgain()

@@ -75,7 +75,7 @@ class ReferralPage extends Page {
         }else if(await (await this.btnCopyLink).isDisplayedInViewport()){
             await (await this.btnEmail).waitForDisplayed()
             expect(await this.btnEmail).toBeClickable()
-            await (await this.btnEmail.click());
+            await (await this.btnEmail).click()
             expect(await this.inputEmail).toBeDisplayed()
             expect(await this.btnSend).toBeDisplayed()
         }

@@ -183,7 +183,6 @@ class HomePage extends Page {
                 }
                 await (await this.btnSearchMobile).waitForClickable()
                 await (await this.btnSearchMobile).click()
-                console.log('clicked')
                 break;
 
             case "brands":
@@ -197,6 +196,7 @@ class HomePage extends Page {
     async mobileUrlAssertion(path) {
         if (path == 'search') {
             await (await this.inputSearchMobile).waitForDisplayed()
+            await (await this.amuseLogo).scrollIntoView()
             await (await this.amuseLogo).waitForDisplayed()
             await (await this.amuseLogo).click()
         } else {
@@ -247,8 +247,10 @@ class HomePage extends Page {
     }
     async profileClickButton() {
         await (await this.btnProfile).waitForClickable()
+        if (await (await this.loaderSpinner).isDisplayedInViewport()) {
+            await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
+        }
         await (await this.btnProfile).click()
-        console.log('clicked')
     }
     async loginModalAssertion() {
         await (await this.loginModal).waitForDisplayed()
@@ -319,7 +321,6 @@ class HomePage extends Page {
     async loginModalClose() {
         await (await this.btnloginModaClose).click()
         await (await this.btnloginModaClose).waitForDisplayed({ reverse: true })
-        console.log('closed')
     }
     async signUpLinkClick() {
         await (await this.signUpLink).waitForDisplayed()
@@ -501,7 +502,6 @@ class HomePage extends Page {
     async scrollBrandSection() {
         await (await this.storyBlokPage).waitForDisplayed()
         var carausels = (await this.storyBlokPage).$$('.product-carousel')
-        console.log((await carausels).length + " carausels")
         await (await carausels)[0].scrollIntoView()
         driver.pause(4000)
         if (driver.capabilities.platformName == 'windows') {

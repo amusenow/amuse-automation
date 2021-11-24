@@ -14,6 +14,7 @@ config.capabilities = [{
       "debug" : "true",
       "networkLogs" : "true",
       'consoleLogs': 'info',
+      'video': 'true',
     },
     "browserName" : "iPhone",
   

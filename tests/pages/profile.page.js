@@ -83,7 +83,13 @@ class ProfilePage extends Page {
     }
     async clickRecipt () {
         await (await this.btnHelp).waitForDisplayed()
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "display: none");
+        })
         await (await this.btnReceipt).click()
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "");
+        })
     }
     async receiptAssertion () {
         const userInfo = await GlobalFunctions.getRecipient()
@@ -112,7 +118,24 @@ class ProfilePage extends Page {
     async clickBack () {
         await (await this.btnBackArrow).scrollIntoView()
         await (await this.btnBackArrow).waitForDisplayed()
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "display: none");
+        })
         await (await this.btnBackArrow).click();
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "");
+        })
+    }
+    async clickBackProfile () {
+        await (await this.btnProfileBackArrow).scrollIntoView()
+        await (await this.btnProfileBackArrow).waitForDisplayed()
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "display: none");
+        })
+        await (await this.btnProfileBackArrow).click();
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "");
+        })
     }
     async btnOrderAgain () {
         await (await this.btnOrderPurchase).waitForDisplayed()

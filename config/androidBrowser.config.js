@@ -11,16 +11,17 @@ config.capabilities = [
   {
     // The defaults you need to have in your config
 
-    'browserstack:device': 'Google Pixel 4',
-    'browserstack:os_version': '11.0',
-    'browserstack:realMobile': 'true',
-    'browserstack:video': 'true',
-    'browserstack:local': 'false',
-    "browserstack:acceptSslCerts" : "true",
-    'browserstack:automationName': 'Appium',
-    'browserName': 'Android',
-    "browserstack:browserstack.networkLogs":"true",
-    "browserstack:browserstack.console":"errors"
+    'bstack:options' : {
+      "osVersion" : "11.0",
+      "deviceName" : "Samsung Galaxy S21",
+      "realMobile" : "true",
+      "local" : "false",
+      "debug" : "true",
+      "networkLogs" : "true",
+      'consoleLogs': 'info',
+      'video': 'true',
+      },
+      "browserName" : "Android",
 
   }
 ];

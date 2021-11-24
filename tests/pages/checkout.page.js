@@ -17,7 +17,8 @@ class CheckoutPage extends Page {
     get btnCart() { return $('.o-order-summary__toggle') }
     get cartGrid() { return $('.collected-product-list') }
     get subtotalLabel() { return $(".o-order-summary__toggle > div.sf-price") }
-    get btnContinue() { return $(".pb-safe .btn--without-padding") }
+    get btnContinue() { return $(".btn--primary.btn.btn--without-padding") }
+    get btnContinueMobile() { return $("#mobile-buttons .btn--primary.btn.btn--without-padding") }
     get btnRadioDelivery() { return $("div:nth-of-type(1) > .form__element.form__radio.my-3.sf-radio > .sf-radio__container > .sf-radio__checkmark") }
     get labelDeliveryHour() { return $("div:nth-of-type(1) > .form__element.form__radio.my-3.sf-radio > .sf-radio__container > .sf-radio__content") }
     get btnRadioPayment() { return $(".o-payment > div> .form__radio-group") }
@@ -167,7 +168,7 @@ class CheckoutPage extends Page {
         var leng = (await radioButtons).length
         var optionNumber = await this.getRandom(leng)
         utils.SelectedPayment = await (await radioButtons)[optionNumber].getText()
-        await (await radioButtons)[optionNumber].click()
+        await (await radioButtons)[0].click()
     }
     async checkSpecialPrice() {
         if (GlobalFunctions.promoInCart()) {
@@ -188,16 +189,31 @@ class CheckoutPage extends Page {
         }
     }
     async checkContinueButton(flag) {
-        await (await this.btnContinue).scrollIntoView()
-        await (await this.btnContinue).waitForDisplayed()
-        if (flag == true) {
-            expect(await this.btnContinue).toBeEnabled()
-        } else {
-            expect(await this.btnContinue).toBeDisabled()
+        if (driver.capabilities.platformName == 'windows') {
+            await (await this.btnContinue).scrollIntoView()
+            await (await this.btnContinue).waitForDisplayed()
+            if (flag == true) {
+                expect(await this.btnContinue).toBeEnabled()
+            } else {
+                expect(await this.btnContinue).toBeDisabled()
+            }
+        }else{
+            await (await this.btnContinueMobile).scrollIntoView()
+            await (await this.btnContinueMobile).waitForDisplayed()
+            if (flag == true) {
+                expect(await this.btnContinueMobile).toBeEnabled()
+            } else {
+                expect(await this.btnContinueMobile).toBeDisabled()
+            }
         }
+        
     }
     async clickContinueButton() {
-        await (await this.btnContinue).click()
+        if (driver.capabilities.platformName == 'windows') {
+            await (await this.btnContinue).click()
+        }else{
+            await (await this.btnContinueMobile).click()
+        }
     }
     async clickPromoCode() {
         await (await this.btnPromoCode).scrollIntoView()
