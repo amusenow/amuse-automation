@@ -58,7 +58,6 @@ When(/^I should be able to close it$/, async () => {
     await HomePage.loginModalClose() 
 });
 When(/^I click on (\w+) from navbar$/, async (element) => {
-    console.log(driver.capabilities.platformName)
     if (driver.capabilities.platformName == 'windows') {
         await HomePage.navbarRedirect(element)
     }else{

@@ -30,7 +30,7 @@ Feature: Amuse Home
     Then I can scroll in brand modules
 
   #END OF NEW TEST CASES
-  @iosBrowser @androidBrowser
+  @iosBrowser @androidBrowser @web
   Scenario Outline: Amuse - Home Page - Header - The Amuse logo and links should be should be clickable and redirect a user to the relevant page
     When I click on <navbarItem> from navbar
     Then I should be redirect to <navbarItem> page

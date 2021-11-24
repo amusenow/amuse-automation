@@ -70,7 +70,7 @@ class HomePage extends Page {
     get productWeight() { return $('#home > div > div:nth-child(3) > div:nth-child(2) > div > div > div > div:nth-child(6)') }
     get productPrice() { return $('#home > div > div:nth-child(3) > div:nth-child(2) > div > div > div > div.flex.justify-between.items-center > div > div.a-product-price') }
     get productLabel() { return $(".content-section--margin-bottom-m:nth-of-type(3) [class='text-lg tracking-tighter leading-none mb-5']") }
-    get thirdProduct() { return $(".product-carousel:nth-of-type(2) .scrolling-product-card:nth-of-type(3)") }
+    get storyBlokPage() { return $("[data-testid='storyblok-page']") }
     get btnPlusProduct() { return $("div:nth-of-type(7) > div:nth-of-type(2) .o-product-card.scrolling-product-card .a-add-to-cart.sf-button") }
     get firstCarousel() { return $(".product-carousel:nth-of-type(2)") }
 
@@ -78,7 +78,6 @@ class HomePage extends Page {
     get categoryModule() { return $('.m-homepage-categories__list--grid') }
     //brands
     get brandsModule() { return $('#home > div > div.max-w-screen-xl.mx-auto > div:nth-child(2)') }
-    get seeAllLinks() { return $$('div.product-carousel > div.flex > .flex') }
 
     //mobile
 
@@ -110,19 +109,8 @@ class HomePage extends Page {
             });
     }
 
-    async logoAssertionElement(element, logo = 'login') {
-        if ((await this.loaderSpinner).isDisplayedInViewport()) {
-            await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
-        }
-        await (await element).waitForDisplayed()
-        if ((await this.loaderSpinner).isDisplayedInViewport()) {
-            await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
-        }
-        await driver.saveElement((await this.amuseLogo), logo)
-        expect(await driver.checkElement((await element), logo, {})).toEqual(0)
-    }
     async logoAssertion() {
-        //await this.logoAssertionElement(this.amuseLogo)
+        expect(await this.amuseLogo).toBeClickable()
     }
     //navbar functions
     async mobileNavBarAssertion() {
@@ -135,7 +123,7 @@ class HomePage extends Page {
         expect(await this.btnProfile).toBeClickable()
         await (await this.btnCart).waitForDisplayed()
     }
-    async navbarRedirect(item){
+    async navbarRedirect(item) {
         if (await (await this.loaderSpinner).isDisplayedInViewport()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
         }
@@ -305,9 +293,7 @@ class HomePage extends Page {
         await (await this.btnCloseResetModal).click()
         await (await this.resetModal).waitForDisplayed({ reverse: true })
     }
-    async loginAssertionLogo() {
-        //await this.logoAssertionElement(this.amuseLogoModal, 'logoLogin')
-    }
+
     async setPassword(password = utils.ValidEmailPassword) {
         await (await this.passwordInput).setValue(password);
     }
@@ -333,6 +319,7 @@ class HomePage extends Page {
     async loginModalClose() {
         await (await this.btnloginModaClose).click()
         await (await this.btnloginModaClose).waitForDisplayed({ reverse: true })
+        console.log('closed')
     }
     async signUpLinkClick() {
         await (await this.signUpLink).waitForDisplayed()
@@ -346,7 +333,6 @@ class HomePage extends Page {
     }
     async footerAssertionLogo() {
         await (await this.amuseLogoFooter).scrollIntoView()
-        //await this.logoAssertionElement(await this.amuseLogoFooter)
     }
     async footerSocialMediaAssertion() {
         await (await this.footerSocialMedia).waitForDisplayed()
@@ -383,8 +369,8 @@ class HomePage extends Page {
     async clickLocationBox() {
         await (await this.locationBox).waitForClickable()
         await (await this.locationBox).click()
-        if(await (await this.inputLocationDiv).isDisplayedInViewport()){
-        }else{
+        if (await (await this.inputLocationDiv).isDisplayedInViewport()) {
+        } else {
             await (await this.locationBox).waitForClickable()
             await (await this.locationBox).click()
         }
@@ -392,17 +378,14 @@ class HomePage extends Page {
     async assertLocationBoxModal() {
         await (await this.logoLocationDiv).waitForDisplayed()
         await (await this.inputLocationDiv).waitForDisplayed()
-        //await this.locationBoxLogoAssertion()
     }
-    async locationBoxLogoAssertion() {
-        //await this.logoAssertionElement(this.logoLocationDiv, 'logoLogin')
-    }
+
     async inputLocation() {
         await (await this.inputLocationDiv).waitForDisplayed()
         await (await this.inputLocationDiv).setValue('11114')
         await (await this.inputLocationDiv).addValue(' Wright Road ')
         await (await this.inputLocationDiv).addValue(' Lynwood ')
-        
+
     }
     async checkMap() {
         //await (await this.mapsDiv).waitForDisplayed()
@@ -508,17 +491,33 @@ class HomePage extends Page {
     //brands module
 
     async seeAllAssertion() {
-        var cards = (await this.seeAllLinks).$$('.content-section--text-normal')
-        console.log((await cards).length)
-        // for (let i = 0; i < (await cards).length; i++) {
-        //     await ((await cards)[i]).scrollIntoView()
-        //     let cardHref = await ((await cards)[i]).getAttribute('href')
-        //     console.log(await ((await cards)[i]).isClickable())
-        // }
+        await (await this.storyBlokPage).waitForDisplayed()
+        var cards = (await this.storyBlokPage).$$('.product-carousel .content-section--text-normal .btn')
+        for (let i = 0; i < 3; i++) {
+            await ((await cards)[i]).scrollIntoView()
+            expect((await cards)[i]).toHaveAttrContaining('href', 'brands')
+        }
     }
     async scrollBrandSection() {
-        await (await this.thirdProduct).waitForDisplayed()
-        await (await this.thirdProduct).scrollIntoView()
+        await (await this.storyBlokPage).waitForDisplayed()
+        var carausels = (await this.storyBlokPage).$$('.product-carousel')
+        console.log((await carausels).length + " carausels")
+        await (await carausels)[0].scrollIntoView()
+        driver.pause(4000)
+        if (driver.capabilities.platformName == 'windows') {
+            var products = (await carausels)[0].$$('.slick-slide')
+            await ((await products)[(await products).length - 1]).waitForDisplayed()
+            await ((await products)[(await products).length - 1]).scrollIntoView()
+            expect((await products)[(await products).length - 1]).toExist()
+        } else {
+            var products = (await carausels)[0].$$('.sf-product-card')
+            await ((await products)[(await products).length - 1]).waitForDisplayed()
+            await ((await products)[(await products).length - 1]).scrollIntoView()
+            expect((await products)[(await products).length - 1]).toExist()
+        }
+
+
+
     }
     async clickReferral() {
         await (await this.btnReferral).waitForDisplayed()
@@ -534,7 +533,7 @@ class HomePage extends Page {
                 return document.querySelector('.o-pending-orders').setAttribute('style', "display: none");
             })
         }
-        
+
     }
     /**
      * overwrite specifc options to adapt it to page object

@@ -21,7 +21,7 @@ const _rootPath = _path.join('/')
 exports.config = {
   user: process.env.BS_USER,
   key: process.env.BS_KEY,
-  runner: 'local',
+  //runner: 'local',
 
   rootPath: _rootPath,
   paths: {
@@ -33,20 +33,20 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-    //'./tests/features/home.feature',
-    './tests/features/login.feature',
-    './tests/features/locationBox.feature',
-    './tests/features/shopPage.feature',
-    './tests/features/brands.feature',
+    './tests/features/home.feature',
+    // './tests/features/login.feature',
+    // './tests/features/locationBox.feature',
+    // './tests/features/shopPage.feature',
+    // './tests/features/brands.feature',
     //'./tests/features/deals.feature',
-    './tests/features/search.feature',
+    //'./tests/features/search.feature',
     //'./tests/features/profile.feature',
-    './tests/features/resetPassword.feature',
-    './tests/features/dailyAllowance.feature',
+    // './tests/features/resetPassword.feature',
+    // './tests/features/dailyAllowance.feature',
     //'./tests/features/checkout.feature',
-    './tests/features/productDetail.feature',
-    './tests/features/cart.feature',
-    './tests/features/cartMinimum.feature',
+    // './tests/features/productDetail.feature',
+    // './tests/features/cart.feature',
+    // './tests/features/cartMinimum.feature',
   ],
 
   logLevel: 'error',
@@ -75,9 +75,7 @@ exports.config = {
   waitforTimeout: defaultTimeoutInterval,
   services: [[TimelineService],
   //uncomment for browserstack runs
-  ['browserstack', {
-    browserstackLocal: true
-  }],
+  ['browserstack'],
   ['appium',
     {
       // This will use the globally installed version of Appium
