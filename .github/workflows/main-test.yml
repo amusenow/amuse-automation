@@ -1,8 +1,8 @@
-name: Node.js CI
+name: Desktop tests
 
 on:
   push:
-    branches: [ feature/develop ]
+    branches: [ develop ]
 
 jobs:
   build:
@@ -31,4 +31,5 @@ jobs:
       env:
         BS_USER: ${{ secrets.BS_USER }}
         BS_KEY: ${{ secrets.BS_KEY }}
-        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }},
+        MAGENTO_PROD: ${{ secrets.MAGENTO_PROD }},
