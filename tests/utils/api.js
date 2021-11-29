@@ -32,9 +32,9 @@ class Api {
         }
       })
       .then((response) => {
-        return response.body.items
+        return response.body
       })
-      .catch(err => console.log('Error in deleting User request ', err));
+      .catch(err => console.log('Error in deleting Users cart request ', err));
   }
   async deleteCartItem(itemId, token) {
     return this.client
@@ -48,7 +48,7 @@ class Api {
           console.log(response.body)
         return response.body
       })
-      .catch(err => console.log('Error in deleting User request ', err));
+      .catch(err => console.log('Error in deleting Users cart request ', err));
   }
 
 }

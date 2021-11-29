@@ -20,7 +20,8 @@ class ReviewCheckout extends Page {
     get discountsLabel() { return $('div:nth-of-type(4) > .sf-accordion-item > .flex.items-center.justify-between > .font-medium.text-xs') }
     get taxesLabel() { return $('div:nth-of-type(5) > .sf-accordion-item > .flex.items-center.justify-between > .font-medium.text-xs') }
     get totalLabel() { return $('span.sf-property__value') }
-    get btnPlaceOrder() { return $('.pb-safe .btn--without-padding') }
+    get btnPlaceOrder() { return $('.btn--without-padding') }
+    get btnPlaceOrderMobile() { return $('#mobile-buttons .btn--without-padding') }
     get deliveryDiscountLabel() { return $(".leading-none.mb-0.text-primary.tracking-tighter") }
     get promoDiscount() { return $('.flex.items-center > h5') }
 
@@ -64,22 +65,29 @@ class ReviewCheckout extends Page {
         expect(await this.subtotalLabel).toHaveTextContaining(await GlobalFunctions.getSubtotal())
     }
     async feesAssertion() {
-        await (await this.feesLabel).waitForDisplayed({ timeoutMsg: 'There were no fees displayed' })
-        expect(await this.feesLabel).toExist()
-        var fees = await (await this.feesLabel).getText()
-        utils.fees = fees.match(/^$[0-9]+.[0-9]+/)
+        if (await (await this.feesLabel).isDisplayedInViewport()) {
+            await (await this.feesLabel).waitForDisplayed({ timeoutMsg: 'There were no fees displayed' })
+            expect(await this.feesLabel).toExist()
+            var fees = await (await this.feesLabel).getText()
+            utils.fees = fees.match(/^$[0-9]+.[0-9]+/)
+        }
+
     }
     async discountsAssertion() {
-        await (await this.discountsLabel).waitForDisplayed({ timeoutMsg: 'There were no discount displayed' })
-        expect(await this.discountsLabel).toExist()
-        var discounts = await (await this.discountsLabel).getText()
-        utils.disconuts = discounts.match(/^$[0-9]+.[0-9]+/)
+        if (await (await this.discountsLabel).isDisplayedInViewport()) {
+            await (await this.discountsLabel).waitForDisplayed({ timeoutMsg: 'There were no discount displayed' })
+            expect(await this.discountsLabel).toExist()
+            var discounts = await (await this.discountsLabel).getText()
+            utils.disconuts = discounts.match(/^$[0-9]+.[0-9]+/)
+        }
     }
     async taxesAssertion() {
-        await (await this.taxesLabel).waitForDisplayed({ timeoutMsg: 'There were no taxes displayed' })
-        expect(await this.taxesLabel).toExist()
-        var taxes = await (await this.taxesLabel).getText()
-        utils.taxes = taxes.match(/^$[0-9]+.[0-9]+/)
+        if (await (await this.taxesLabel).isDisplayedInViewport()) {
+            await (await this.taxesLabel).waitForDisplayed({ timeoutMsg: 'There were no taxes displayed' })
+            expect(await this.taxesLabel).toExist()
+            var taxes = await (await this.taxesLabel).getText()
+            utils.taxes = taxes.match(/^$[0-9]+.[0-9]+/)
+        }
     }
     async totalAssertion() {
         await (await this.totalLabel).waitForDisplayed()
@@ -90,12 +98,24 @@ class ReviewCheckout extends Page {
         expect(await this.subtotalLabel).toHaveTextContaining(totalSum)
     }
     async placeOrderButtonAssertion() {
-        await (await this.btnPlaceOrder).waitForDisplayed()
-        expect(await this.btnPlaceOrder).toExist()
+        if (driver.capabilities.platformName == 'windows') {
+            await (await this.btnPlaceOrder).waitForDisplayed()
+            expect(await this.btnPlaceOrder).toExist()
+        }else{
+            await (await this.btnPlaceOrderMobile).waitForDisplayed()
+            expect(await this.btnPlaceOrderMobile).toExist()
+        }
+        
     }
     async placeOrderClick() {
-        await (await this.btnPlaceOrder).waitForDisplayed()
-        await (await this.btnPlaceOrder).click()
+        if (driver.capabilities.platformName == 'windows') {
+            await (await this.btnPlaceOrder).waitForDisplayed()
+            await (await this.btnPlaceOrder).click()
+        }else{
+            await (await this.btnPlaceOrderMobile).waitForDisplayed()
+            await (await this.btnPlaceOrderMobile).click()
+        }
+        
     }
     async deliveryDiscountAssertion() {
         expect(await this.promoDiscount).toExist()

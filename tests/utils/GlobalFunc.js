@@ -93,11 +93,13 @@ class GlobalFunctions {
     }
     const api = new Api(url);
     const cart = await api.getCart(await this.getCurrentToken())
-    for(let i =  0; i < cart.length; i++){
-      await api.deleteCartItem(cart[i].item_id, await this.getCurrentToken())
+    console.log(cart.items_count + "count")
+    if(cart.items_count == 0){
+    }else{
+      for(let i =  0; i < cart.items.length; i++){
+        await api.deleteCartItem(cart.items[i].item_id, await this.getCurrentToken())
+      }
     }
-    const cart2 = await api.getCart(await this.getCurrentToken())
-    console.log(cart2)
     driver.refresh()
   }
 

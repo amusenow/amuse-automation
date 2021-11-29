@@ -16,7 +16,7 @@ class CheckoutPage extends Page {
     get instructionsInput() { return $('.sf-select--bordered') }
     get btnCart() { return $('.o-order-summary__toggle') }
     get cartGrid() { return $('.collected-product-list') }
-    get subtotalLabel() { return $(".o-order-summary__toggle > div.sf-price") }
+    get subtotalLabel() { return $(".o-order-summary .sf-property--price-summary .sf-price") }
     get btnContinue() { return $(".btn--primary.btn.btn--without-padding") }
     get btnContinueMobile() { return $("#mobile-buttons .btn--primary.btn.btn--without-padding") }
     get btnRadioDelivery() { return $("div:nth-of-type(1) > .form__element.form__radio.my-3.sf-radio > .sf-radio__container > .sf-radio__checkmark") }
@@ -44,7 +44,6 @@ class CheckoutPage extends Page {
     async checkoutDeliveryAssertion() {
         await (await this.addressLabel).waitForDisplayed()
         expect(await this.addressLabel).toExist()
-        console.log(await (await this.addressLabel).getText())
         expect(await this.addressLabel).toHaveTextContaining(await GlobalFunctions.getAddress())
     }
     async unitAssertion() {
@@ -73,8 +72,13 @@ class CheckoutPage extends Page {
         expect(await this.instructionsInput).toExist()
     }
     async cartClick() {
-        await (await this.btnCart).waitForDisplayed()
-        await (await this.btnCart).click()
+        if (driver.capabilities.platformName == 'windows') {}
+        else{
+            await (await this.btnCart).waitForDisplayed()
+            await (await this.btnCart).click()
+        }
+
+        
     }
     async cartModuleAssertion() {
         const cart = await GlobalFunctions.getCart()
@@ -104,6 +108,7 @@ class CheckoutPage extends Page {
         }
     }
     async selectTime() {
+        await (await this.addressLabel).scrollIntoView()
         await (await this.hourRadioButtonGroup).waitForDisplayed()
         expect(await this.hourRadioButtonGroup).toExist()
         var hour = (await this.hourRadioButtonGroup).$$('.delivery-time-row > .sf-radio  > .sf-radio__container')
@@ -114,7 +119,10 @@ class CheckoutPage extends Page {
         await (await hour)[optionNumber].click()
     }
     async selectDate() {
-        await (await this.dateCarausel).scrollIntoView()
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "display: none");
+        })
+        await (await this.addressLabel).scrollIntoView()
         await (await this.dateCarausel).waitForDisplayed()
         expect(await this.dateCarausel).toExist()
         var dates = (await this.dateCarausel).$$('.slick-slide')
@@ -125,7 +133,7 @@ class CheckoutPage extends Page {
         await (await dates)[optionNumber].click()
     }
     async selectDiscountedTime() {
-        await (await this.dateCarausel).scrollIntoView()
+        await (await this.addressLabel).scrollIntoView()
         await (await this.dateCarausel).waitForDisplayed()
         expect(await this.dateCarausel).toExist()
         await (await this.hourRadioButtonGroup).waitForDisplayed()
@@ -143,7 +151,7 @@ class CheckoutPage extends Page {
                     utils.SelectedDeliverHour = await (await hours)[j].getText()
                     utils.DiscountedDeliverHour = info.price_adjustment
                     await (await hours)[j].scrollIntoView()
-                    var hour =  (await hours)[j].$('.sf-radio__input')
+                    var hour =  (await hours)[j].$('.sf-radio__checkmark')
                     await (await hour).click()
                     flag = false;
                     break;
@@ -209,9 +217,14 @@ class CheckoutPage extends Page {
         
     }
     async clickContinueButton() {
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "");
+        })
         if (driver.capabilities.platformName == 'windows') {
+            await (await this.btnContinue).waitForClickable()
             await (await this.btnContinue).click()
         }else{
+            await (await this.btnContinueMobile).waitForClickable()
             await (await this.btnContinueMobile).click()
         }
     }

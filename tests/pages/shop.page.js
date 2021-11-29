@@ -94,6 +94,9 @@ class ShopPage extends Page {
         await (await this.productGrid).waitForDisplayed()
         expect(await this.productGrid).toExist()
         var flag = true
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "display: none");
+        })
         while (flag) {
             var cards = (await this.productGrid).$$('[qa-data-product-special="true"]')
             console.log((await cards).length)
@@ -110,6 +113,9 @@ class ShopPage extends Page {
                 flag = false
             }
         }
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "");
+        })
     }
     async addToCheapProduct() {
         await (await this.productGrid).waitForDisplayed()

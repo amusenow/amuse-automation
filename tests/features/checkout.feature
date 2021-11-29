@@ -45,6 +45,7 @@ Feature: Amuse Site - checkout page
         And I click checkout button
     @iosBrowser @androidBrowser @web
     Scenario:  Amuse - Checkout - Checkout Details Page - Items and Subtotal should be displayed in the Cart module. And The subtotal should reflect the discount
+        When I click on cart button
         Then I should see subtotal
     @iosBrowser @androidBrowser @web
     Scenario Outline:  Amuse - Checkout - Checkout Details Page - User should select payment

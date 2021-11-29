@@ -33,20 +33,20 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-    //'./tests/features/home.feature',
-    // './tests/features/login.feature',
-    // './tests/features/locationBox.feature',
-    // './tests/features/shopPage.feature',
-    // './tests/features/brands.feature',
-    //'./tests/features/deals.feature',
-    //'./tests/features/search.feature',
-    './tests/features/profile.feature',
-    // './tests/features/resetPassword.feature',
-    // './tests/features/dailyAllowance.feature',
+    './tests/features/home.feature',
+    './tests/features/login.feature',
+    './tests/features/locationBox.feature',
+    './tests/features/shopPage.feature',
+    './tests/features/brands.feature',
+    './tests/features/deals.feature',
+    './tests/features/search.feature',
+    //'./tests/features/profile.feature',
+    './tests/features/resetPassword.feature',
+    './tests/features/dailyAllowance.feature',
     //'./tests/features/checkout.feature',
-    // './tests/features/productDetail.feature',
-    // './tests/features/cart.feature',
-    // './tests/features/cartMinimum.feature',
+    './tests/features/productDetail.feature',
+    './tests/features/cart.feature',
+    './tests/features/cartMinimum.feature',
   ],
 
   logLevel: 'error',
@@ -212,7 +212,6 @@ exports.config = {
     }
   },
   afterFeature: async function (feature) {
-    
     if (feature.includes('signUp')) {
       var url = ''
       if (process.env.BASEURL.includes('dev')) {
@@ -226,8 +225,8 @@ exports.config = {
       const api = await new Api(url);
       await api.deleteUserFromDB(userID, await GlobalFunc.getCurrentToken());
     }else if(feature.includes('shopPage') || feature.includes('dailyAllowance') || feature.includes('cart') || feature.includes('profile') 
-    || feature.includes('checkout') || feature.includes('productDetail') || feature.includes('cartMinimum') ){
-      await GlobalFunc.deleteCart()
+    || feature.includes('checkout') || feature.includes('productDetail') || feature.includes('cartMinimum') || feature.includes('login')){
+        await GlobalFunc.deleteCart()
     }
   }
 }

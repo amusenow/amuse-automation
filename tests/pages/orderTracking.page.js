@@ -51,6 +51,7 @@ class OrderTracking extends Page {
         expect(await this.hourLabel).toHaveTextContaining(utils.SelectedDeliverHour)
     }
     async clickViewReceipt () {
+        await (await this.recipientName).scrollIntoView()
         await (await this.btnReciept).waitForDisplayed()
         expect(await this.btnReciept).toExist()
         await (await this.btnReciept).click()
