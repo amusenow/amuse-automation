@@ -1,5 +1,5 @@
 
-name: IOS Stage
+name: Staging Automation Tests
 
 on:
   schedule:
