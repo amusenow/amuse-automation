@@ -3,7 +3,7 @@ name: Staging Automation Tests
 
 on:
   schedule:
-    - cron:  '0 10,14 * * *'
+    - cron:  '0 11,18 * * *'
 
 jobs:
   build:
