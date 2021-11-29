@@ -1,4 +1,5 @@
 const { When } = require('@cucumber/cucumber');
+const GlobalFunc = require('../utils/GlobalFunc');
 
 const SearchPage = require ('../pages/search.page');
 const HomePage = require('../pages/home.page.js')
@@ -28,6 +29,10 @@ const pages = {
 /**
  * SEARCH STEPS
  */
+ When(/^I clean up the cart$/, async () => {
+    //await GlobalFunc.deleteCart()
+    await HomePage.closePending()
+});
  When(/^a search box is displayed$/, async () => {
     await SearchPage.inputSearchAssertion()
 });
@@ -42,7 +47,7 @@ When(/^most searched content by section is displayed$/, async () => {
 });
 
 When(/^the user types text to search content$/, async () => {
-    await SearchPage.searchForAResult()
+    await SearchPage.searchForAResult('Sativa')
 });
 
 /**
@@ -53,7 +58,11 @@ When(/^I should be able to close it$/, async () => {
     await HomePage.loginModalClose() 
 });
 When(/^I click on (\w+) from navbar$/, async (element) => {
-    await HomePage.mobileNavbarRedirect(element)
+    if (driver.capabilities.platformName == 'windows') {
+        await HomePage.navbarRedirect(element)
+    }else{
+        await HomePage.mobileNavbarRedirect(element)
+    }
 });
 When(/^I click on profile from header$/, async () => {
     await HomePage.profileClickButton()
@@ -67,6 +76,13 @@ When(/^I should see (\w+) header icons$/, async (loggedFlag) => {
 });
 When(/^I click on login button$/, async () => {
     await HomePage.loginClickButton() 
+});
+When(/^I click reset password$/, async () => {
+    await HomePage.clickResetButton() 
+});
+When(/^I enter valid email$/, async () => {
+    await HomePage.resetEmailInput() 
+    await HomePage.clickResetEmail()
 });
 When(/^I should (\w+) see location box in (\w+) page$/, async (locationFlag, page) => {
     if(locationFlag!='not'){
@@ -99,7 +115,12 @@ When(/^I should see help button$/, async () => {
 });
 // SHOP PAGE 
 When(/^I click in the (\w+) page$/, async (page) => {
-    await HomePage.mobileNavbarRedirect(page)
+    if (driver.capabilities.platformName == 'windows') {
+        await HomePage.navbarRedirect(page)
+    }else{
+        await HomePage.mobileNavbarRedirect(page)
+    }
+    
 });
 When(/^I click in sort button$/, async () => {
     await ShopPage.checkShopAll()
@@ -114,8 +135,8 @@ When(/^I add a product to the cart$/, async () => {
 });
 When(/^I add a cheap product to the cart$/, async () => {
     await ShopPage.addToCheapProduct()
-    await ProductPage.addCartClick()
-    await HomePage.selectAddress()
+    await ProductPage.productHeaderAssertion()
+    await ProductPage.addCartOneClick()
 });
 When(/^I login$/, async () => {
     await HomePage.setEmail()
@@ -219,11 +240,8 @@ When(/^all delivery options are set$/, async () => {
     await CheckoutPage.selectDate()
     await CheckoutPage.selectTime()
 });
-When(/^I change date$/, async () => {
-    await CheckoutPage.selectDate()
-});
-When(/^I change time$/, async () => {
-    await CheckoutPage.selectTime()
+When(/^I change to discounted date and time$/, async () => {
+    await CheckoutPage.selectDiscountedTime()
 });
 When(/^there is special price$/, async () => {
     await CheckoutPage.checkSpecialPrice()
@@ -235,7 +253,12 @@ When(/^I enter a promo code$/, async () => {
 When(/^I click on continue button$/, async () => {
     await CheckoutPage.clickContinueButton()
 });
-
+When(/^I should see discounts$/, async () => {
+    await ReviewCheckoutPage.deliveryDiscountAssertion()
+});
+When(/^I should see discounts in receipt$/, async () => {
+    await ReviewCheckoutPage.deliveryDiscountAssertion()
+});
 When(/^I should see taxes$/, async () => {
     await ReviewCheckoutPage.taxesAssertion()
 });
@@ -261,10 +284,11 @@ When(/^I enter valid credentials$/, async () => {//
 }); 
 //search
 When(/^I set a value in search input$/, async () => {//
-    await SearchPage.searchForAResult()
+    await SearchPage.searchForAResult('Sativa')
 }); 
 When(/^I click Enter$/, async () => {//
     await SearchPage.clickEnterKey()
+    
 });
 When(/^I click in a result$/, async () => {//
     await SearchPage.clickResult()
@@ -305,7 +329,22 @@ When(/^I click in view recipt$/, async () => {//
     await ProfilePage.clickRecipt()
 }); 
 When(/^I click in purchase order again$/, async () => {//
+    if (driver.capabilities.platformName == 'windows') {
+        await ProfilePage.clickBack()
+    }else{
+        await ProfilePage.clickBack()
+        await ProfilePage.clickBackProfile()
+    }
     await ProfilePage.clickOrderHistory()
     await ProfilePage.clickOldOrder()
     await ProfilePage.btnOrderAgain()
+}); 
+//limit modal
+When(/^I search for a product$/, async () => {//
+    await SearchPage.searchForAResult('28g')
+    await SearchPage.clickResult()
+}); 
+When(/^I add more than limit allowance to cart$/, async () => {//
+    await ProductPage.productHeaderAssertion()
+    await ProductPage.increaseOneProduct()
 }); 

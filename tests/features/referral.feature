@@ -56,7 +56,7 @@ Feature: Amuse Home - referral
         And I should see subtotal discount
     @iosBrowser @androidBrowser
     Scenario:  Amuse - Checkout - Checkout Details Page - Promo code appears in subtotal
-        Then I shuld see promo code applied
+        Then I should see promo code applied
     
     
     

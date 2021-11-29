@@ -49,6 +49,10 @@ Then(/^all links navigate to correct pages$/, async () => {
 Then(/^I can scroll in brand modules$/, async () => {
     await HomePage.scrollBrandSection()
 });
+Then(/^I should see reset modal confirmation$/, async () => {
+    await HomePage.resetModalAssertion()
+    await HomePage.closeResetModalAssertion()
+});
 /**
  * LOGIN Section 
  */
@@ -142,6 +146,9 @@ Then(/^I should see delivery window$/, async () => {//
     await ReviewCheckoutPage.checkoutDeliveryAssertion()
     await ReviewCheckoutPage.checkoutDeliveryTimeAssertion()
 }); 
+Then(/^I should see discounted applied in cart$/, async () => {//
+    await CheckoutPage.deliveryDiscountAssertion()
+}); 
 
 Then(/^I should see payment window$/, async () => {//
     await ReviewCheckoutPage.checkoutPaymentAssertion()
@@ -183,7 +190,7 @@ Then(/^I should see header$/, async () => {//
     await HomePage.mobileNavBarAssertion() 
 }); 
 Then(/^I should see relevant results$/, async () => {//
-    await SearchPage.searchFoundAssert()
+    await SearchPage.searchFoundAssert('Sativa')
 }); 
 Then(/^I be redirected to correct page$/, async () => {//
     await SearchPage.checkSearch()
@@ -216,7 +223,7 @@ Then(/^I should be redirected to program rules$/, async () => {//
 Then(/^referral link should be clickable$/, async () => {//
     await ReferralsPage.copyLinkAssertion()
 }); 
-Then(/^I shuld see promo code applied$/, async () => {//
+Then(/^I should see promo code applied$/, async () => {//
     await CheckoutPage.promoCodeAssertion()
 }); 
 //profile
@@ -252,4 +259,7 @@ Then(/^I am able to add it to the calendar$/, async () => {//
 }); 
 Then(/^I should be able to cancel order$/, async () => {//
     await OrderTracking.cancelledOrderCheck()
+});
+Then(/^I should see limit modal$/, async () => {//
+    await CartPage.limitModalAsserion()
 }); 

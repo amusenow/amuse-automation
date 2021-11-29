@@ -51,9 +51,17 @@ class OrderTracking extends Page {
         expect(await this.hourLabel).toHaveTextContaining(utils.SelectedDeliverHour)
     }
     async clickViewReceipt () {
+        await (await this.recipientName).scrollIntoView()
         await (await this.btnReciept).waitForDisplayed()
         expect(await this.btnReciept).toExist()
         await (await this.btnReciept).click()
+    }
+    async deliveryDiscountAssertion() {
+        expect(await this.promoDiscount).toExist()
+        if(utils.DiscountedDeliverHour < 0){
+            expect(await this.deliveryDiscount).toExist()
+            expect(await this.deliveryDiscountLabel).toExist()
+        }
     }
     async addCalendarAssertion () {
         await (await this.btnAddCalendar).waitForDisplayed()

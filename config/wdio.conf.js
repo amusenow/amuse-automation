@@ -3,6 +3,8 @@ const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
 const SlackReporter = require('@moroo/wdio-slack-reporter').default;
 const { join } = require('path');
 require('dotenv').config()
+const GlobalFunc = require("../tests/utils/GlobalFunc")
+const Api = require("../tests/utils/api")
 
 const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 60000
 
@@ -38,9 +40,13 @@ exports.config = {
     './tests/features/brands.feature',
     './tests/features/deals.feature',
     './tests/features/search.feature',
+    //'./tests/features/profile.feature',
+    './tests/features/resetPassword.feature',
+    './tests/features/dailyAllowance.feature',
+    //'./tests/features/checkout.feature',
+    './tests/features/productDetail.feature',
     './tests/features/cart.feature',
-    //  './tests/features/productDetail.feature',
-    // './tests/features/cart.feature',
+    './tests/features/cartMinimum.feature',
   ],
 
   logLevel: 'error',
@@ -66,17 +72,17 @@ exports.config = {
         title: 'Slack Reporter Test',
       }
     ],
-    // [
-    //   SlackReporter, {
-    //     slackOptions: {
-    //       type: 'webhook',
-    //       webhook: process.env.AMUSE_SLACK_WEBHOOK,
-    //       slackName: "eng-qa-channel"
-    //     },
-    //     title: 'Production QA Automation',
-    //     notifyTestStartMessage: false,
-    //   }
-    // ],
+    [
+      SlackReporter, {
+        slackOptions: {
+          type: 'webhook',
+          webhook: process.env.AMUSE_SLACK_WEBHOOK,
+          slackName: "eng-qa-channel"
+        },
+        title: 'Production QA Automation',
+        notifyTestStartMessage: false,
+      }
+    ],
   ],
   waitforTimeout: defaultTimeoutInterval,
   services: [[TimelineService],
@@ -128,6 +134,7 @@ exports.config = {
   //port: 4723,
   path: '/wd/hub/',
   baseUrl: process.env.BASEURL,
+  deprecationWarnings: false,
 
   framework: 'cucumber',
   cucumberOpts: {
@@ -185,7 +192,7 @@ exports.config = {
   //
   // Gets executed before test execution begins. At this point you can access all global
   // variables, such as `browser`. It is the perfect place to define custom commands.
-  onPrepare: function () {
+  onPrepare: async function () {
     // Start the appium server with default host:localhost, port:4723
     // appiumController.startAppium();
     // appiumController.startAppium({
@@ -193,13 +200,16 @@ exports.config = {
     //   port: '4444'
     // });
   },
-  before: function () {
+  before: async function () {
     require('expect-webdriverio');
-    const chai = require('chai');
-    global.chaiExpect = chai.expect;
+  },
+  beforeFeature: async function () {
+    if (driver.capabilities.platformName == 'windows') {
+      driver.setWindowSize(1920, 1080)
+    }
   },
   //
-  onComplete: function () {
+  onComplete: async function () {
     // Stop the appium server with default host:localhost, port:4723
     // appiumController.stopAppium();
     // appiumController.stopAppium({
@@ -211,6 +221,24 @@ exports.config = {
     if (result.result.status == 'FAILED') {
       const screenshot = await (await driver).takeScreenshot();
       await SlackReporter.uploadFailedTestScreenshot(screenshot);
+    }
+  },
+  afterFeature: async function (feature) {
+    if (feature.includes('signUp')) {
+      var url = ''
+      if (process.env.BASEURL.includes('dev')) {
+        url = process.env.MAGENTO_DEV
+      } else if (process.env.BASEURL.includes('stage')) {
+        url = process.env.MAGENTO_STAGE
+      } else {//prod
+        url = process.env.MAGENTO_PROD
+      }
+      const userID = await GlobalFunc.getRecipient().id;
+      const api = await new Api(url);
+      await api.deleteUserFromDB(userID, await GlobalFunc.getCurrentToken());
+    }else if(feature.includes('shopPage') || feature.includes('dailyAllowance') || feature.includes('cart') || feature.includes('profile') 
+    || feature.includes('checkout') || feature.includes('productDetail') || feature.includes('cartMinimum') || feature.includes('login')){
+        await GlobalFunc.deleteCart()
     }
   }
 }

@@ -22,6 +22,7 @@ class ProductDetail extends Page {
     get btnDecreaseProduct() { return $(".border-2.border-primary.p-2 > div:nth-of-type(1) > button") }
     get amountInput() { return $(".border-2 > .text-center") }
     get btnAddCart() { return $(".m-product-add-to-cart > .a-add-to-cart.btn.btn--big.btn--primary.btn--with-padding") }
+    get limitModal() { return $('.sf-modal__content') }
 
 
     /**
@@ -87,18 +88,20 @@ class ProductDetail extends Page {
         }
     }
     async increaseProduct() {
+        await (await this.locationDiv).scrollIntoView()
         if (await (await this.btnAddCart).isDisplayed()) {
             await (await this.btnAddCart).click()
         }
         await (await this.btnAddProduct).waitForDisplayed()
         expect(await this.btnAddProduct).toExist()
-        while (await GlobalFunctions.getSubtotal() < 65) {
-            console.log(await GlobalFunctions.getSubtotal() + " subtotal ?")
+        while (await GlobalFunctions.getSubtotal() < 65 || await (await this.limitModal).isDisplayedInViewport()) {
+            await (await this.amountInput).waitForEnabled()
             await (await this.btnAddProduct).click()
             
         }
     }
     async decreaseProduct() {
+        await (await this.locationDiv).scrollIntoView()
         await (await this.btnDecreaseProduct).waitForDisplayed()
         expect(await this.btnDecreaseProduct).toExist()
         let amount = parseInt(await (await this.amountInput).getValue())
@@ -106,6 +109,7 @@ class ProductDetail extends Page {
         expect((await (await this.amountInput).getValue())).toEqual((await (await this.amountInput).getValue()))
         while (await (await this.amountInput).isEnabled()) {
             console.log(await (await this.amountInput).getValue())
+            await (await this.amountInput).waitForEnabled()
             await (await this.btnDecreaseProduct).click()
             
         }
@@ -113,6 +117,7 @@ class ProductDetail extends Page {
     async deleteProduct() {
         await (await this.btnDecreaseProduct).click()
         while (await (await this.amountInput).isDisplayedInViewport()) {
+            await (await this.amountInput).waitForEnabled()
             await (await this.btnDecreaseProduct).click()
         }
         await (await this.btnAddCart).waitForDisplayed()
@@ -121,9 +126,32 @@ class ProductDetail extends Page {
         await (await this.btnAddCart).waitForDisplayed()
         expect(await this.btnAddCart).toExist()
     }
+    async addCartOneClick() {
+        if (await (await this.btnAddCart).isDisplayedInViewport()) {
+            await (await this.btnAddCart).click()
+        }
+    }
     async addCartClick() {
+        if (await (await this.btnAddCart).isDisplayedInViewport()) {
+            await (await this.btnAddCart).click()
+        }else{
+            await (await this.btnAddProduct).waitForDisplayed()
+            await (await this.btnAddProduct).click()
+        }
+    }
+    async increaseOneProduct() {
         if (await (await this.btnAddCart).isDisplayed()) {
             await (await this.btnAddCart).click()
+        }
+        await (await this.btnAddProduct).waitForDisplayed()
+        expect(await this.btnAddProduct).toExist()
+        await (await this.amountInput).scrollIntoView()
+        while (!(await (await this.limitModal).isDisplayedInViewport())) {
+            await (await this.amountInput).waitForEnabled()
+            if(await (await this.limitModal).isDisplayedInViewport()){
+            }else{
+                await (await this.btnAddProduct).click()
+            }
         }
     }
 

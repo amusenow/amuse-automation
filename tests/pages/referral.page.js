@@ -18,6 +18,8 @@ class ReferralPage extends Page {
     get btnSend() { return $(".email-button") }
     get btnLearnMore() { return $(".m-referrals-sharing-by-email__learn-more") }
     get dotsDiv() { return $(".slick-dots") }
+    get trackDiv() { return $(".slick-track") }
+    
 
     /**
      * a method to encapsule automation code to interact with the page
@@ -60,19 +62,20 @@ class ReferralPage extends Page {
         }
     }
     async emailButtonAssertion() {
+        await (await this.trackDiv).scrollIntoView()
         if (await (await this.dotsDiv).isDisplayedInViewport()) {
             var cards = (await this.dotsDiv).$$('li')
             console.log((await cards).length)
             await (await cards)[(await cards).length - 1].click()
             await (await this.btnEmail).waitForDisplayed()
             expect(await this.btnEmail).toBeClickable()
-            await this.btnEmail.click();
+            await (await this.btnEmail).click();
             expect(await this.inputEmail).toBeDisplayed()
             expect(await this.btnSend).toBeDisplayed()
         }else if(await (await this.btnCopyLink).isDisplayedInViewport()){
             await (await this.btnEmail).waitForDisplayed()
             expect(await this.btnEmail).toBeClickable()
-            await this.btnEmail.click();
+            await (await this.btnEmail).click()
             expect(await this.inputEmail).toBeDisplayed()
             expect(await this.btnSend).toBeDisplayed()
         }

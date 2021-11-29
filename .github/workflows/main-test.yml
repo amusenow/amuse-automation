@@ -1,9 +1,8 @@
-
-name: IOS Stage
+name: Desktop tests
 
 on:
-  schedule:
-    - cron:  '0 10,14 * * *'
+  push:
+    branches: [ develop ]
 
 jobs:
   build:
@@ -28,8 +27,9 @@ jobs:
       run: |
         npm i
         npm i -g appium
-        BASEURL=https://storefront.stage.amuse.com npm run iosBrowser
+        BASEURL=https://amuse.com npm run chrome
       env:
         BS_USER: ${{ secrets.BS_USER }}
         BS_KEY: ${{ secrets.BS_KEY }}
-        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }},
+        MAGENTO_PROD: ${{ secrets.MAGENTO_PROD }},

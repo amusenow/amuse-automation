@@ -12,6 +12,7 @@ class ShopPage extends Page {
     get locationBox() { return $('.a-address-search') }
     get locationDiv() { return $('.m-select-location') }
     get btnSortDiv() { return $('[class="w-1\/2 pl-1"] .btn--without-padding') }//
+    get sortDivWeb() { return $('.sf-select__selected-option') }//
     get btnShopAll() { return $('button.sb-category-filter-item.sb-category-filter-item--active') }//
     get recommendedOption() { return $('button.m-product-sorting__option.m-product-sorting__option--active') }
     get loaderSpinner() { return $('div.m-loader') } //
@@ -39,15 +40,25 @@ class ShopPage extends Page {
         if ((await this.loaderSpinner).isDisplayed()) {
             await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
         }
-        await (await this.btnSortDiv).waitForDisplayed()
-        await (await this.locationDiv).scrollIntoView()
-        await (await this.btnSortDiv).click()
+        console.log(driver.capabilities.platformName)
+        if (driver.capabilities.platformName == 'windows') {
+            await (await this.locationDiv).scrollIntoView()
+            await (await this.sortDivWeb).waitForDisplayed() //sortDivWeb
+            await (await this.sortDivWeb).click()
+        }else{
+            await (await this.locationDiv).scrollIntoView()
+            await (await this.btnSortDiv).waitForDisplayed() 
+            await (await this.btnSortDiv).click()
+        }
     }
     async recommendedCheck() {
-        await (await this.recommendedOption).waitForDisplayed()
-        expect(await this.recommendedOption).toHaveTextContaining('Recommended')
-        await (await this.btnModalClose).click()
-
+        if (driver.capabilities.platformName == 'windows') {
+            expect(await this.sortDivWeb).toHaveTextContaining('Recommended')
+        }else{
+            await (await this.recommendedOption).waitForDisplayed()
+            expect(await this.recommendedOption).toHaveTextContaining('Recommended')
+            await (await this.btnModalClose).click()
+        }
     }
     async checkShopAll() {
         await (await this.btnShopAll).waitForDisplayed()
@@ -66,7 +77,7 @@ class ShopPage extends Page {
         await (await this.productGrid).waitForDisplayed()
         expect(await this.productGrid).toExist()
         var cards = (await this.productGrid).$$('div.sf-product-card')
-        console.log((await cards).length)
+        await (await cards)[0].waitForDisplayed()
         for (let i = 0; i < 3; i++) {
             expect(await (await cards)[i].$$('div.sf-product-card__image-wrapper')).toBeDisplayed()
             expect(await (await cards)[i].$$('.sf-product-card__link')).toBeDisplayed()
@@ -83,35 +94,46 @@ class ShopPage extends Page {
         await (await this.productGrid).waitForDisplayed()
         expect(await this.productGrid).toExist()
         var flag = true
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "display: none");
+        })
         while (flag) {
-            var cards = (await this.productGrid).$$('.sf-product-card .flex .a-product-price .sf-price__value.sf-price__value--special')
+            var cards = (await this.productGrid).$$('[qa-data-product-special="true"]')
             console.log((await cards).length)
             if((await cards).length == 0){
                 await (await this.btnLoadMoreProducts).click()
                 if ((await this.loaderSpinner).isDisplayed()) {
                     await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
                 }
-                var cards = (await this.productGrid).$$('div.sf-product-card')
+                var cards = (await this.productGrid).$$('[qa-data-product-special="true"]')
             }else{
-                await ((await (await (await (await(await (await cards)[0].parentElement()).parentElement()).parentElement()).parentElement()).parentElement()).scrollIntoView())
-                console.log(await ((await cards)[0]).getText() + " shop page")
-                await (await cards)[0].click()
+                await (await cards)[0].scrollIntoView()
+                var title =  (await cards)[0].$('a.sf-product-card__link')
+                await (await title).click()
                 flag = false
             }
         }
+        await driver.execute(() => {
+            return document.querySelector('#amuseHeader').setAttribute('style', "");
+        })
     }
     async addToCheapProduct() {
         await (await this.productGrid).waitForDisplayed()
         expect(await this.productGrid).toExist()
         var cards = (await this.productGrid).$$('div.sf-product-card > div.flex > div > .a-product-price')
-        console.log((await cards).length)
         var priceLabel = '', price =0
         for (let i = 0; i < (await cards).length; i++) {
             priceLabel = await ((await cards)[i]).getText()
-            price = priceLabel.match(/^$[0-9]+.[0-9]+/)
-            if(price < 50){
+            price = priceLabel.match(/[(0-9)+.?(0-9)*]+/)
+            if(price[0] < 65){
                 await ((await cards)[i].scrollIntoView())
+                await driver.execute(() => {
+                    return document.querySelector('#amuseHeader').setAttribute('style', "display: none");
+                })
                 await (await cards)[i].click()
+                await driver.execute(() => {
+                    return document.querySelector('#amuseHeader').setAttribute('style', "");
+                })
                 break;
             }
         }

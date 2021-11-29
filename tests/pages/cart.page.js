@@ -74,7 +74,8 @@ class CartPage extends Page {
         }
     }
     async modifyQuantity() {
-        await (await this.input).setValue(4)
+        const cart = await GlobalFunctions.getCart()
+        await (await this.input).setValue(cart[0].qty + 1)
         if(await (await this.limitModal).isDisplayedInViewport()){
             await (await this.closeModal).click()
         }
@@ -92,6 +93,13 @@ class CartPage extends Page {
     async checkMinimumCheckout() {
         await (await this.btnCheckout).waitForDisplayed()
         expect(await this.btnCheckout).toBeDisabled()
+    }
+    async limitModalAsserion() {
+        await (await this.limitModal).waitForDisplayed({timeoutMsg: 'Limit modal was not displayed afer 5 seconds'})
+        expect(await this.limitModal).toBeDisplayed()
+        await (await this.closeModal).click()
+        await (await this.closeModal).waitForDisplayed({reverse:true})
+    
     }
     /**
      * overwrite specifc options to adapt it to page object

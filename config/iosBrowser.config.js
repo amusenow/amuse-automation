@@ -6,18 +6,19 @@ const config = require('./wdio.conf.js').config
 // http://appium.io/docs/en/writing-running-appium/caps/#general-capabilities
 config.capabilities = [{
   //The defaults you need to have in your config
-  'browserstack:device': 'iPhone 11',
-  'browserstack:os_version': '13',
-  'browserName': 'iPhone',
-  'browserstack:realMobile': 'true',
-  'browserstack:video': 'true',
-  "browserstack:acceptSslCerts" : "true",
-  'browserstack:console':"errors",
-  'browserstack:debug': true,
-  'bstack:options': {
-    'networkLogs': 'true',
-    
-},
+    'bstack:options' : {
+      "osVersion" : "14",
+      "deviceName" : "iPhone 12",
+      "realMobile" : "true",
+      "local" : "false",
+      "debug" : "true",
+      "networkLogs" : "true",
+      'consoleLogs': 'info',
+      'video': 'true',
+    },
+    "browserName" : "iPhone",
+  
+  
 
   // browserName: 'safari',
   // platformName: 'iOS',
@@ -25,6 +26,7 @@ config.capabilities = [{
   //For W3C the appium capabilities need to have an extension prefix
   //This is `appium:` for all Appium Capabilities which can be found here
   //http://appium.io/docs/en/writing-running-appium/caps/
+  
   // 'appium:deviceName': 'iPhone 12 Pro',
   // 'appium:platformVersion': '14.5',
   // 'appium:udid': '586EFE98-9998-4BFA-AC75-BABF034D06BB',

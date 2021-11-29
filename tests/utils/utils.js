@@ -1,5 +1,4 @@
 module.exports = {
-  platformName: browser.isAndroid ? 'ANDROID' : 'IOS',
   NewUserCredentials: {
     email: 'noheliaeucedaf@gmail.com',
     password: 'Password1.'
@@ -16,6 +15,7 @@ module.exports = {
     brand: '',
     price: ''
   },
+  DiscountedDeliverHour: 0,
   SelectedDeliverHour: '',
   SelectedDeliverDate: '',
   SelectedPayment: '',
