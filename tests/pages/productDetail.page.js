@@ -146,7 +146,9 @@ class ProductDetail extends Page {
         await (await this.btnAddProduct).waitForDisplayed()
         expect(await this.btnAddProduct).toExist()
         await (await this.amountInput).scrollIntoView()
-        while (!(await (await this.limitModal).isDisplayedInViewport())) {
+        console.log(await (await this.limitModal).isDisplayedInViewport())
+        while ((await (await this.limitModal).isDisplayedInViewport()) == false) {
+            console.log(await (await this.limitModal).isDisplayedInViewport())
             await (await this.amountInput).waitForEnabled()
             if(await (await this.limitModal).isDisplayedInViewport()){
             }else{
