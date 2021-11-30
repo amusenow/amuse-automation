@@ -1,1 +1,3 @@
 wdio-0-0-timeline-reporter.log
+wdio-0-0-timeline-reporter.log
+wdio-0-1-timeline-reporter.log
