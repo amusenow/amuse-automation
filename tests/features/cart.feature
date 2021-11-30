@@ -1,4 +1,4 @@
-Feature: Amuse Home - Cart
+Feature: Cart
 
     As a user, in the amuse site
     I want to be able to see cart page
