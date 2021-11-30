@@ -72,17 +72,17 @@ exports.config = {
         title: 'Slack Reporter Test',
       }
     ],
-    // [
-    //   SlackReporter, {
-    //     slackOptions: {
-    //       type: 'webhook',
-    //       webhook: process.env.AMUSE_SLACK_WEBHOOK,
-    //       slackName: "eng-qa-channel"
-    //     },
-    //     title: 'Production QA Automation',
-    //     notifyTestStartMessage: false,
-    //   }
-    // ],
+    [
+      SlackReporter, {
+        slackOptions: {
+          type: 'webhook',
+          webhook: process.env.AMUSE_SLACK_WEBHOOK,
+          slackName: "eng-qa-channel"
+        },
+        title: 'Production QA Automation',
+        notifyTestStartMessage: false,
+      }
+    ],
   ],
   waitforTimeout: defaultTimeoutInterval,
   services: [[TimelineService],
