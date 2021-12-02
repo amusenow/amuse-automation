@@ -8,6 +8,10 @@ Feature: Amuse Home - shop page
         When I click in the shop page
         Then I should see header and footer
     @iosBrowser @androidBrowser @web
+    Scenario:  Amuse - Shop Page - I select address
+        When I click in the location box
+        And I select last address
+    @iosBrowser @androidBrowser @web
     Scenario:  Amuse - Shop Page - The default state is “Shop all” and sorted by “Recommended”
         When I click in sort button
         Then I should see recommended option selected

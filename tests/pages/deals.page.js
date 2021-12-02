@@ -13,6 +13,7 @@ class DealsPage extends Page {
      get allDealsTitles() { return $('div.product-carousel') }
      get allCarousels() { return $('.scrolling-product') }
      get allLinks() { return $$('.text-fontBase.underline') }
+     get storyBlokPage() { return $("[data-testid='storyblok-page']") }
      //
     /**
      * a method to encapsule automation code to interact with the page
@@ -36,12 +37,11 @@ class DealsPage extends Page {
     }
     async checkAllModules () {
         await driver.pause(3000)
-        await (await this.allDealsTitles).waitForDisplayed()
-        var cards =  await (await this.allDealsTitles).$$('div.flex');
-        var cards2 = await  (await this.allDealsTitles).$$('div > div > div.scrolling-product')
-        for (let i = 0; i <  cards.length; i++) {
-            await (cards[i]).scrollIntoView()
-            expect(cards2[i]).toBeDisplayed()
+        await (await this.storyBlokPage).waitForDisplayed()
+        var cards = (await this.storyBlokPage).$$('.product-carousel')
+        for (let i = 0; i < 3; i++) {
+            await ((await cards)[i]).scrollIntoView()
+            expect((await cards)[i]).toExist()
         }
     }
     async allLinksClick () {
@@ -50,6 +50,14 @@ class DealsPage extends Page {
             //expect(await this.allLinks)[0].toBeClickable()
         }
         
+    }
+    async seeAllAssertion() {
+        await (await this.storyBlokPage).waitForDisplayed()
+        var cards = (await this.storyBlokPage).$$('.product-carousel')
+        for (let i = 0; i < 3; i++) {
+            await ((await cards)[i]).scrollIntoView()
+            expect((await cards)[i]).toHaveAttrContaining('href', 'brands')
+        }
     }
     /**
      * overwrite specifc options to adapt it to page object

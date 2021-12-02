@@ -13,7 +13,6 @@ class HomePage extends Page {
      */
     get modalAgeYes() { return $('.sf-modal__content') }
     get btnModalAgeYes() { return $('.sf-modal__content .btn.btn--primary.btn--regular.btn--without-padding') }
-    get btnNoThanks() { return $('#bx-element-1428003-kqkNBO3 > button') }
     get btnCloseAdvertisement() { return $("#amuseNotification button") }
     get amuseLogo() { return $("#amuseHeader a[title='Amuse']") }
     get amuseLogoFooter() { return $('.m-logo__image') }
@@ -231,18 +230,6 @@ class HomePage extends Page {
             await (await this.btnCloseAdvertisement).click()
         }
         
-    }
-    async unlockModal() {
-        await (await this.btnNoThanks).waitUntil(async () => {
-            return await (await this.btnNoThanks).waitForDisplayed()
-        }, {
-            timeout: 4000,
-            timeoutMsg: 'Modal is not present'
-        });
-        if (await (await this.btnNoThanks).isDisplayedInViewport()) {
-            await (await this.btnNoThanks).click()
-            await (await this.btnNoThanks).waitForDisplayed({ reverse: true })
-        }
     }
     async loginClickButton() {
         await (await this.btnLoginNavbar).waitForClickable()

@@ -146,7 +146,6 @@ class ProductDetail extends Page {
         await (await this.btnAddProduct).waitForDisplayed()
         expect(await this.btnAddProduct).toExist()
         await (await this.amountInput).scrollIntoView()
-        await (await this.btnAddProduct).click()
         if(await (await this.limitModal).isDisplayedInViewport()){
         }else{
             await (await this.btnAddProduct).click()
