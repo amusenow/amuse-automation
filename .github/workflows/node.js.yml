@@ -36,4 +36,5 @@ jobs:
         BS_KEY: ${{ secrets.BS_KEY }}
         SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
         AMUSE_SLACK_WEBHOOK: ${{secrets.AMUSE_SLACK_WEBHOOK}}
+        MAGENTO_PROD: ${{ secrets.MAGENTO_PROD }},
         
