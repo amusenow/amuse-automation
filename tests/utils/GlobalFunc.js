@@ -40,6 +40,7 @@ class GlobalFunctions {
       return this.localStorage.getItem(key)
     }, 'shop/user/current-token')
     var token = JSON.parse(result)
+    console.log(token)
     return token
   }
   async getAddress() {

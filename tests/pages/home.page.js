@@ -14,7 +14,7 @@ class HomePage extends Page {
     get modalAgeYes() { return $('.sf-modal__content') }
     get btnModalAgeYes() { return $('.sf-modal__content .btn.btn--primary.btn--regular.btn--without-padding') }
     get btnNoThanks() { return $('#bx-element-1428003-kqkNBO3 > button') }
-    get btnCloseAdvertisement() { return $("[class='max-w-screen-xl mx-auto px-4 sm\:px-6'] [type]") }
+    get btnCloseAdvertisement() { return $("#amuseNotification button") }
     get amuseLogo() { return $("#amuseHeader a[title='Amuse']") }
     get amuseLogoFooter() { return $('.m-logo__image') }
     get btnSearchNavbar() { return $('[class="a-search-icon p-1 mx-2 rounded-full lg\:block cursor-pointer o-header__search hidden"]') }
@@ -155,7 +155,7 @@ class HomePage extends Page {
             case "search":
                 await (await this.btnSearchNavbar).waitForClickable()
                 await (await this.btnSearchNavbar).click()
-                expect(this.btnReferralsNavbar).toHaveAttributeContaining('class', 'active')
+                expect(this.btnSearchNavbar).toHaveAttributeContaining('class', 'active')
             default:
                 break;
         }
@@ -226,8 +226,11 @@ class HomePage extends Page {
         await (await this.modalAgeYes).waitForDisplayed({ reverse: true })
     }
     async closeAdvertisement() {
-        await (await this.btnCloseAdvertisement).waitForDisplayed()
-        await (await this.btnCloseAdvertisement).click()
+        if (await (await this.btnCloseAdvertisement).isDisplayedInViewport()){
+            await (await this.btnCloseAdvertisement).waitForDisplayed()
+            await (await this.btnCloseAdvertisement).click()
+        }
+        
     }
     async unlockModal() {
         await (await this.btnNoThanks).waitUntil(async () => {
