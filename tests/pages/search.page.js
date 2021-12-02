@@ -8,7 +8,7 @@ class SearchPage extends Page {
      * define selectors using getter methods
      */
     get inputSearch() { return $('.sf-search-bar__input') }
-    get btnSearch() { return $('.btn.btn--regular.btn--secondary.btn--with-padding.hidden') }
+    get btnSearch() { return $('.btn.btn--regular.btn--secondary') }
     get mostSearchedSection() { return $('.m-search-panel-suggestions') }
     get labelMostSearchedSection() { return $('h6[class="mb-4 md:mb-5 text-fontBase lg:text-xs leading-none tracking-smaller lg:tracking-small"]') }
     get searchPanelResults() { return $('.m-search-panel-results') }

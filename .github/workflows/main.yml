@@ -3,6 +3,8 @@ name: Desktop tests
 on:
   schedule:
     - cron:  '0 13,20 * * *'
+  push:
+     branches: [ main ]
 
 jobs:
   build:

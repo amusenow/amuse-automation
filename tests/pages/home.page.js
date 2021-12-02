@@ -15,7 +15,7 @@ class HomePage extends Page {
     get btnModalAgeYes() { return $('.sf-modal__content .btn.btn--primary.btn--regular.btn--without-padding') }
     get btnNoThanks() { return $('#bx-element-1428003-kqkNBO3 > button') }
     get btnCloseAdvertisement() { return $("[class='max-w-screen-xl mx-auto px-4 sm\:px-6'] [type]") }
-    get amuseLogo() { return $('#amuseHeader > div > div > header > a') }
+    get amuseLogo() { return $("#amuseHeader a[title='Amuse']") }
     get amuseLogoFooter() { return $('.m-logo__image') }
     get btnSearchNavbar() { return $('[class="a-search-icon p-1 mx-2 rounded-full lg\:block cursor-pointer o-header__search hidden"]') }
     get btnLoginNavbar() { return $('.btn--with-padding') }

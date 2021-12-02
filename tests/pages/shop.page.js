@@ -18,7 +18,7 @@ class ShopPage extends Page {
     get loaderSpinner() { return $('div.m-loader') } //
     get btnModalClose() { return $('.sf-modal__close') }
     get btnShopAllSection() { return $("button[title='Shop All']") }
-    get productGrid() { return $("div.m-category-products > div.m-product-listing") }
+    get productGrid() { return $(".m-category-products .m-product-listing") }
     get pageName() { return $(".sf-breadcrumbs__item--last") }
     get btnAddCart() { return $(".m-product-add-to-cart > .a-add-to-cart.btn.btn--big.btn--primary.btn--with-padding") }
     get microCartDiv() { return $("div.o-microcart__checkout-box") }
@@ -79,11 +79,12 @@ class ShopPage extends Page {
         var cards = (await this.productGrid).$$('div.sf-product-card')
         await (await cards)[0].waitForDisplayed()
         for (let i = 0; i < 3; i++) {
-            expect(await (await cards)[i].$$('div.sf-product-card__image-wrapper')).toBeDisplayed()
-            expect(await (await cards)[i].$$('.sf-product-card__link')).toBeDisplayed()
-            expect(await (await cards)[i].$$('.flex.flex-row.items-center.text-xxs')).toBeDisplayed()
-            expect(await (await cards)[i].$$('.a-lab-results.leading-snug.text-grey-darkest.text-xxs')).toBeDisplayed()
-            expect(await (await cards)[i].$$('.flex.items-center.justify-between')).toBeDisplayed()
+            await ((await cards)[i]).scrollIntoView()
+            expect(await (await cards)[i].$$('.sf-product-card__image-wrapper')).toExist()
+            expect(await (await cards)[i].$$('.sf-product-card__link')).toExist()
+            expect(await (await cards)[i].$$('.flex.flex-row.items-center.text-xxs')).toExist()
+            expect(await (await cards)[i].$$('.a-lab-results')).toExist()
+            expect(await (await cards)[i].$$('.flex.items-center.justify-between')).toExist()
         }
     }
     async addProductToCart() {
@@ -141,11 +142,13 @@ class ShopPage extends Page {
     async clickOnProduct() {
         await (await this.productGrid).waitForDisplayed()
         expect(await this.productGrid).toExist()
-        var name = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.sf-product-card__link')
-        var image = (await this.productGrid).$('.sf-product-card:nth-of-type(2) > .sf-product-card__image-wrapper')
-        var classification = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.flex.flex-row.items-center.text-xxs')
-        var brand = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.a-brand.text-xxs')
-        var price = (await this.productGrid).$('.sf-product-card:nth-of-type(2) >.flex.items-center.justify-between')
+        var cards = (await this.productGrid).$$('.sf-product-card')
+        console.log((await cards).length)
+        var name = (await cards)[1].$('.sf-product-card__link')
+        var image = (await cards)[1].$('.sf-product-card__image-wrapper')
+        var classification = (await cards)[1].$('.flex.flex-row.items-center.text-xxs')
+        var brand = (await cards)[1].$('.a-brand.text-xxs')
+        var price = (await cards)[1].$('.flex.items-center.justify-between')
         utils.SelectedProduct.name = await (await name).getText()
         utils.SelectedProduct.classification = await (await classification).getText()
         utils.SelectedProduct.brand = await (await brand).getText()
