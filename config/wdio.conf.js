@@ -6,35 +6,18 @@ require('dotenv').config()
 const GlobalFunc = require("../tests/utils/GlobalFunc")
 const Api = require("../tests/utils/api")
 
-const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 60000
-
-const apps = {
-  android: 'CelsiusFahrenheitConverter_v1.0.1_apkpure.com.apk',
-  ios: 'PROD6.8.2.ipa'
-}
-
-let _path = __dirname.split('/')
-_path.pop()
-
-const _rootPath = _path.join('/')
+const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 200000
 
 exports.config = {
   user: process.env.BS_USER,
   key: process.env.BS_KEY,
-  //runner: 'local',
-
-  rootPath: _rootPath,
-  paths: {
-    android: _rootPath + '/app/' + apps.android,
-    ios: _rootPath + '/app/ ' + apps.ios
-  },
-  apps: apps,
+  runner: 'local',
 
   // Runner and framework Configuration
 
   specs: [
     // './tests/features/home.feature',
-     './tests/features/login.feature',
+    './tests/features/login.feature',
     // './tests/features/locationBox.feature',
     // './tests/features/shopPage.feature',
     // './tests/features/brands.feature',
@@ -210,6 +193,17 @@ exports.config = {
     if (driver.capabilities.platformName == 'windows') {
       driver.setWindowSize(1920, 1080)
     }
+    driver.waitUntil(function () {
+      const state = driver.execute(async function () {
+        return await document.readyState;
+      });
+      console.log("state:" + state)
+      return state === 'complete';
+    },
+      {
+        timeout: 90000, //60secs
+        timeoutMsg: 'Oops! Check your internet connection'
+      });
   },
   //
   onComplete: async function () {

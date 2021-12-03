@@ -92,13 +92,13 @@ class GlobalFunctions {
     }else{//prod
       url = process.env.MAGENTO_PROD
     }
+    const api = new Api('https://store.amuse.com/');
     const token = await this.getCurrentToken()
-    const api = new Api(url, token);
-    const cart = await api.getCart()
+    const cart = await api.getCart(token)
     console.log(cart.items_count + " count")
     if(cart.items_count > 0){
       for(let i =  0; i < cart.items.length; i++){
-        await api.deleteCartItem(cart.items[i].item_id )
+        await api.deleteCartItem(cart.items[i].item_id, token)
       }
     }
     driver.refresh()

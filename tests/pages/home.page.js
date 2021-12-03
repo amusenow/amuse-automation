@@ -220,7 +220,8 @@ class HomePage extends Page {
     }
 
     async acceptModal() {
-        await (await this.modalAgeYes).waitForDisplayed()
+        await (await this.modalAgeYes).waitForDisplayed({ timeout: 12000 })
+        driver.config.cucumberOpts.timeout = 5000
         await (await this.btnModalAgeYes).click()
         await (await this.modalAgeYes).waitForDisplayed({ reverse: true })
     }

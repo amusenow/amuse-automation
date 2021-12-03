@@ -4,39 +4,50 @@ let GlobalFunc = require('./GlobalFunc.js')
 
 
 class Api {
-   constructor(prefixUrl, token) {
+   constructor(prefixUrl) {
     this.client = got.extend({
       prefixUrl,
       responseType: 'json',
-      headers: {
-        'Authorization': 'Bearer ' + token,
-      }
     })
   }
 
-  async deleteUserFromDB(userid) {
+  async deleteUserFromDB(userid, token) {
     return this.client
-      .delete(`rest/all/V1/customers/${userid}?XDEBUG_SESSION_START=PHPSTORM`)
+      .delete(`rest/all/V1/customers/${userid}?XDEBUG_SESSION_START=PHPSTORM`,{
+        headers: {
+          'Authorization': 'Bearer ' + Buffer.from(token).toString("base64"),
+        }
+      })
       .then((response) => {
         return response.body
       })
       .catch(err => console.log('Error in deleting User request ', err));
   }
-  async getCart() {
+  async getCart(token) {
     return this.client
-      .get(`rest/V1/carts/mine`)
+      .get(`rest/V1/carts/mine`,{
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          
+        }
+      })
       .then((response) => {
         return response.body
       })
-      .catch(err => console.log('Error in geting Users cart request ', err.response.headers));
+      .catch(err => console.log('Error in geting Users cart request ', err));
   }
-  async deleteCartItem(itemId) {
+  async deleteCartItem(itemId, token) {
     return this.client
-      .delete(`rest/V1/carts/mine/items/${itemId}`)
+      .delete(`rest/V1/carts/mine/items/${itemId}`,{
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          
+        }
+      })
       .then((response) => {
         return response.body
       })
-      .catch(err => console.log('Error in deleting Users cart request ', err.response));
+      .catch(err => console.log('Error in deleting Users cart request ', err));
   }
 
 }
