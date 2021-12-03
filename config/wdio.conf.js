@@ -33,19 +33,19 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-    './tests/features/home.feature',
-    './tests/features/login.feature',
-    './tests/features/locationBox.feature',
-    './tests/features/shopPage.feature',
-    './tests/features/brands.feature',
-    './tests/features/deals.feature',
-    './tests/features/search.feature',
+    // './tests/features/home.feature',
+    // './tests/features/login.feature',
+    // './tests/features/locationBox.feature',
+    // './tests/features/shopPage.feature',
+    // './tests/features/brands.feature',
+    // './tests/features/deals.feature',
+    // './tests/features/search.feature',
     //'./tests/features/profile.feature',
-    './tests/features/resetPassword.feature',
+    // './tests/features/resetPassword.feature',
     './tests/features/dailyAllowance.feature',
-    //'./tests/features/checkout.feature',
-    './tests/features/productDetail.feature',
-    './tests/features/cart.feature',
+    // //'./tests/features/checkout.feature',
+    // './tests/features/productDetail.feature',
+    // './tests/features/cart.feature',
     './tests/features/cartMinimum.feature',
   ],
 
@@ -73,17 +73,17 @@ exports.config = {
         title: 'Slack Reporter Test',
       }
     ],
-    [
-      SlackReporter, {
-        slackOptions: {
-          type: 'webhook',
-          webhook: process.env.AMUSE_SLACK_WEBHOOK,
-          slackName: "eng-qa-channel"
-        },
-        title: 'Production QA Automation',
-        notifyTestStartMessage: false,
-      }
-    ],
+    // [
+    //   SlackReporter, {
+    //     slackOptions: {
+    //       type: 'webhook',
+    //       webhook: process.env.AMUSE_SLACK_WEBHOOK,
+    //       slackName: "eng-qa-channel"
+    //     },
+    //     title: 'Production QA Automation',
+    //     notifyTestStartMessage: false,
+    //   }
+    // ],
   ],
   waitforTimeout: defaultTimeoutInterval,
   services: [[TimelineService],

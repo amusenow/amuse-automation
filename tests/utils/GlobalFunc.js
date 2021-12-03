@@ -40,7 +40,7 @@ class GlobalFunctions {
       return this.localStorage.getItem(key)
     }, 'shop/user/current-token')
     var token = JSON.parse(result)
-    console.log(token)
+    console.log(token + "token")
     return token
   }
   async getAddress() {
@@ -93,12 +93,12 @@ class GlobalFunctions {
       url = process.env.MAGENTO_PROD
     }
     const api = new Api(url);
-    const cart = await api.getCart(await this.getCurrentToken())
-    console.log(cart.items_count + "count")
-    if(cart.items_count == 0){
-    }else{
+    const token =await this.getCurrentToken()
+    const cart = await api.getCart(token)
+    console.log(cart.items_count + " count")
+    if(cart.items_count > 0){
       for(let i =  0; i < cart.items.length; i++){
-        await api.deleteCartItem(cart.items[i].item_id, await this.getCurrentToken())
+        await api.deleteCartItem(cart.items[i].item_id, token)
       }
     }
     driver.refresh()

@@ -34,18 +34,16 @@ class Api {
       .then((response) => {
         return response.body
       })
-      .catch(err => console.log('Error in deleting Users cart request ', err));
+      .catch(err => console.log('Error in geting Users cart request ', err));
   }
   async deleteCartItem(itemId, token) {
     return this.client
       .delete(`rest/V1/carts/mine/items/${itemId}`, {
         headers: {
           'Authorization': 'Bearer ' + token,
-          'Cookie': 'AWSALB=W1auVOVwyeOPRw8qAzvx9AMgy77ZJtSbVfeFV4YbtcthuaoYtF67neQFdBYYTv+qq2V5e5yimWWkMTNh4c4YrvKIXDG2NlJ7WmrUdFBcsTRfqcRC5ovrv4qUJUYX; AWSALBCORS=W1auVOVwyeOPRw8qAzvx9AMgy77ZJtSbVfeFV4YbtcthuaoYtF67neQFdBYYTv+qq2V5e5yimWWkMTNh4c4YrvKIXDG2NlJ7WmrUdFBcsTRfqcRC5ovrv4qUJUYX; PHPSESSID=nhub7fu2lhf2c9cgon2kc8o3fp'
         }
       })
       .then((response) => {
-          console.log(response.body)
         return response.body
       })
       .catch(err => console.log('Error in deleting Users cart request ', err));
