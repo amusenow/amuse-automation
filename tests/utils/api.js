@@ -34,7 +34,7 @@ class Api {
       .then((response) => {
         return response.body
       })
-      .catch(err => console.log('Error in geting Users cart request ', err.response));
+      .catch(err => console.log('Error in geting Users cart request ', err.response.headers));
   }
   async deleteCartItem(itemId, token) {
     return this.client
