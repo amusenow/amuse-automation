@@ -29,7 +29,7 @@ class Api {
       .get(`rest/V1/carts/mine`, {
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Cookie': 'AWSALB=W1auVOVwyeOPRw8qAzvx9AMgy77ZJtSbVfeFV4YbtcthuaoYtF67neQFdBYYTv+qq2V5e5yimWWkMTNh4c4YrvKIXDG2NlJ7WmrUdFBcsTRfqcRC5ovrv4qUJUYX; AWSALBCORS=W1auVOVwyeOPRw8qAzvx9AMgy77ZJtSbVfeFV4YbtcthuaoYtF67neQFdBYYTv+qq2V5e5yimWWkMTNh4c4YrvKIXDG2NlJ7WmrUdFBcsTRfqcRC5ovrv4qUJUYX; PHPSESSID=nhub7fu2lhf2c9cgon2kc8o3fp'
+          'Cookie': 'AWSALB=zVOsnDHBOHaKJm8tqfWDUfG3dt2Kuff4E91tXVMbz1PFymjkdq/TXrzlCZYkY2a9o4Ub/mdmEx8fbDISlM+xT02gUSp4z88KJcBXeQJmYQsi0vQAUTfqWpU2ggQF'
         }
       })
       .then((response) => {
@@ -42,7 +42,7 @@ class Api {
       .delete(`rest/V1/carts/mine/items/${itemId}`, {
         headers: {
           'Authorization': 'Bearer ' + token,
-          'Cookie': 'AWSALB=W1auVOVwyeOPRw8qAzvx9AMgy77ZJtSbVfeFV4YbtcthuaoYtF67neQFdBYYTv+qq2V5e5yimWWkMTNh4c4YrvKIXDG2NlJ7WmrUdFBcsTRfqcRC5ovrv4qUJUYX; AWSALBCORS=W1auVOVwyeOPRw8qAzvx9AMgy77ZJtSbVfeFV4YbtcthuaoYtF67neQFdBYYTv+qq2V5e5yimWWkMTNh4c4YrvKIXDG2NlJ7WmrUdFBcsTRfqcRC5ovrv4qUJUYX; PHPSESSID=nhub7fu2lhf2c9cgon2kc8o3fp'
+          'Cookie': 'AWSALB=zVOsnDHBOHaKJm8tqfWDUfG3dt2Kuff4E91tXVMbz1PFymjkdq/TXrzlCZYkY2a9o4Ub/mdmEx8fbDISlM+xT02gUSp4z88KJcBXeQJmYQsi0vQAUTfqWpU2ggQF'
         }
       })
       .then((response) => {
