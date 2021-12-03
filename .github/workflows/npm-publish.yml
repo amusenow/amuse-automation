@@ -1,5 +1,5 @@
 
-name: Staging Automation Tests
+name: ios Prod Automation Tests
 
 on:
   schedule:
@@ -28,8 +28,10 @@ jobs:
       run: |
         npm i
         npm i -g appium
-        BASEURL=https://storefront.stage.amuse.com npm run iosBrowser
+        BASEURL=https://amuse.com npm run iosBrowser
       env:
         BS_USER: ${{ secrets.BS_USER }}
         BS_KEY: ${{ secrets.BS_KEY }}
-        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }},
+        AMUSE_SLACK_WEBHOOK: ${{secrets.AMUSE_SLACK_WEBHOOK}}
+        MAGENTO_PROD: ${{ secrets.MAGENTO_PROD }},
