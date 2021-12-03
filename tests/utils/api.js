@@ -29,26 +29,24 @@ class Api {
       .get(`rest/V1/carts/mine`, {
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Cookie': 'AWSALB=zVOsnDHBOHaKJm8tqfWDUfG3dt2Kuff4E91tXVMbz1PFymjkdq/TXrzlCZYkY2a9o4Ub/mdmEx8fbDISlM+xT02gUSp4z88KJcBXeQJmYQsi0vQAUTfqWpU2ggQF'
         }
       })
       .then((response) => {
         return response.body
       })
-      .catch(err => console.log('Error in geting Users cart request ', err));
+      .catch(err => console.log('Error in geting Users cart request ', err.response));
   }
   async deleteCartItem(itemId, token) {
     return this.client
       .delete(`rest/V1/carts/mine/items/${itemId}`, {
         headers: {
           'Authorization': 'Bearer ' + token,
-          'Cookie': 'AWSALB=zVOsnDHBOHaKJm8tqfWDUfG3dt2Kuff4E91tXVMbz1PFymjkdq/TXrzlCZYkY2a9o4Ub/mdmEx8fbDISlM+xT02gUSp4z88KJcBXeQJmYQsi0vQAUTfqWpU2ggQF'
         }
       })
       .then((response) => {
         return response.body
       })
-      .catch(err => console.log('Error in deleting Users cart request ', err));
+      .catch(err => console.log('Error in deleting Users cart request ', err.response));
   }
 
 }

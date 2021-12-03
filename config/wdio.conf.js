@@ -34,7 +34,7 @@ exports.config = {
 
   specs: [
     // './tests/features/home.feature',
-    // './tests/features/login.feature',
+     './tests/features/login.feature',
     // './tests/features/locationBox.feature',
     // './tests/features/shopPage.feature',
     // './tests/features/brands.feature',
@@ -42,11 +42,11 @@ exports.config = {
     // './tests/features/search.feature',
     //'./tests/features/profile.feature',
     // './tests/features/resetPassword.feature',
-    './tests/features/dailyAllowance.feature',
+    //'./tests/features/dailyAllowance.feature',
     // //'./tests/features/checkout.feature',
     // './tests/features/productDetail.feature',
     // './tests/features/cart.feature',
-    './tests/features/cartMinimum.feature',
+    //'./tests/features/cartMinimum.feature',
   ],
 
   logLevel: 'error',
@@ -143,6 +143,8 @@ exports.config = {
 
     // <boolean> show full backtrace for errors
     backtrace: false,
+
+    failFast: true,
 
     requireModule: [],
 
