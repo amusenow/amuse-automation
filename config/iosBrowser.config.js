@@ -29,7 +29,7 @@ config.capabilities = [{
   
   // 'appium:deviceName': 'iPhone 12 Pro',
   // 'appium:platformVersion': '14.5',
-  // 'appium:udid': '586EFE98-9998-4BFA-AC75-BABF034D06BB',
+  //// 'appium:udid': '586EFE98-9998-4BFA-AC75-BABF034D06BB',
   // 'appium:orientation': 'PORTRAIT',
   //  'appium:automationName': 'XCUITest',
   // 'appium:newCommandTimeout': 240,
