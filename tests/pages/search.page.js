@@ -68,7 +68,7 @@ class SearchPage extends Page {
         }
     }
     async clickResult() {
-        await (await this.firstProduct).scrollIntoView()
+        await (await this.searchItems).scrollIntoView()
         await (await this.firstProduct).waitForDisplayed()
         await (await this.firstProduct).click()
     }
