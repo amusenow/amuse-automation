@@ -20,11 +20,13 @@ class HomePage extends Page {
     get btnLoginNavbar() { return $('.btn--with-padding') }
     get btnProfile() { return $('.account-button.account-button--logged-in.cursor-pointer.p-1.rounded-full') }
     get btnloginModaClose() { return $('.sf-modal__close') }
+
+
     get btnCart() { return $('.a-microcart-icon.o-header__microcart') }
-    get btnShopNavbar() { return $('a[href="/shop"]') }
-    get btnDealsNavbar() { return $('a[href="/deals"]') }
-    get btnBrandsNavbar() { return $('a[href="/brands"]') }
-    get btnReferralsNavbar() { return $('a[href="/referrals"]') }
+    get btnShopNavbar() { return $('#m-header-navigation_shop') }
+    get btnDealsNavbar() { return $('#m-header-navigation_deals') }
+    get btnBrandsNavbar() { return $('#m-header-navigation_brands') }
+    get btnReferralsNavbar() { return $('#m-header-navigation_referrals') }
     get footerDiv() { return $('.o-footer__container') }
     get footerSocialMedia() { return $('#viewport > div.o-footer > div > div > div > div.mt-12 > div.mt-10 > div.flex') }
     get footerLinks() { return $('#viewport > div.o-footer > div > div > div > div.grid > div') }
@@ -80,11 +82,11 @@ class HomePage extends Page {
 
     //mobile
 
-    get btnShopMobile() { return $('.sf-bottom-navigation > div:nth-of-type(2)') }
-    get btnDealsMobile() { return $('.sf-bottom-navigation > div:nth-of-type(3)') }
-    get btnSearchMobile() { return $('.sf-bottom-navigation > div:nth-of-type(4)') }
+    get btnShopMobile() { return $('#sf-bottom-navigation_Shop') }
+    get btnDealsMobile() { return $('#sf-bottom-navigation_Deals') }
+    get btnSearchMobile() { return $('#sf-bottom-navigation_Search') }
     get inputSearchMobile() { return $('.sf-search-bar__input') }
-    get btnProfileMobile() { return $('.sf-bottom-navigation > div:nth-of-type(5)') }
+    get btnBrandsMobile() { return $('#sf-bottom-navigation_Brands') }
     get microCartDiv() { return $("div.o-microcart__checkout-box") }
 
     //referral
@@ -99,7 +101,6 @@ class HomePage extends Page {
             const state = await driver.execute(async function () {
                 return document.readyState;
             });
-            console.log("state:" + state)
             return state === 'complete';
         },
             {
@@ -185,8 +186,8 @@ class HomePage extends Page {
                 break;
 
             case "brands":
-                await (await this.btnProfileMobile).waitForClickable()
-                await (await this.btnProfileMobile).click()
+                await (await this.btnBrandsMobile).waitForClickable()
+                await (await this.btnBrandsMobile).click()
                 break;
             default:
                 break;

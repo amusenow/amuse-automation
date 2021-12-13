@@ -16,7 +16,7 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-    './tests/features/home.feature',
+     './tests/features/home.feature',
     './tests/features/login.feature',
     './tests/features/locationBox.feature',
     './tests/features/shopPage.feature',
@@ -198,7 +198,6 @@ exports.config = {
       const state = driver.execute(async function () {
         return await document.readyState;
       });
-      console.log("state:" + state)
       return state === 'complete';
     },
       {
