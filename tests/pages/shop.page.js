@@ -25,6 +25,8 @@ class ShopPage extends Page {
     get microCartMessage() { return $(".o-microcart__content") }
     get btnCheckoutMicrocart() { return $(".btn.btn--inverted-primary.btn--regular.btn--without-padding.cart-action") }
     get btnLoadMoreProducts() { return $(".block.duration-150.ease-in-out.font-light.mx-auto") }
+
+   
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
