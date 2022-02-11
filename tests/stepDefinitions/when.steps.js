@@ -115,6 +115,7 @@ When(/^I should see help button$/, async () => {
 });
 // SHOP PAGE 
 When(/^I click in the (\w+) page$/, async (page) => {
+    browser.pause(4000)
     if (driver.capabilities.platformName == 'windows') {
         await HomePage.navbarRedirect(page)
     }else{
@@ -123,6 +124,7 @@ When(/^I click in the (\w+) page$/, async (page) => {
     
 });
 When(/^I click in sort button$/, async () => {
+    browser.pause(4000)
     await ShopPage.checkShopAll()
     await ShopPage.clickSortBtn()
 });
