@@ -21,6 +21,8 @@ class HomePage extends Page {
     get btnProfile() { return $('.account-button.account-button--logged-in.cursor-pointer.p-1.rounded-full') }
     get btnloginModaClose() { return $('.sf-modal__close') }
 
+    
+
 
     get btnCart() { return $('.a-microcart-icon.o-header__microcart') }
     get btnShopNavbar() { return $('#m-header-navigation_shop') }
