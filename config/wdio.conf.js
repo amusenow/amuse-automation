@@ -19,7 +19,7 @@ exports.config = {
     //'./tests/features/home.feature',
     //'./tests/features/login.feature',
     //'./tests/features/locationBox.feature',
-    './tests/features/shopPage.feature',
+    //'./tests/features/shopPage.feature',
     //'./tests/features/brands.feature',
     //'./tests/features/deals.feature',
     //'./tests/features/search.feature',
@@ -27,13 +27,13 @@ exports.config = {
     //'./tests/features/resetPassword.feature',
     //'./tests/features/dailyAllowance.feature',
     //'./tests/features/checkout.feature',
-    //'./tests/features/productDetail.feature',
+    './tests/features/productDetail.feature',
     //'./tests/features/cart.feature',
     //'./tests/features/cartMinimum.feature',
   ],
 
   logLevel: 'error',
-  specFileRetries: 1,
+  specFileRetries: 0,
   maxInstances: 5,
   maxInstancesPerCapability: 1,
   reporters: ['spec',
@@ -72,7 +72,7 @@ exports.config = {
   waitforTimeout: defaultTimeoutInterval,
   services: [[TimelineService],
   //uncomment for browserstack runs
-  ['browserstack'],
+  //['browserstack'],
   ['appium',
     {
       // This will use the globally installed version of Appium
@@ -113,12 +113,12 @@ exports.config = {
     }],
   ],
   // For browserstack:
-  host: 'hub.browserstack.com',
+  //host: 'hub.browserstack.com',
   //For simulator running:
-  //host: '127.0.0.1',
-  //port: 4723,
+  host: '127.0.0.1',
+  port: 4723,
   path: '/wd/hub/',
-  baseUrl: process.env.BASEURL,
+  //baseUrl: process.env.BASEURL,
   deprecationWarnings: false,
 
   framework: 'cucumber',
