@@ -96,7 +96,6 @@ class ProductDetail extends Page {
         }
         await (await this.btnAddProduct).waitForDisplayed()
         await (await this.btnAddProduct).click()
-        await console.log((await this.btnAddProduct).isClickable()) 
         expect(await this.btnAddProduct).toExist()
         while (await GlobalFunctions.getSubtotal() < 65 || await (await this.limitModal).isDisplayedInViewport()) {
             await (await this.amountInput).waitForEnabled()
