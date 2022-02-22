@@ -9,8 +9,8 @@ const Api = require("../tests/utils/api")
 const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 200000
 
 exports.config = {
-  user: "rodgersromero_FUCpfi", 
-  key: "HnynWvjz3JfwsTxHpm4h",
+  user: process.env.BS_USER, 
+  key: process.env.BS_KEY,
   runner: 'local',
 
   // Runner and framework Configuration
