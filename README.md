@@ -28,9 +28,9 @@ Follow the below commands: - (after setting uo the WDA)
 
 ```bash
 export JAVA_HOME=$(/usr/libexec/java_home)
-export ANDROID_HOME=/Users/helloiconic/Library/Android/sdk
-export ANDROID_SDK_ROOT=/Users/helloiconic/Library/Android/sdk
-export ANDROID_AVD_HOME=/Users/helloiconic/.android/avd
+export ANDROID_HOME=/Users/YOUR_USER/Library/Android/sdk
+export ANDROID_SDK_ROOT=/Users/YOUR_USER/Library/Android/sdk
+export ANDROID_AVD_HOME=/Users/YOUR_USER/.android/avd
 export HTTP_PROXY=myserver:1981
 export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH"
 
