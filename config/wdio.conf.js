@@ -9,8 +9,8 @@ const Api = require("../tests/utils/api")
 const defaultTimeoutInterval = process.env.DEBUG ? (24 * 60 * 60 * 1000) : 200000
 
 exports.config = {
-  user: process.env.BS_USER, 
-  key: process.env.BS_KEY,
+  user: "rodgersromero_FUCpfi", 
+  key: "HnynWvjz3JfwsTxHpm4h",
   runner: 'local',
 
   // Runner and framework Configuration
@@ -33,7 +33,7 @@ exports.config = {
   ],
 
   logLevel: 'error',
-  specFileRetries: 1,
+  specFileRetries: 0,
   maxInstances: 5,
   maxInstancesPerCapability: 1,
   reporters: ['spec',
@@ -72,7 +72,7 @@ exports.config = {
   waitforTimeout: defaultTimeoutInterval,
   services: [[TimelineService],
   //uncomment for browserstack runs
-  ['browserstack'],
+  //['browserstack'],
   ['appium',
     {
       // This will use the globally installed version of Appium
@@ -113,10 +113,10 @@ exports.config = {
     }],
   ],
   // For browserstack:
-  host: 'hub.browserstack.com',
+  //host: 'hub.browserstack.com',
   //For simulator running:
-  //host: '127.0.0.1',
-  //port: 4723,
+  host: '127.0.0.1',
+  port: 4723,
   path: '/wd/hub/',
   baseUrl: process.env.BASEURL,
   deprecationWarnings: false,

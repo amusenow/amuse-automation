@@ -158,7 +158,7 @@ When(/^I select another address$/, async () => {
 //product detail page 
 When(/^I click on a product$/, async () => {
     await ShopPage.clickOnProduct()
-    await ProductPage.productHeaderAssertion()
+    await ProductPage.productBodyAssertion()
 });
 When(/^I should see product price$/, async () => {
     await ProductPage.priceAssertion()

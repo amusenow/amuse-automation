@@ -18,7 +18,7 @@ class ShopPage extends Page {
     get loaderSpinner() { return $('div.m-loader') } //
     get btnModalClose() { return $('.sf-modal__close') }
     get btnShopAllSection() { return $("button[title='Shop All']") }
-    get productGrid() { return $(".m-category-products .m-product-listing") }
+    get productGrid() { return $("div [class='m-product-listing']") }
     get pageName() { return $(".sf-breadcrumbs__item--last") }
     get btnAddCart() { return $(".m-product-add-to-cart > .a-add-to-cart.btn.btn--big.btn--primary.btn--with-padding") }
     get microCartDiv() { return $("div.o-microcart__checkout-box") }
@@ -144,18 +144,20 @@ class ShopPage extends Page {
     async clickOnProduct() {
         await (await this.productGrid).waitForDisplayed()
         expect(await this.productGrid).toExist()
-        var cards = (await this.productGrid).$$('.sf-product-card')
+        var cards = (await this.productGrid).$$('div [class="sf-product-card o-product-card"]')
         console.log((await cards).length)
-        var name = (await cards)[1].$('.sf-product-card__link')
-        var image = (await cards)[1].$('.sf-product-card__image-wrapper')
-        var classification = (await cards)[1].$('.flex.flex-row.items-center.text-xxs')
-        var brand = (await cards)[1].$('.a-brand.text-xxs')
-        var price = (await cards)[1].$('.flex.items-center.justify-between')
+        var name = (await cards)[1].$('div [class="sf-product-card__link"]')
+        var category = $('div [class="sf-image sb-category-filter-item__icon sf-image--has-size"]')
+        var image = (await cards)[1].$('div [class="sf-product-card__image-wrapper"]') 
+        var classification = (await cards)[1].$('div [class="flex flex-row items-center text-xxs"]')
+        var brand = (await cards)[1].$('div [class="a-brand text-xxs leading-snug"]')
+        var price = (await cards)[1].$('div [class="flex justify-between items-center"]')
         utils.SelectedProduct.name = await (await name).getText()
         utils.SelectedProduct.classification = await (await classification).getText()
         utils.SelectedProduct.brand = await (await brand).getText()
         utils.SelectedProduct.price = await (await price).getText()
-        await (await image).scrollIntoView()
+        await (await category).scrollIntoView()
+       // await (await image).scrollIntoView()
         await (await name).click()
     }
     async checkMinimumMessage() {
