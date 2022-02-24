@@ -7,7 +7,7 @@ Feature: Amuse Home
     Given I am on the home page
     Then I should see amuse logo
     And I should see normal header icons
-  @iosBrowser #@androidBrowser @web
+  @iosBrowser @androidBrowser @web
   Scenario: Amuse - Home Page - Header - The login icon is clickable and redirect a user to the relevant page
     When I click on login button
     Then I should be displayed with sigin modal
