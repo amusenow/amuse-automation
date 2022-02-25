@@ -27,7 +27,7 @@ class HomePage extends Page {
     get btnCart() { return $('.a-microcart-icon.o-header__microcart') }
     get btnShopNavbar() { return $('div [class="sf-bottom-navigation-item__label sf-bottom-navigation-item--has-margin') }
     get btnDealsNavbar() { return $('div [id="sf-bottom-navigation_Deals"]') }
-    get btnBrandsNavbar() { return $('#m-header-navigation_brands') }
+    get btnBrandsNavbar() { return $('div [id="sf-bottom-navigation_Brands"]') }
     get btnReferralsNavbar() { return $('#m-header-navigation_referrals') }
     get footerDiv() { return $('.o-footer__container') }
     get footerSocialMedia() { return $('#viewport > div.o-footer > div > div > div > div.mt-12 > div.mt-10 > div.flex') }
