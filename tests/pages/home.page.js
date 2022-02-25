@@ -28,7 +28,7 @@ class HomePage extends Page {
     get btnBrandsNavbar() { return $('#m-header-navigation_brands') }
     get btnReferralsNavbar() { return $('#m-header-navigation_referrals') }
     get footerDiv() { return $('.o-footer__container') }
-    get footerSocialMedia() { return $('#viewport > div.o-footer > div > div > div > div.mt-12 > div.mt-10 > div.flex') }
+    get footerSocialMedia() { return $('div[class="lg:mt-10 xl:mt-0 pt-8 md:pt-2 md:flex md:items-center md:justify-between flex-wrap order-last xl:order-none"] > div') }
     get footerLinks() { return $('#viewport > div.o-footer > div > div > div > div.grid > div') }
     get heroImage() { return $('.content-section--margin-bottom-m.content-section--margin-top-m.product-module') }
     get btnHelp() { return $("[class='wrapper-AtBcr u-isActionable u-textLeft u-inlineBlock u-borderNone u-textBold u-textNoWrap Arrange Arrange--middle u-userLauncherColor wrapperMobile-1Ets2']") }
@@ -420,7 +420,7 @@ class HomePage extends Page {
         if (await (await this.inputLocationDiv).isDisplayedInViewport()) {
             await (await this.inputLocationDiv).setValue('11114')
             await (await this.inputLocationDiv).addValue(' Wright')
-            await (await this.inputLocationDiv).addValue(' Road ')
+            await (await this.inputLocationDiv).addValue(' Rd ')
             await (await this.inputLocationDiv).addValue(' Lynwood ')
             await (await this.mapsDivTest).waitForDisplayed()
             await (await this.mapsDivTest).click()

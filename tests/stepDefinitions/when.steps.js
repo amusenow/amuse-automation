@@ -100,7 +100,8 @@ When(/^I set valid password$/, async () => {
 });
 //LOCATION BOX
 When(/^I click in the location box$/, async () => {
-    await HomePage.clickLocationBox() 
+    await HomePage.clickLocationBox()
+    await browser.pause(3000)
     await HomePage.assertLocationBoxModal()
 });
 When(/^I enter part of address$/, async () => {
