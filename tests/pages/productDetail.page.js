@@ -18,9 +18,9 @@ class ProductDetail extends Page {
     get infoModule() { return $('.flex-wrap.justify-center') }
     get productImage() { return $('.panzoom-img') } //
     get caroselDiv() { return $('.slick-dots') }
-    get btnAddProduct() { return $('div[class="m-product-add-to-cart ml-4 md:ml-0 sm:w-48 md:w-36 w-auto lg:w-48"] > div > div:nth-child(3) > button') }
-    get btnDecreaseProduct() { return $('div[class="m-product-add-to-cart ml-4 md:ml-0 sm:w-48 md:w-36 w-auto lg:w-48"] > div > div:nth-child(1) > button') }
-    get amountInput() { return $("div > div.sf-quantity-selector__input-container.sf-quantity-selector__input-container--width-1 > input") }
+    get btnAddProduct() { return $('div[class="sf-quantity-selector w-full border-2 border-primary rounded-lg p-2"] > div:nth-child(3) > button') }
+    get btnDecreaseProduct() { return $('div[class="sf-quantity-selector w-full border-2 border-primary rounded-lg p-2"] > div:nth-child(1) > button') }
+    get amountInput() { return $('div[class="sf-quantity-selector w-full border-2 border-primary rounded-lg p-2"] > div:nth-child(2) > input') }
     get btnAddCart() { return $(".m-product-add-to-cart > .a-add-to-cart.btn.btn--big.btn--primary.btn--with-padding") }
     get limitModal() { return $('.sf-modal__content') }
 
@@ -95,33 +95,38 @@ class ProductDetail extends Page {
             await (await this.btnAddCart).click()
         }
         await (await this.btnAddProduct).waitForDisplayed()
-        await (await this.btnAddProduct).click()
         expect(await this.btnAddProduct).toExist()
         while (await GlobalFunctions.getSubtotal() < 65 || await (await this.limitModal).isDisplayedInViewport()) {
-            await (await this.amountInput).waitForEnabled()
+            await (await this.amountInput).waitForEnabled({ timeout: 10000 })
             await (await this.btnAddProduct).click()
+            await browser.pause(2000)
         }
     }
     async decreaseProduct() {
         await (await this.locationDiv).scrollIntoView()
-        await (await this.btnDecreaseProduct).waitForDisplayed()
+        await (await this.btnDecreaseProduct).waitForDisplayed({ timeout: 10000 })
         expect(await this.btnDecreaseProduct).toExist()
         let amount = parseInt(await (await this.amountInput).getValue())
         await (await this.btnDecreaseProduct).click()
-        expect((await (await this.amountInput).getValue())).toEqual((await (await this.amountInput).getValue()))
-        while (await (await this.amountInput).isEnabled()) {
+        if (await (await this.amountInput).isDisplayed()){
+            expect((await (await this.amountInput).getValue())).toEqual((await (await this.amountInput).getValue()))
+        }
+        /*while (await (await this.amountInput).isEnabled()) {
             await (await this.amountInput).waitForEnabled()
+            await browser.pause(2000)
             await (await this.btnDecreaseProduct).click()
             
-        }
+        }*/
     }
     async deleteProduct() {
-        await (await this.btnDecreaseProduct).click()
-        while (await (await this.amountInput).isDisplayedInViewport()) {
-            await (await this.amountInput).waitForEnabled()
-            await (await this.btnDecreaseProduct).click()
+        if (await (await this.amountInput).isDisplayed()){
+            while (await (await this.btnDecreaseProduct).isEnabled()) {
+                await (await this.btnDecreaseProduct).waitForEnabled()
+                await (await this.btnDecreaseProduct).click()
+                //await browser.pause(2000)
+            }
+            await (await this.btnAddCart).waitForDisplayed()
         }
-        await (await this.btnAddCart).waitForDisplayed()
     }
     async addCartAssert() {
         await (await this.btnAddCart).waitForDisplayed()
