@@ -78,7 +78,7 @@ class HomePage extends Page {
     get firstCarousel() { return $(".product-carousel:nth-of-type(2)") }
 
     //categories
-    get categoryModule() { return $('div [id="category"]') }
+    get categoryModule() { return $('div [class="slick-track"]')}
     //brands
     get brandsModule() { return $('#home > div > div.max-w-screen-xl.mx-auto > div:nth-child(2)') }
 
@@ -479,8 +479,8 @@ class HomePage extends Page {
         var cards = (await this.categoryModule).$$('a')
         console.log((await cards).length)
         for (let i = 0; i < (await cards).length; i++) {
-            expect(await (await cards)[i].$$('div.px-1')).toBeDisplayed()
-            expect(await (await cards)[i].$$('p.text-xs')).toBeDisplayed()
+            expect(await (await cards)[i].$('div [class="text-center px-2 sm:px-1"]')).toBeDisplayed()
+            expect(await (await cards)[i].$('div [class="flex justify-center text-xs font-medium text-center leading-none tracking-normal capitalize break-normal pt-2"]')).toBeDisplayed()
             expect((await cards)[i]).toBeClickable()
         }
     }
