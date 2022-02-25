@@ -16,10 +16,10 @@ exports.config = {
   // Runner and framework Configuration
 
   specs: [
-    //'./tests/features/home.feature',
+    './tests/features/home.feature',
     //'./tests/features/login.feature',
     //'./tests/features/locationBox.feature',
-    './tests/features/shopPage.feature',
+    //'./tests/features/shopPage.feature',
     //'./tests/features/brands.feature',
     //'./tests/features/deals.feature',
     //'./tests/features/search.feature',

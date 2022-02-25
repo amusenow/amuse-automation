@@ -14,9 +14,9 @@ class HomePage extends Page {
     get modalAgeYes() { return $('.sf-modal__content') }
     get btnModalAgeYes() { return $('.sf-modal__content .btn.btn--primary.btn--regular.btn--without-padding') }
     get btnCloseAdvertisement() { return $("#amuseNotification button") }
-    get amuseLogo() { return $("#amuseHeader a[title='Amuse']") }
+    get amuseLogo() { return $('div [class="sf-header__container"]')}
     get amuseLogoFooter() { return $('.m-logo__image') }
-    get btnSearchNavbar() { return $('[class="a-search-icon p-1 mx-2 rounded-full lg\:block cursor-pointer o-header__search hidden"]') }
+    get btnSearchNavbar() { return $('div [id="sf-bottom-navigation_Search"]') }
     get btnLoginNavbar() { return $('.btn--with-padding') }
     get btnProfile() { return $('.account-button.account-button--logged-in.cursor-pointer.p-1.rounded-full') }
     get btnloginModaClose() { return $('.sf-modal__close') }
@@ -25,8 +25,8 @@ class HomePage extends Page {
 
 
     get btnCart() { return $('.a-microcart-icon.o-header__microcart') }
-    get btnShopNavbar() { return $('#m-header-navigation_shop') }
-    get btnDealsNavbar() { return $('#m-header-navigation_deals') }
+    get btnShopNavbar() { return $('div [class="sf-bottom-navigation-item__label sf-bottom-navigation-item--has-margin') }
+    get btnDealsNavbar() { return $('div [id="sf-bottom-navigation_Deals"]') }
     get btnBrandsNavbar() { return $('#m-header-navigation_brands') }
     get btnReferralsNavbar() { return $('#m-header-navigation_referrals') }
     get footerDiv() { return $('.o-footer__container') }
@@ -78,7 +78,7 @@ class HomePage extends Page {
     get firstCarousel() { return $(".product-carousel:nth-of-type(2)") }
 
     //categories
-    get categoryModule() { return $('.m-homepage-categories__list--grid') }
+    get categoryModule() { return $('div [id="category"]') }
     //brands
     get brandsModule() { return $('#home > div > div.max-w-screen-xl.mx-auto > div:nth-child(2)') }
 
