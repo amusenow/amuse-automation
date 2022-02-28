@@ -15,7 +15,7 @@ class CartPage extends Page {
     get loaderSpinner() { return $('div.m-loader') }
     get limitModal() { return $('.sf-modal__content') }
     get closeModal() { return $('.sf-modal__close') }
-    get input() { return $('div.border-t.border-b.border-grey-medium > div:nth-child(1) > div.flex.flex-col-reverse > div:nth-child(1) > div > div > input') }
+    get input() { return $('div[class="border-t border-b border-grey-medium py-4"] > div:nth-child(1) > div[class="flex flex-col-reverse justify-end md:justify-between items-end w-1/2 sm:flex-row sm:items-start md:w-1/2"] > div:nth-child(1) > div > div > div:nth-child(2) > input') }
     get cartMinimumLabel() { return $('.leading-snug.m-0.text-error.text-xxs.tracking-normal') }
     get subtotalLabel () { return $(".o-microcart__total-price.sf-property > .sf-price") }
     // 
