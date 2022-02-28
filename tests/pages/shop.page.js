@@ -26,6 +26,7 @@ class ShopPage extends Page {
     get btnCheckoutMicrocart() { return $(".btn.btn--inverted-primary.btn--regular.btn--without-padding.cart-action") }
     get btnLoadMoreProducts() { return $(".block.duration-150.ease-in-out.font-light.mx-auto") }
 
+
    
     /**
      * a method to encapsule automation code to interact with the page
@@ -156,8 +157,8 @@ class ShopPage extends Page {
         utils.SelectedProduct.classification = await (await classification).getText()
         utils.SelectedProduct.brand = await (await brand).getText()
         utils.SelectedProduct.price = await (await price).getText()
-        await (await category).scrollIntoView()
-       // await (await image).scrollIntoView()
+        await (await category).scrollIntoView() // Better use this, it makes the page scroll up all to the header.
+       // await (await image).scrollIntoView() 
         await (await name).click()
     }
     async checkMinimumMessage() {

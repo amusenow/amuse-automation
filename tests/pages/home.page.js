@@ -82,6 +82,7 @@ class HomePage extends Page {
 
     //mobile
 
+    
     get btnShopMobile() { return $('div[id="sf-bottom-navigation_Shop All"]') }
     get btnDealsMobile() { return $('div[id="sf-bottom-navigation_Deals"]') }
     get btnSearchMobile() { return $('div[id="sf-bottom-navigation_Search"]') }
