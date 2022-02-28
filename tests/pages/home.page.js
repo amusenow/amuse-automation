@@ -421,7 +421,7 @@ class HomePage extends Page {
         if (await (await this.inputLocationDiv).isDisplayedInViewport()) {
             await (await this.inputLocationDiv).setValue('11114')
             await (await this.inputLocationDiv).addValue(' Wright')
-            await (await this.inputLocationDiv).addValue(' Road ')
+            await (await this.inputLocationDiv).addValue(' Rd ')
             await (await this.inputLocationDiv).addValue(' Lynwood ')
             await (await this.mapsDivTest).waitForDisplayed()
             await (await this.mapsDivTest).click()

@@ -11,16 +11,16 @@ class ProductDetail extends Page {
      */
     get locationBox() { return $('.a-address-search') }
     get locationDiv() { return $('.m-select-location') }
-    get productHeader() { return $("div.m-product-short-info > div.mobile-top.mb-2 > div > header") } 
+    get productHeader() { return $('header[class="sf_heading sf_heading--no-underline sf_heading--left sf_heading sf_heading--border"]') }
     get brandLabel() { return $('div.m-product-short-info > div.a-brand') }
     get detailInfo() { return $('div.m-product-short-info > div.m-product-additional-info') }
     get productPrice() { return $('.a-product-price.sf-price--big.sub-price') }
     get infoModule() { return $('.flex-wrap.justify-center') }
     get productImage() { return $('.panzoom-img') } //
     get caroselDiv() { return $('.slick-dots') }
-    get btnAddProduct() { return $(".border-2.border-primary.p-2 > div:nth-of-type(2) > button") }
-    get btnDecreaseProduct() { return $(".border-2.border-primary.p-2 > div:nth-of-type(1) > button") }
-    get amountInput() { return $(".border-2 > .text-center") }
+    get btnAddProduct() { return $('div[class="sf-quantity-selector w-full border-2 border-primary rounded-lg p-2"] > div:nth-child(3) > button') }
+    get btnDecreaseProduct() { return $('div[class="sf-quantity-selector w-full border-2 border-primary rounded-lg p-2"] > div:nth-child(1) > button') }
+    get amountInput() { return $('div[class="sf-quantity-selector w-full border-2 border-primary rounded-lg p-2"] > div:nth-child(2) > input') }
     get btnAddCart() { return $(".m-product-add-to-cart > .a-add-to-cart.btn.btn--big.btn--primary.btn--with-padding") }
     get limitModal() { return $('.sf-modal__content') }
 
@@ -35,7 +35,7 @@ class ProductDetail extends Page {
         await (await this.locationDiv).waitForDisplayed()
         expect(await this.locationBox).toExist()
         await (await this.locationBox).waitForDisplayed()
-        expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocation())
+        //expect(await this.locationBox).toHaveTextContaining(await GlobalFunctions.getLocation())
     }
     async productHeaderAssertion() {
         await (await this.productHeader).waitForDisplayed()
@@ -92,9 +92,11 @@ class ProductDetail extends Page {
     async caroselCheck() {
         expect(browser.checkElement((await this.productImage), 'productImageZoom', {})).not.toEqual(0)
         var dots = (await this.caroselDiv).$$('button')
-        for (let i = 0; i < (await dots).length; i++) {
-            await (await dots)[i].click()
-            expect(browser.checkElement((await this.productImage), 'productImageZoom', {})).not.toEqual(0)
+        if (dots > 0) {
+            for (let i = 0; i < (await dots).length; i++) {
+                await (await dots)[i].click()
+                expect(browser.checkElement((await this.productImage), 'productImageZoom', {})).not.toEqual(0)
+            }
         }
     }
     async increaseProduct() {
@@ -105,32 +107,36 @@ class ProductDetail extends Page {
         await (await this.btnAddProduct).waitForDisplayed()
         expect(await this.btnAddProduct).toExist()
         while (await GlobalFunctions.getSubtotal() < 65 || await (await this.limitModal).isDisplayedInViewport()) {
-            await (await this.amountInput).waitForEnabled()
+            await (await this.amountInput).waitForEnabled({ timeout: 10000 })
             await (await this.btnAddProduct).click()
-            
+            await browser.pause(2000)
         }
     }
     async decreaseProduct() {
         await (await this.locationDiv).scrollIntoView()
-        await (await this.btnDecreaseProduct).waitForDisplayed()
+        await (await this.btnDecreaseProduct).waitForDisplayed({ timeout: 10000 })
         expect(await this.btnDecreaseProduct).toExist()
         let amount = parseInt(await (await this.amountInput).getValue())
         await (await this.btnDecreaseProduct).click()
-        expect((await (await this.amountInput).getValue())).toEqual((await (await this.amountInput).getValue()))
-        while (await (await this.amountInput).isEnabled()) {
-            console.log(await (await this.amountInput).getValue())
+        if (await (await this.amountInput).isDisplayed()){
+            expect((await (await this.amountInput).getValue())).toEqual((await (await this.amountInput).getValue()))
+        }
+        /*while (await (await this.amountInput).isEnabled()) {
             await (await this.amountInput).waitForEnabled()
+            await browser.pause(2000)
             await (await this.btnDecreaseProduct).click()
             
-        }
+        }*/
     }
     async deleteProduct() {
-        await (await this.btnDecreaseProduct).click()
-        while (await (await this.amountInput).isDisplayedInViewport()) {
-            await (await this.amountInput).waitForEnabled()
-            await (await this.btnDecreaseProduct).click()
+        if (await (await this.amountInput).isDisplayed()){
+            while (await (await this.btnDecreaseProduct).isEnabled()) {
+                await (await this.btnDecreaseProduct).waitForEnabled()
+                await (await this.btnDecreaseProduct).click()
+                //await browser.pause(2000)
+            }
+            await (await this.btnAddCart).waitForDisplayed()
         }
-        await (await this.btnAddCart).waitForDisplayed()
     }
     async addCartAssert() {
         await (await this.btnAddCart).waitForDisplayed()
