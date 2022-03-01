@@ -16,7 +16,7 @@ config.capabilities = [{
       'consoleLogs': 'info',
       'video': 'true',
     },*/
-    "browserName" : "iPhone",
+    //"browserName" : "iPhone",
   
   
 
@@ -28,8 +28,8 @@ config.capabilities = [{
   //http://appium.io/docs/en/writing-running-appium/caps/
   
   'appium:deviceName': 'iPhone 12 Pro',
-  'appium:platformVersion': '15.0',
-  //'appium:udid': '586EFE98-9998-4BFA-AC75-BABF034D06BB',
+  'appium:platformVersion': '15.2',
+  //// 'appium:udid': '586EFE98-9998-4BFA-AC75-BABF034D06BB',
   'appium:orientation': 'PORTRAIT',
   'appium:automationName': 'XCUITest',
   'appium:newCommandTimeout': 240,

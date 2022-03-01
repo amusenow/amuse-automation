@@ -67,6 +67,7 @@ Then(/^I should see available products$/, async () => {
 });
 //SHOP PAGE 
 Then(/^I should see header and footer$/, async () => {
+    await browser.pause(3000)
     await HomePage.mobileNavBarAssertion()
     await HomePage.footerAssertion()
     await HomePage.footerAssertionLogo()
