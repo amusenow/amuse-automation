@@ -24,6 +24,7 @@ class ProductDetail extends Page {
     get btnAddCart() { return $(".m-product-add-to-cart > .a-add-to-cart.btn.btn--big.btn--primary.btn--with-padding") }
     get limitModal() { return $('.sf-modal__content') }
 
+    
 
     /**
      * a method to encapsule automation code to interact with the page
@@ -39,6 +40,15 @@ class ProductDetail extends Page {
     async productHeaderAssertion() {
         await (await this.productHeader).waitForDisplayed()
         expect(await this.productHeader).toBeDisplayed()
+    }
+    async productBodyAssertion(){
+        var Gallery = $('div [class="sf-image m-image-with-zoom sf-gallery__big-image sf-gallery__big-image--has-zoom"]')
+        var CurrentClass = $('div [class="sf-breadcrumbs__current"]')
+
+        await (await Gallery).waitForDisplayed()
+        await (await Gallery).waitForClickable()
+        await (await CurrentClass).waitForDisplayed()
+        await (await CurrentClass).waitForClickable()
     }
     async productDetailsAssertion() {
         await (await this.productHeader).waitForDisplayed()
