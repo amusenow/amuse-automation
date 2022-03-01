@@ -19,7 +19,7 @@ Feature: Amuse Home
   @iosBrowser #@androidBrowser @web
   Scenario: Amuse - Home Page - Hero - The hero slide should be clickable //check that is present
     Then hero slide should be clickable
-  @iosBrowser @androidBrowser @web
+  @iosBrowser #@androidBrowser @web
   Scenario: Amuse - Home Page - Category module - The category module appears on the home page
     Then all icons in category module are clickable
   @iosBrowser #@androidBrowser @web

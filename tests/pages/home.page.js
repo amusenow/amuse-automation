@@ -474,13 +474,14 @@ class HomePage extends Page {
     }
     //category module
     async categoryModuleAssertion() {
+        await console.log('pass')
         await (await this.categoryModule).waitForDisplayed()
         await (await this.categoryModule).scrollIntoView()
-        var cards = (await this.categoryModule).$$('a')
+        var cards = (await this.categoryModule)
         console.log((await cards).length)
         for (let i = 0; i < (await cards).length; i++) {
-            expect(await (await cards)[i].$('div [class="text-center px-2 sm:px-1"]')).toBeDisplayed()
-            expect(await (await cards)[i].$('div [class="flex justify-center text-xs font-medium text-center leading-none tracking-normal capitalize break-normal pt-2"]')).toBeDisplayed()
+            expect(await (await cards)[i].$$('div [class="text-center px-2 sm:px-1"]')).toBeDisplayed()
+            expect(await (await cards)[i].$$('div [class="flex justify-center text-xs font-medium text-center leading-none tracking-normal capitalize break-normal pt-2"]')).toBeDisplayed()
             expect((await cards)[i]).toBeClickable()
         }
     }

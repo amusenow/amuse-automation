@@ -13,6 +13,7 @@ exports.config = {
   key: process.env.BS_KEY,
   runner: 'local',
 
+
   // Runner and framework Configuration
 
   specs: [
