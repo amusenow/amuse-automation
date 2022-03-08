@@ -78,7 +78,7 @@ class HomePage extends Page {
     get firstCarousel() { return $(".product-carousel:nth-of-type(2)") }
 
     //categories
-    get categoryModule() { return $('div [class="slick-track"]')}
+    get categoryModule() { return $('div [class="sb-category-filter"]')}
     //brands
     get brandsModule() { return $('#home > div > div.max-w-screen-xl.mx-auto > div:nth-child(2)') }
 
@@ -475,16 +475,39 @@ class HomePage extends Page {
     //category module
     async categoryModuleAssertion() {
         await console.log('pass')
+        await browser.pause(2000)
+        await console.log(await this.categoryModule)
         await (await this.categoryModule).waitForDisplayed()
         await (await this.categoryModule).scrollIntoView()
-        var cards = (await this.categoryModule)
-        console.log((await cards).length)
-        for (let i = 0; i < (await cards).length; i++) {
-            expect(await (await cards)[i].$$('div [class="text-center px-2 sm:px-1"]')).toBeDisplayed()
-            expect(await (await cards)[i].$$('div [class="flex justify-center text-xs font-medium text-center leading-none tracking-normal capitalize break-normal pt-2"]')).toBeDisplayed()
-            expect((await cards)[i]).toBeClickable()
+        var category = await $('div [class="sf-image sb-category-filter-item__icon sf-image--has-size"]')
+        await (await category).scrollIntoView()
+        await console.log('pass2')
+        for (let i = 0; i <=3 ; i++) {
+            await console.log('pass3')
+            var ButtonName = await $('#home > div > div:nth-child(1) > div > div > div > button:nth-child(1) > div > p')
+            var ActualButton = await ButtonName.getText()
+            if(ActualButton = "Shop All"){
+                let x = i+1
+                $('div [data-index='+x+']').waitForClickable
+            }
+            
         }
     }
+
+    // async categoryModuleAssertion() {
+    //     await console.log('pass')
+    //     await (await this.categoryModule).waitForDisplayed()
+    //     await (await this.categoryModule).scrollIntoView()
+    //     var cards = (await this.categoryModule)
+    //     console.log((await cards).length)
+    //     for (let i = 0; i < (await cards).length; i++) {
+    //         await console.log('pass2')
+    //         expect(await (await cards)[i].$$('div [class="text-center px-2 sm:px-1"]')).toBeDisplayed()
+    //         expect(await (await cards)[i].$$('div [class="flex justify-center text-xs font-medium text-center leading-none tracking-normal capitalize break-normal pt-2"]')).toBeDisplayed()
+    //         expect((await cards)[i]).toBeClickable()
+    //     }
+    // }
+
     //brands module
 
     async seeAllAssertion() {

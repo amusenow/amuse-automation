@@ -34,7 +34,7 @@ exports.config = {
   ],
 
   logLevel: 'error',
-  specFileRetries: 1,
+  specFileRetries: 0,
   maxInstances: 5,
   maxInstancesPerCapability: 1,
   reporters: ['spec',
