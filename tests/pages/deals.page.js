@@ -20,14 +20,14 @@ class DealsPage extends Page {
      * e.g. to login using username and password
      */
     async locationBoxAssertion () {
-        await console.log('pass')
+        
         expect(await this.locationBox).toExist()
         expect(await this.locationBox).waitForDisplayed()
         expect(await this.locationDiv).toExist()
         expect(await this.locationDiv).waitForDisplayed()
     }
     async locationBoxAssertion (page) {
-            await console.log('pass')
+            
             await (await this.locationBox).waitForDisplayed() 
             expect(await this.locationBox).toExist()
             await (await this.locationDiv).waitForDisplayed()
@@ -38,13 +38,10 @@ class DealsPage extends Page {
         expect(this.btnDealsMobile).toHaveAttributeContaining('class', 'active')
     }
     async checkAllModules () {
-        console.log('here')
+        
         await driver.pause(7000)
-        console.log('here')
         await (await this.storyBlokPage).waitForDisplayed()
-        console.log('here')
         var cards = (await this.storyBlokPage).$$('.product-carousel')
-        console.log('here')
         console.log("cards", cards)
         for (let i = 0; i < 3; i++) {
             await ((await cards)[i]).scrollIntoView()
