@@ -494,19 +494,6 @@ class HomePage extends Page {
         }
     }
 
-    // async categoryModuleAssertion() {
-    //     await console.log('pass')
-    //     await (await this.categoryModule).waitForDisplayed()
-    //     await (await this.categoryModule).scrollIntoView()
-    //     var cards = (await this.categoryModule)
-    //     console.log((await cards).length)
-    //     for (let i = 0; i < (await cards).length; i++) {
-    //         await console.log('pass2')
-    //         expect(await (await cards)[i].$$('div [class="text-center px-2 sm:px-1"]')).toBeDisplayed()
-    //         expect(await (await cards)[i].$$('div [class="flex justify-center text-xs font-medium text-center leading-none tracking-normal capitalize break-normal pt-2"]')).toBeDisplayed()
-    //         expect((await cards)[i]).toBeClickable()
-    //     }
-    // }
 
     //brands module
 
