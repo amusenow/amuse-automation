@@ -26,7 +26,7 @@ exports.config = {
     //'./tests/features/search.feature',
     //'./tests/features/profile.feature',
     //'./tests/features/resetPassword.feature',
-    //'./tests/features/dailyAllowance.feature',
+    './tests/features/dailyAllowance.feature',
     //'./tests/features/checkout.feature',
     //'./tests/features/productDetail.feature',
     //'./tests/features/cart.feature',
@@ -119,7 +119,7 @@ exports.config = {
   host: '127.0.0.1',
   port: 4723,
   path: '/wd/hub/',
-  baseUrl: process.env.BASEURL,
+  //baseUrl: process.env.BASEURL,
   deprecationWarnings: false,
 
   framework: 'cucumber',

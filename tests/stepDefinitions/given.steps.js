@@ -18,11 +18,8 @@ const pages = {
 
 Given(/^I am on the (\w+) page$/, async (page) => {
     await pages[page].open(page)
-    console.log('que pasa')
     await HomePage.acceptModal()
-    console.log('que pasa1')
     await HomePage.closeAdvertisement()
-    console.log('que pasa2')
 });
 Given(/^I am logged in$/, async () => {
     await HomePage.loginClickButton()
