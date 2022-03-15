@@ -20,14 +20,14 @@ config.capabilities = [{
   
   
 
-  /*browserName: 'safari',
+  browserName: 'safari',
   platformName: 'iOS',
   maxInstances: 1,
   //For W3C the appium capabilities need to have an extension prefix
   //This is `appium:` for all Appium Capabilities which can be found here
   //http://appium.io/docs/en/writing-running-appium/caps/
   
-  'appium:deviceName': 'iPhone 12 Pro',
+  /*'appium:deviceName': 'iPhone 12 Pro',
   'appium:platformVersion': '15.2',
   //// 'appium:udid': '586EFE98-9998-4BFA-AC75-BABF034D06BB',
   'appium:orientation': 'PORTRAIT',
