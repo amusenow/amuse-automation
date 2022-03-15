@@ -16,6 +16,8 @@ Feature: Amuse Home - deals page
         Then I should see hero image
     @iosBrowser @androidBrowser @web
     Scenario:  Amuse - Deals Page - All deal modules appear on the Deals page in the correct position
+        Given I am on the home page
+        When I click in the deals page
         Then I should see all deals module
     @iosBrowser @androidBrowser @web
     Scenario:  Amuse - Brands Page - All brand links navigate user to the correct brand page

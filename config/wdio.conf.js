@@ -13,23 +13,24 @@ exports.config = {
   key: process.env.BS_KEY,
   runner: 'local',
 
+
   // Runner and framework Configuration
 
   specs: [
-    //'./tests/features/home.feature',
-    //'./tests/features/login.feature',
-    //'./tests/features/locationBox.feature',
+    './tests/features/home.feature',
+    './tests/features/login.feature',
+    './tests/features/locationBox.feature',
     './tests/features/shopPage.feature',
-    //'./tests/features/brands.feature',
-    //'./tests/features/deals.feature',
-    //'./tests/features/search.feature',
+    './tests/features/brands.feature',
+    './tests/features/deals.feature',
+    './tests/features/search.feature',
     //'./tests/features/profile.feature',
-    //'./tests/features/resetPassword.feature',
-    //'./tests/features/dailyAllowance.feature',
+    './tests/features/resetPassword.feature',
+    './tests/features/dailyAllowance.feature',
     //'./tests/features/checkout.feature',
-    //'./tests/features/productDetail.feature',
-    //'./tests/features/cart.feature',
-    //'./tests/features/cartMinimum.feature',
+    './tests/features/productDetail.feature',
+    './tests/features/cart.feature',
+    './tests/features/cartMinimum.feature',
   ],
 
   logLevel: 'error',
@@ -42,38 +43,38 @@ exports.config = {
       embedImages: true,
       screenshotStrategy: 'on:error'
     }],
-    // [
-    // //   SlackReporter, {
-    // //     slackOptions: {
-    // //       type: 'webhook',
-    // //       webhook: process.env.AMUSE_SLACK_WEBHOOK,
-    // //       slackName: "eng-qa-channel"
-    // //     },
-    // //     title: 'Production QA Automation',
-    // //     notifyTestStartMessage: false,
-    // //   }
-    // // ],
-    // // [
-    // //   SlackReporter,
-    // //   {
-    // //     slackOptions: {
-    // //       type: 'web-api',
-    // //       channel: 'U69UC3B5X',
-    // //       slackBotToken: process.env.SLACK_TOKEN,
-    // //       uploadScreenshotOfFailedCase: true,
-    // //       notifyFailedCase: true,
-    // //     },
-    // //     notifyTestStartMessage: false,
-    // //     title: 'Slack Reporter Test',
-    // //   }
-    // ],
+    [
+       SlackReporter, {
+         slackOptions: {
+           type: 'webhook',
+           webhook: process.env.AMUSE_SLACK_WEBHOOK,
+           slackName: "eng-qa-channel"
+         },
+         title: 'Production QA Automation',
+         notifyTestStartMessage: false,
+       }
+   ],
+    [
+     SlackReporter,
+       {
+        slackOptions: {
+          type: 'web-api',
+          channel: 'U69UC3B5X',
+          slackBotToken: process.env.SLACK_TOKEN,
+           uploadScreenshotOfFailedCase: true,
+           notifyFailedCase: true,
+         },
+        notifyTestStartMessage: false,
+         title: 'Slack Reporter Test',
+       }
+    ],
 
   ],
   waitforTimeout: defaultTimeoutInterval,
   services: [[TimelineService],
   //uncomment for browserstack runs
   ['browserstack'],
-  ['appium',
+  /*['appium',
     {
       // This will use the globally installed version of Appium
       command: 'appium',
@@ -83,7 +84,7 @@ exports.config = {
         relaxedSecurity: true,
       },
     },
-  ],
+  ]*/,
   ['image-comparison',
     // The options
     {
@@ -117,8 +118,8 @@ exports.config = {
   //For simulator running:
   //host: '127.0.0.1',
   //port: 4723,
-  path: '/wd/hub/',
-  baseUrl: process.env.BASEURL,
+  //path: '/wd/hub/',
+  //baseUrl: process.env.BASEURL,
   deprecationWarnings: false,
 
   framework: 'cucumber',
