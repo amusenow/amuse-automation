@@ -8,7 +8,7 @@ const config = require('./wdio.conf.js').config;
 config.capabilities = [
   {
     // The defaults you need to have in your config
-    /*'bstack:options' : {
+    'bstack:options' : {
       "osVersion" : "11.0",
       "deviceName" : "Samsung Galaxy S21",
       "realMobile" : "true",
@@ -18,8 +18,8 @@ config.capabilities = [
       'consoleLogs': 'info',
       'video': 'true',
       },
-      "browserName" : "Android",*/
-    platformName: 'Android',
+      "browserName" : "Android",
+    /*platformName: 'Android',
     browserName: 'chrome',
     maxInstances: 1,
     // For W3C the appium capabilities need to have an extension prefix
@@ -29,7 +29,7 @@ config.capabilities = [
     'appium:platformVersion': '12.0',
     'appium:orientation': 'PORTRAIT',
     'appium:automationName': 'UiAutomator2',
-    //'appium:udid': 'emulator-5554',
+    //'appium:udid': 'emulator-5554',*/
   }
 ];
 config.cucumberOpts.tagExpression = '@androidBrowser'; // pass tag to run tests specific to android
