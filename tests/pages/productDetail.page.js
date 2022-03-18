@@ -108,7 +108,6 @@ class ProductDetail extends Page {
         expect(await this.btnDecreaseProduct).toExist()
         let amount = parseInt(await (await this.amountInput).getValue())
         await (await this.btnDecreaseProduct).click()
-        await console.log('in')
         if (await (await this.amountInput).isEnabled()){
             expect((await (await this.amountInput).getValue())).toEqual((await (await this.amountInput).getValue()))
         }
@@ -124,9 +123,8 @@ class ProductDetail extends Page {
             while (await (await this.btnDecreaseProduct).isDisplayed()) {
                 await (await this.amountInput).waitForEnabled()
                 await (await this.btnDecreaseProduct).click()
-                await browser.pause(3000)
+                await browser.pause(2000)
             }
-            await console.log('in3')
             await (await this.btnAddCart).waitForDisplayed()
         }
     }
