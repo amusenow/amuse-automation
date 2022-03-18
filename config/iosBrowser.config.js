@@ -6,7 +6,7 @@ const config = require('./wdio.conf.js').config
 // http://appium.io/docs/en/writing-running-appium/caps/#general-capabilities
 config.capabilities = [{
   //The defaults you need to have in your config
-    /*'bstack:options' : {
+    'bstack:options' : {
       "osVersion" : "14",
       "deviceName" : "iPhone 12",
       "realMobile" : "true",
@@ -15,8 +15,8 @@ config.capabilities = [{
       "networkLogs" : "true",
       'consoleLogs': 'info',
       'video': 'true',
-    },*/
-    //"browserName" : "iPhone",
+    },
+    "browserName" : "iPhone",
   
   
 
@@ -27,14 +27,14 @@ config.capabilities = [{
   //This is `appium:` for all Appium Capabilities which can be found here
   //http://appium.io/docs/en/writing-running-appium/caps/
   
-  'appium:deviceName': 'iPhone 12 Pro',
+  /*'appium:deviceName': 'iPhone 12 Pro',
   'appium:platformVersion': '15.2',
   //// 'appium:udid': '586EFE98-9998-4BFA-AC75-BABF034D06BB',
   'appium:orientation': 'PORTRAIT',
   'appium:automationName': 'XCUITest',
   'appium:newCommandTimeout': 240,
   'appium:wdaLaunchTimeout': 999999,
-  'appium:wdaConnectionTimeout': 999999,
+  'appium:wdaConnectionTimeout': 999999,*/
   
   // The following capabilities are needed to run tests on physical devices. Request them to your Dev Team
   // xcodeOrgId: 'YD5FNB475F',
