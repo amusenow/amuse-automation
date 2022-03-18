@@ -84,7 +84,7 @@ exports.config = {
         relaxedSecurity: true,
       },
     },
-  ]*/,
+  ]*/
   ['image-comparison',
     // The options
     {
@@ -118,8 +118,8 @@ exports.config = {
   //For simulator running:
   //host: '127.0.0.1',
   //port: 4723,
-  //path: '/wd/hub/',
-  //baseUrl: process.env.BASEURL,
+  path: '/wd/hub/',
+  baseUrl: process.env.BASEURL,
   deprecationWarnings: false,
 
   framework: 'cucumber',

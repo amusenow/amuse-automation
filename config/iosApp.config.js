@@ -16,7 +16,7 @@ config.capabilities = [{
   // http://appium.io/docs/en/writing-running-appium/caps/
   'appium:deviceName': 'iPhone 11 Pro Max',
   'appium:platformVersion': '13.2.2',
-  'appium:udid': 'B624ABAA-7830-48FA-AC12-1126EAFDA4A0',
+  //'appium:udid': 'B624ABAA-7830-48FA-AC12-1126EAFDA4A0',
   'appium:orientation': 'PORTRAIT',
   'appium:automationName': 'XCUITest',
   // The path to the app
