@@ -68,13 +68,13 @@ class SearchPage extends Page {
         }
     }
     async clickResult() {
-        await console.log('in')
         await (await this.searchItems).scrollIntoView()
         await (await this.firstProduct).waitForDisplayed()
         await (await this.firstProduct).click()
     }
     async checkSearch () {
-        await (await this.btnSearch).waitForDisplayed({reverse: true})
+        expect(await (await this.btnSearch).isDisplayed()).toBe(false)
+       // await (await this.btnSearch).waitForDisplayed({reverse: true})
     }
     /**
      * overwrite specifc options to adapt it to page object
