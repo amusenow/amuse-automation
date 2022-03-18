@@ -109,3 +109,6 @@ dist
 
 #Html
 *.html
+
+#config
+wdio.conf.js
