@@ -15,9 +15,9 @@ class HomePage extends Page {
     get btnModalAgeYes() { return $('.sf-modal__content .btn.btn--primary.btn--regular.btn--without-padding') }
     get btnCloseAdvertisement() { return $("#amuseNotification button") }
     get amuseLogo() { return $("#amuseHeader a[title='Amuse']") }
-    get amuseLogoFooter() { return $('.m-logo__image') }
+    get amuseLogoFooter() { return $('div a[class="m-logo router-link-active xl:mb-8"]') }
     get btnSearchNavbar() { return $('[class="a-search-icon p-1 mx-2 rounded-full lg\:block cursor-pointer o-header__search hidden"]') }
-    get btnLoginNavbar() { return $('.btn--with-padding') }
+    get btnLoginNavbar() { return $('div button[class="btn account-button btn--with-padding btn--primary btn--small"]') }
     get btnProfile() { return $('.account-button.account-button--logged-in.cursor-pointer.p-1.rounded-full') }
     get btnloginModaClose() { return $('.sf-modal__close') }
 
@@ -27,7 +27,7 @@ class HomePage extends Page {
     get btnDealsNavbar() { return $('#m-header-navigation_deals') }
     get btnBrandsNavbar() { return $('#m-header-navigation_brands') }
     get btnReferralsNavbar() { return $('#m-header-navigation_referrals') }
-    get footerDiv() { return $('.o-footer__container') }
+    get footerDiv() { return $('div [class="sf-bottom-navigation sf-bottom-navigation--visible"]') }
     get footerSocialMedia() { return $('div[class="lg:mt-10 xl:mt-0 pt-8 md:pt-2 md:flex md:items-center md:justify-between flex-wrap order-last xl:order-none"] > div') }
     get footerLinks() { return $('#viewport > div.o-footer > div > div > div > div.grid > div') }
     get heroImage() { return $('.content-section--margin-bottom-m.content-section--margin-top-m.product-module') }
@@ -82,6 +82,7 @@ class HomePage extends Page {
 
     //mobile
 
+    
     get btnShopMobile() { return $('div[id="sf-bottom-navigation_Shop All"]') }
     get btnDealsMobile() { return $('div[id="sf-bottom-navigation_Deals"]') }
     get btnSearchMobile() { return $('div[id="sf-bottom-navigation_Search"]') }

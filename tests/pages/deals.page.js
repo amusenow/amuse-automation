@@ -9,7 +9,7 @@ class DealsPage extends Page {
      */
      get locationBox () { return $('.a-address-search') }
      get locationDiv () { return $('.m-select-location') }
-     get btnDealsMobile() { return $('.sf-bottom-navigation > div:nth-of-type(3)') }
+     get btnDealsMobile() { return $('div [id="sf-bottom-navigation_Deals"]') }
      get allDealsTitles() { return $('div.product-carousel') }
      get allCarousels() { return $('.scrolling-product') }
      get allLinks() { return $$('.text-fontBase.underline') }
@@ -20,12 +20,14 @@ class DealsPage extends Page {
      * e.g. to login using username and password
      */
     async locationBoxAssertion () {
+        
         expect(await this.locationBox).toExist()
         expect(await this.locationBox).waitForDisplayed()
         expect(await this.locationDiv).toExist()
         expect(await this.locationDiv).waitForDisplayed()
     }
     async locationBoxAssertion (page) {
+            
             await (await this.locationBox).waitForDisplayed() 
             expect(await this.locationBox).toExist()
             await (await this.locationDiv).waitForDisplayed()
@@ -36,9 +38,11 @@ class DealsPage extends Page {
         expect(this.btnDealsMobile).toHaveAttributeContaining('class', 'active')
     }
     async checkAllModules () {
-        await driver.pause(3000)
+        
+        await driver.pause(7000)
         await (await this.storyBlokPage).waitForDisplayed()
         var cards = (await this.storyBlokPage).$$('.product-carousel')
+        console.log("cards", cards)
         for (let i = 0; i < 3; i++) {
             await ((await cards)[i]).scrollIntoView()
             expect((await cards)[i]).toExist()
