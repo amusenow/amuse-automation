@@ -14,7 +14,7 @@ class SearchPage extends Page {
     get searchPanelResults() { return $('.m-search-panel-results') }
     get searchResults() { return $('.sf-list.classifications') }
     get searchItems() { return $('.sf-list.products') }
-    get firstProduct() { return $('.sf-list.products  > .sf-list__item:nth-of-type(1) > div.a-search-result-list-product > a') }
+    get firstProduct() { return $('div > div > div > ul.sf-list.classifications > li:nth-child(1) > a') }
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
@@ -68,6 +68,7 @@ class SearchPage extends Page {
         }
     }
     async clickResult() {
+        await console.log('in')
         await (await this.searchItems).scrollIntoView()
         await (await this.firstProduct).waitForDisplayed()
         await (await this.firstProduct).click()
