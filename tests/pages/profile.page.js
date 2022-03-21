@@ -13,6 +13,8 @@ class ProfilePage extends Page {
     get btnBasicInfo () { return $('div:nth-of-type(1) > .sf-content-pages__list > li:nth-of-type(1) > .sf-content-pages__menu.sf-menu-item') }
     get btnOrderHistory () { return $('li:nth-of-type(2) > .py-4.sf-content-pages__menu.sf-menu-item') }
     get menuProfile () { return $('.sf-list.sf-content-pages__list') }
+    get menuHistory() {return $('div [class="visible h-auto"]')}
+    get viewReceip() {return $('div [class="btn w-full text-center btn--with-padding btn--secondary btn--regular"]')}
     get microcart () { return $('.o-microcart') } //
     get oldOrder () { return $('.sf-accordion-item') }
     get btnHelp () { return $('.btn.btn--regular.btn--secondary.btn--with-padding.mr-4.text-center.w-full') }
@@ -52,7 +54,8 @@ class ProfilePage extends Page {
         }
     }
     async clickOrderHistory () {
-        await (await this.menuProfile).scrollIntoView()
+        //await (await this.menuProfile).scrollIntoView()
+        await (await this.menuHistory).scrollIntoView()
         await driver.execute(() => {
             return document.querySelector('#amuseHeader').setAttribute('style', "display: none");
         })
@@ -82,6 +85,7 @@ class ProfilePage extends Page {
         expect(await this.btnOrderPurchase).toExist()
     }
     async clickRecipt () {
+        await (await this.viewReceip).scrollIntoView()
         await (await this.btnHelp).waitForDisplayed()
         await driver.execute(() => {
             return document.querySelector('#amuseHeader').setAttribute('style', "display: none");
