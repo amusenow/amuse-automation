@@ -33,6 +33,7 @@ class CheckoutPage extends Page {
     get hourRadioButtonGroup() { return $(".form__radio-group > .flex > div") }
     get btnPromoCode() { return $(".a-promo-code__toggle") }
     get btnEditCart() { return $(".o-order-summary .btn-icon.duration-150.ease-in-out.font-normal.px-1.py-1.transition") }
+    get okOutOfStockbtn() {return $("#viewport > div:nth-child(4) > span > div.m-modal-location.modal > section > div.sf-modal__container > div > div > div.mt-10.flex.justify-center > button")}
     /**
     * a method to encapsule automation code to interact with the page
     * e.g. to login using username and password
@@ -169,6 +170,9 @@ class CheckoutPage extends Page {
         }
     }
     async selectPayment() {
+        if (await (await this.okOutOfStockbtn).isDisplayed()){
+            await (await this.okOutOfStockbtn).click()
+        }
         await (await this.btnRadioPayment).scrollIntoView()
         await (await this.btnRadioPayment).waitForDisplayed()
         expect(await this.btnRadioPayment).toExist()
@@ -176,7 +180,7 @@ class CheckoutPage extends Page {
         var leng = (await radioButtons).length
         var optionNumber = await this.getRandom(leng)
         utils.SelectedPayment = await (await radioButtons)[optionNumber].getText()
-        await (await radioButtons)[0].click()
+        await (await radioButtons)[1].click()
     }
     async checkSpecialPrice() {
         if (GlobalFunctions.promoInCart()) {
