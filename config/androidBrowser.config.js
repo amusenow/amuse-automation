@@ -25,7 +25,7 @@ config.capabilities = [
     // For W3C the appium capabilities need to have an extension prefix
     // http://appium.io/docs/en/writing-running-appium/caps/
     // This is `appium:` for all Appium Capabilities which can be found here
-    'appium:deviceName': 'Pixel 5 API 31',
+    'appium:deviceName': 'Pixel 5',
     'appium:platformVersion': '12.0',
     'appium:orientation': 'PORTRAIT',
     'appium:automationName': 'UiAutomator2',

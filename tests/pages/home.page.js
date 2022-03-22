@@ -64,7 +64,7 @@ class HomePage extends Page {
     get mapsDiv() { return $('body > div.pac-container.pac-logo.hdpi') }//
     get mapsDivTest() { return $('div:nth-of-type(1) > .pac-item-query > .pac-matched') }
     get shippingLocation() { return $('.m-shipping-location') }
-    get deliveryAddress() { return $('.m-shipping-location__scroll > div:nth-of-type(2) > button:nth-of-type(1)') }
+    get deliveryAddress() { return $('.m-shipping-location__scroll > div:nth-child(2) > div:nth-child(2) > div > div.flex.justify-between.w-full > div > p.m-shipping-location__street') }
 
     //products 
     get productName() { return $('div:nth-of-type(3) .o-product-card.scrolling-product-card.sf-product-card > .sf-product-card__link > .sf-product-card__title') }
@@ -443,6 +443,7 @@ class HomePage extends Page {
             expect(await this.shippingLocation).toBeDisplayed()
             expect(await this.deliveryAddress).toBeDisplayed()
             await (await this.deliveryAddress).click()
+            await console.log('in')
             if (await (await this.loaderSpinner).isDisplayedInViewport()) {
                 await (await this.loaderSpinner).waitForDisplayed({ reverse: true })
             }
