@@ -14,18 +14,20 @@ class HomePage extends Page {
     get modalAgeYes() { return $('.sf-modal__content') }
     get btnModalAgeYes() { return $('.sf-modal__content .btn.btn--primary.btn--regular.btn--without-padding') }
     get btnCloseAdvertisement() { return $("#amuseNotification button") }
-    get amuseLogo() { return $("#amuseHeader a[title='Amuse']") }
-    get amuseLogoFooter() { return $('div a[class="m-logo router-link-active xl:mb-8"]') }
-    get btnSearchNavbar() { return $('[class="a-search-icon p-1 mx-2 rounded-full lg\:block cursor-pointer o-header__search hidden"]') }
-    get btnLoginNavbar() { return $('div button[class="btn account-button btn--with-padding btn--primary btn--small"]') }
+    get amuseLogo() { return $('div [class="sf-header__container"]')}
+    get amuseLogoFooter() { return $('.m-logo__image') }
+    get btnSearchNavbar() { return $('div [id="sf-bottom-navigation_Search"]') }
+    get btnLoginNavbar() { return $('.btn--with-padding') }
     get btnProfile() { return $('.account-button.account-button--logged-in.cursor-pointer.p-1.rounded-full') }
     get btnloginModaClose() { return $('.sf-modal__close') }
 
+    
+
 
     get btnCart() { return $('.a-microcart-icon.o-header__microcart') }
-    get btnShopNavbar() { return $('#m-header-navigation_shop') }
-    get btnDealsNavbar() { return $('#m-header-navigation_deals') }
-    get btnBrandsNavbar() { return $('#m-header-navigation_brands') }
+    get btnShopNavbar() { return $('div [class="sf-bottom-navigation-item__label sf-bottom-navigation-item--has-margin') }
+    get btnDealsNavbar() { return $('div [id="sf-bottom-navigation_Deals"]') }
+    get btnBrandsNavbar() { return $('div [id="sf-bottom-navigation_Brands"]') }
     get btnReferralsNavbar() { return $('#m-header-navigation_referrals') }
     get footerDiv() { return $('div [class="sf-bottom-navigation sf-bottom-navigation--visible"]') }
     get footerSocialMedia() { return $('div[class="lg:mt-10 xl:mt-0 pt-8 md:pt-2 md:flex md:items-center md:justify-between flex-wrap order-last xl:order-none"] > div') }
@@ -76,7 +78,7 @@ class HomePage extends Page {
     get firstCarousel() { return $(".product-carousel:nth-of-type(2)") }
 
     //categories
-    get categoryModule() { return $('.m-homepage-categories__list--grid') }
+    get categoryModule() { return $('div [class="sb-category-filter"]')}
     //brands
     get brandsModule() { return $('#home > div > div.max-w-screen-xl.mx-auto > div:nth-child(2)') }
 
@@ -473,16 +475,27 @@ class HomePage extends Page {
     }
     //category module
     async categoryModuleAssertion() {
+        await console.log('pass')
+        await browser.pause(2000)
+        await console.log(await this.categoryModule)
         await (await this.categoryModule).waitForDisplayed()
         await (await this.categoryModule).scrollIntoView()
-        var cards = (await this.categoryModule).$$('a')
-        console.log((await cards).length)
-        for (let i = 0; i < (await cards).length; i++) {
-            expect(await (await cards)[i].$$('div.px-1')).toBeDisplayed()
-            expect(await (await cards)[i].$$('p.text-xs')).toBeDisplayed()
-            expect((await cards)[i]).toBeClickable()
+        var category = await $('div [class="sf-image sb-category-filter-item__icon sf-image--has-size"]')
+        await (await category).scrollIntoView()
+        await console.log('pass2')
+        for (let i = 0; i <=3 ; i++) {
+            await console.log('pass3')
+            var ButtonName = await $('#home > div > div:nth-child(1) > div > div > div > button:nth-child(1) > div > p')
+            var ActualButton = await ButtonName.getText()
+            if(ActualButton = "Shop All"){
+                let x = i+1
+                $('div [data-index='+x+']').waitForClickable
+            }
+            
         }
     }
+
+
     //brands module
 
     async seeAllAssertion() {

@@ -106,3 +106,9 @@ dist
 #ScreenShots
 *.jpeg
 *.png
+
+#Html
+*.html
+
+#config
+wdio.conf.js

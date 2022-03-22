@@ -7,8 +7,8 @@ module.exports = {
   waitForTimeout: 30000,
   DevDomain: 'https://storefront.dev.amuse.com/',
   ProdDomain: 'https://amuse.com/',
-  ValidEmail: 'noheliaeucedaf@gmail.com',
-  ValidEmailPassword: 'Password1.',
+  ValidEmail: 'rodgers.romero+2@helloiconic.com',
+  ValidEmailPassword: 'Test1234!',
   SelectedProduct:{
     name: '',
     classification: '',
