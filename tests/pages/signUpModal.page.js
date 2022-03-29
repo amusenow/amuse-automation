@@ -64,8 +64,11 @@ class SignUpPage extends Page {
         await (await this.confirmPasswordInput).setValue(utils.NewUserCredentials.password);
     }
     async clickSignUp() {
-        await (await this.btnSignUp).waitForDisplayed()
-        await (await this.btnSignUp).click()
+        const btnSignUp = await this.btnSignUp
+        const Password = await this.passwordInput
+        await btnSignUp.scrollIntoView()
+       // await btnSignUp.waitForEnabled({timeout:500})
+        await btnSignUp.click()
     }
 
 

@@ -73,7 +73,9 @@ class SearchPage extends Page {
         await (await this.firstProduct).click()
     }
     async checkSearch () {
-        await (await this.btnSearch).waitForDisplayed({reverse: true})
+       //await browser.pause(7000)
+       await (await this.btnSearch).waitForDisplayed({reverse: true})
+       expect(await (await this.btnSearch).isDisplayed()).toBe(false)
     }
     /**
      * overwrite specifc options to adapt it to page object
