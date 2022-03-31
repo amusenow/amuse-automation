@@ -8,12 +8,12 @@ class ReferralPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get btnSignUp() { return $('.btn--secondary') }
+    get btnSignUp() { return $('div button[class="btn btn--without-padding btn--secondary btn--regular"]') }
     get btnSignIn() { return $('.btn.btn--primary.btn--regular.btn--without-padding') }
     get restrictionsLink() { return $(".duration-150.ease-in-out.inline-block.transition.underline") }
     get btnCopyLink() { return $(".m-referrals-sharing__copy") }
     get labelCopyLink() { return $(".m-referrals-sharing__link") }
-    get btnEmail() { return $(".m-referrals-sharing-by-email.mt-12 .btn.btn--primary.btn--regular.btn--without-padding") }
+    get btnEmail() { return $('div [class="m-referrals-sharing-by-email__container flex"]') }
     get inputEmail() { return $(".email-input__text.flex.ml-2") }
     get btnSend() { return $(".email-button") }
     get btnLearnMore() { return $(".m-referrals-sharing-by-email__learn-more") }
@@ -28,12 +28,12 @@ class ReferralPage extends Page {
     async clickSignUp() {
         await (await this.btnSignUp).waitForDisplayed()
         expect(await this.btnSignUp).toBeClickable()
-        await this.btnSignUp.click();
+        await (await this.btnSignUp).click();
     }
     async clickSignIn() {
         await (await this.btnSignIn).waitForDisplayed()
         expect(await this.btnSignIn).toBeClickable()
-        await this.btnSignIn.click();
+        await (await this.btnSignIn).click();
     }
     async clickRestrictionsLink() {
         await (await this.restrictionsLink).waitForDisplayed()
@@ -62,25 +62,30 @@ class ReferralPage extends Page {
         }
     }
     async emailButtonAssertion() {
-        await (await this.trackDiv).scrollIntoView()
-        if (await (await this.dotsDiv).isDisplayedInViewport()) {
-            var cards = (await this.dotsDiv).$$('li')
-            console.log((await cards).length)
-            await (await cards)[(await cards).length - 1].click()
-            await (await this.btnEmail).waitForDisplayed()
-            expect(await this.btnEmail).toBeClickable()
-            await (await this.btnEmail).click();
-            expect(await this.inputEmail).toBeDisplayed()
-            expect(await this.btnSend).toBeDisplayed()
-        }else if(await (await this.btnCopyLink).isDisplayedInViewport()){
-            await (await this.btnEmail).waitForDisplayed()
-            expect(await this.btnEmail).toBeClickable()
-            await (await this.btnEmail).click()
-            expect(await this.inputEmail).toBeDisplayed()
-            expect(await this.btnSend).toBeDisplayed()
-        }
-
+        await (await this.btnEmail).waitForDisplayed()
+        expect(await this.btnEmail).toBeClickable()
+        await (await this.btnEmail).click();
     }
+    // async emailButtonAssertion() {
+    //     await (await this.trackDiv).scrollIntoView()
+    //     if (await (await this.dotsDiv).isDisplayedInViewport()) {
+    //         var cards = (await this.dotsDiv).$$('li')
+    //         console.log((await cards).length)
+    //         await (await cards)[(await cards).length - 1].click()
+    //         await (await this.btnEmail).waitForDisplayed()
+    //         expect(await this.btnEmail).toBeClickable()
+    //         await (await this.btnEmail).click();
+    //         expect(await this.inputEmail).toBeDisplayed()
+    //         expect(await this.btnSend).toBeDisplayed()
+    //     }else if(await (await this.btnCopyLink).isDisplayedInViewport()){
+    //         await (await this.btnEmail).waitForDisplayed()
+    //         expect(await this.btnEmail).toBeClickable()
+    //         await (await this.btnEmail).click()
+    //         expect(await this.inputEmail).toBeDisplayed()
+    //         expect(await this.btnSend).toBeDisplayed()
+    //     }
+
+    // }
     async learnMoreButtonAssertion() {
         await (await this.btnLearnMore).waitForDisplayed()
         expect(await this.btnLearnMore).toBeClickable()
