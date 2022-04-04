@@ -16,7 +16,6 @@ const SignUpModal = require('../pages/signUpModal.page')
 const ReferralsPage = require('../pages/referral.page')
 const ProfilePage = require('../pages/profile.page');
 const productDetailPage = require('../pages/productDetail.page');
-const { timeout } = require('../utils/utils');
 
 const pages = {
     home: HomePage,
@@ -284,10 +283,6 @@ When(/^I enter valid credentials$/, async () => {//
     await SignUpModal.setFakeEmail()
     await SignUpModal.setFakePhone()
     await SignUpModal.setPassword()
-    let body = await $('body')
-    await body.click()
-    //await SignUpModal.btnSignUp.waitForEnabled({timeout:100})
-    //await $(SignUpModal.btnSignUp).waitForEnabled({ timeout:100 })
     await SignUpModal.clickSignUp()
 }); 
 //search

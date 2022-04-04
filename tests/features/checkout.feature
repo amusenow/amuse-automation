@@ -1,6 +1,7 @@
 Feature: Amuse Site - checkout page
 
-    As a user, in the amuse site I want to be able to see checkout page
+    As a user, in the amuse site
+    I want to be able to see checkout page
 
     @iosBrowser @androidBrowser @web
     Scenario:  Amuse - Cart Page -  I login  

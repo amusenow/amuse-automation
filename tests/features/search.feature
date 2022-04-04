@@ -2,7 +2,6 @@ Feature: Amuse Home - search
 
     As a user, in the amuse site
     I want to be able to search products
-    
     @iosBrowser @androidBrowser @web
     Scenario:  Amuse - Search Page - The Search button should be clickable
         Given I am on the home page
